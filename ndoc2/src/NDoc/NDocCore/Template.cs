@@ -277,8 +277,14 @@ namespace NDoc.Core
 							case "assembly-name":
 								newValue = AssemblyNameVariable;
 								break;
+							case "namespace-link":
+								newValue = NamespaceLinkVariable;
+								break;
 							case "type-link":
 								newValue = TypeLinkVariable;
+								break;
+							case "type-members-link":
+								newValue = TypeMembersLinkVariable;
 								break;
 							default:
 								newValue = "{$" + nameBuilder.ToString() + "}";
@@ -369,11 +375,27 @@ namespace NDoc.Core
 			}
 		}
 
+		private string NamespaceLinkVariable
+		{
+			get
+			{
+				return assemblyNavigator.NamespaceName + ".html";
+			}
+		}
+
 		private string TypeLinkVariable
 		{
 			get
 			{
 				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + ".html";
+			}
+		}
+
+		private string TypeMembersLinkVariable
+		{
+			get
+			{
+				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-members.html";
 			}
 		}
 

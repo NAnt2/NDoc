@@ -671,4 +671,23 @@ public class TemplateTests : TestCase
 				"NDoc.Test.AbstractAndSealed", 
 				"SealedClass"));
 	}
+
+	public void TestNamespaceLinkVariable()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.html\">NDoc.Test</a>",
+			EvaluateNamespace(
+				"<a href=\"{$namespace-link}\"><namespace-name /></a>",
+				"NDoc.Test"));
+	}
+
+	public void TestTypeMembersLinkVariable()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Class1-members.html\">Class1 Members</a>",
+			EvaluateType(
+				"<a href=\"{$type-members-link}\"><type-name /> Members</a>",
+				"NDoc.Test",
+				"Class1"));
+	}
 }

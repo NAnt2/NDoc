@@ -37,7 +37,7 @@
 			</div>
 			<div id="nstext" valign="bottom">
 				<type-summary />
-				<p>For a list of all members of this type, see <a href=""><type-name /> Members</a>.</p>
+				<p>For a list of all members of this type, see <a href="{$type-members-link}"><type-name /> Members</a>.</p>
 				<!-- TODO: Insert derivation hierarchy here. -->
 				<!-- In the actual MSDN source, all of the syntax examples are in a single <pre> element. -->
 				<pre class="syntax">
@@ -93,12 +93,12 @@
 				</pre>
 				<h4 class="dtH4">See Also</h4>
 				<p>
-					<a href="">
+					<a href="{$type-members-link}">
 						<type-name />
 						<text> Members</text>
 					</a>
 					<text> | </text>
-					<a href="">
+					<a href="{$namespace-link}">
 						<namespace-name />
 						<text> Namespace</text>
 					</a>
