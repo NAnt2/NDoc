@@ -3693,7 +3693,6 @@ namespace NDoc.Core.Reflection
 		{
 			string derivedMemberID = GetMemberName(type);
 			if (type.BaseType != null && 
-				!(type.BaseType.FullName.StartsWith("System.") || type.BaseType.FullName.StartsWith("Microsoft.")) && 
 				MustDocumentType(type.BaseType)) // we don't care about undocumented types
 			{
 				string baseMemberID = GetMemberName(type.BaseType);
@@ -3742,8 +3741,7 @@ namespace NDoc.Core.Reflection
 			string derivedMemberID = GetMemberName(type);
 			foreach (Type interfaceType in type.GetInterfaces())
 			{
-				if (!(interfaceType.FullName.StartsWith("System.") || interfaceType.FullName.StartsWith("Microsoft.")) && 
-					MustDocumentType(interfaceType)) // we don't care about undocumented types
+				if (MustDocumentType(interfaceType)) // we don't care about undocumented types
 				{
 					string interfaceMemberID = GetMemberName(interfaceType);
 					if (type.IsInterface)
