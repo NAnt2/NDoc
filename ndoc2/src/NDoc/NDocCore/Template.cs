@@ -197,6 +197,9 @@ namespace NDoc.Core
 				case "if-type-has-base-type-or-implements-interfaces":
 					IfTypeHasBaseTypeOrImplementsInterfaces(instructionElement);
 					break;
+				case "if-type-has-remarks":
+					IfTypeHasRemarks(instructionElement);
+					break;
 				case "if-type-implements-interfaces":
 					IfTypeImplementsInterfaces(instructionElement);
 					break;
@@ -226,6 +229,9 @@ namespace NDoc.Core
 					break;
 				case "type-name":
 					TypeName(instructionElement);
+					break;
+				case "type-remarks":
+					TypeRemarks(instructionElement);
 					break;
 				case "type-summary":
 					TypeSummary(instructionElement);
@@ -559,6 +565,21 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasRemarks(XmlElement instructionElement)
+		{
+			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+
+			if (node != null)
+			{
+				XmlNode remarks = node["remarks"];
+
+				if (remarks != null)
+				{
+					EvaluateChildren(instructionElement);
+				}
+			}
+		}
+
 		private void IfTypeImplementsInterfaces(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeImplementsInterfaces)
@@ -646,14 +667,35 @@ namespace NDoc.Core
 			resultWriter.WriteString(assemblyNavigator.TypeName);
 		}
 
-		private void TypeSummary(XmlElement instructionElement)
+		private void TypeRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
-			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
 			if (node != null)
 			{
-				EvaluateDocumentationChildren(node["summary"], stripPara, true);
+				XmlNode remarks = node["remarks"];
+
+				if (remarks != null)
+				{
+					EvaluateDocumentationChildren(remarks, false, true);
+				}
+			}
+		}
+
+		private void TypeSummary(XmlElement instructionElement)
+		{
+			bool stripPara = instructionElement.GetAttribute("strip") == "first";
+
+			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+
+			if (node != null)
+			{
+				XmlNode summary = node["summary"];
+
+				if (summary != null)
+				{
+					EvaluateDocumentationChildren(summary, stripPara, true);
+				}
 			}
 		}
 

@@ -704,4 +704,51 @@ public class TemplateTests : TestCase
 	{
 		Assert(Evaluate("<for-each-namespace><namespace-name /></for-each-namespace>").StartsWith("NDoc.TestNDoc.Test."));
 	}
+
+	public void TestTypeSummaryOnTypeWithNoSummary()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+			"<type-summary />",
+			"NDoc.Test.Remarks",
+			"RemarksWithPara"));
+	}
+
+	public void TestTypeRemarksWithPara()
+	{
+		AssertEquals(
+			"<p>These remarks contains one para element.</p>",
+			EvaluateType(
+				"<type-remarks />",
+				"NDoc.Test.Remarks",
+				"RemarksWithPara"));
+	}
+
+	public void TestTypeRemarksWithoutPara()
+	{
+		AssertEquals(
+			"<p>These remarks contains no para element.</p>",
+			EvaluateType(
+			"<type-remarks />",
+			"NDoc.Test.Remarks",
+			"RemarksWithoutPara"));
+	}
+
+	public void TestIfTypeHasRemarks()
+	{
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-remarks>true</if-type-has-remarks>",
+				"NDoc.Test.Remarks",
+				"RemarksWithPara"));
+
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-remarks>true</if-type-has-remarks>",
+				"NDoc.Test.Remarks",
+				"NoRemarks"));
+	}
 }

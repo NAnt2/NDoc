@@ -91,6 +91,10 @@
 						<text>&nl;</text>
 					</b>
 				</pre>
+				<if-type-has-remarks>
+					<h4 class="dtH4">Remarks</h4>
+					<type-remarks />
+				</if-type-has-remarks>
 				<h4 class="dtH4">See Also</h4>
 				<p>
 					<a href="{$type-members-link}">

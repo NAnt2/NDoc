@@ -129,3 +129,12 @@ namespace NDoc.Test.AbstractAndSealed
 	public abstract class AbstractClass {}
 	public sealed class SealedClass {}
 }
+
+namespace NDoc.Test.Remarks
+{
+	/// <remarks><para>These remarks contains one para element.</para></remarks>
+	public class RemarksWithPara {}
+	/// <remarks>These remarks contains no para element.</remarks>
+	public class RemarksWithoutPara {}
+	public class NoRemarks {}
+}
