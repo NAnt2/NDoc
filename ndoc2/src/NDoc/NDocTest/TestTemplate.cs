@@ -80,6 +80,19 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace IfMemberHasParameters
+	{
+		public class OneMethodNoParameters
+		{
+			public void Method1() {}
+		}
+
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+	}
+
 	namespace IfNotLastParameter
 	{
 		public class OneMethodOneParameter

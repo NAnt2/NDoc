@@ -45,7 +45,21 @@
 						<member-access lang="VB" />
 						<text> Function </text>
 						<member-name />
-						<text>()</text>
+						<text>(</text>
+						<if-member-has-parameters>
+							<text>&nl;</text>
+							<for-each-parameter-in-member>
+								<text>&in;</text>
+								<parameter-name />
+								<text> As </text>
+								<parameter-type-name />
+								<if-not-last-parameter>
+									<text>,&nl;</text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
+							<text>&nl;</text>
+						</if-member-has-parameters>
+						<text>)</text>
 					</b>
 				</pre>
 				<pre class="syntax">
@@ -54,7 +68,21 @@
 						<member-access lang="C#" />
 						<text> void </text>
 						<member-name />
-						<text>()</text>
+						<text>(</text>
+						<if-member-has-parameters>
+							<text>&nl;</text>
+							<for-each-parameter-in-member>
+								<text>&in;</text>
+								<parameter-type-name />
+								<text> </text>
+								<parameter-name />
+								<if-not-last-parameter>
+									<text>,&nl;</text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
+							<text>&nl;</text>
+						</if-member-has-parameters>
+						<text>)</text>
 					</b>
 				</pre>
 				<div class="footer">

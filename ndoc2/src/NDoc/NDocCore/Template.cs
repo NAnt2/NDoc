@@ -13,6 +13,8 @@ namespace NDoc.Core
 	/// </summary>
 	public class Template
 	{
+		#region Fields
+
 		private Hashtable instructions;
 		private Hashtable variables;
 		private XmlDocument templateDocument;
@@ -24,6 +26,10 @@ namespace NDoc.Core
 		private AssemblyDocumentation assemblyDocumentation;
 		private XmlWriter resultWriter;
 
+		#endregion
+
+		#region Constructor
+
 		/// <summary>
 		///		<para>Initializes a new instance of the Template class.</para>
 		/// </summary>
@@ -32,6 +38,10 @@ namespace NDoc.Core
 			FindInstructions();
 			FindVariables();
 		}
+
+		#endregion
+
+		#region Instruction and Variable Helpers
 
 		private delegate void Instruction(XmlElement instructionElement);
 		private delegate string Variable();
@@ -70,6 +80,10 @@ namespace NDoc.Core
 			}
 		}
 
+		#endregion
+
+		#region Load Methods
+
 		/// <summary>
 		///		<para>Loads a template from the specified file.</para>
 		/// </summary>
@@ -107,6 +121,10 @@ namespace NDoc.Core
 			xmlValidatingReader.EntityHandling = EntityHandling.ExpandEntities;
 			return xmlValidatingReader;
 		}
+
+		#endregion
+
+		#region Evaluate Methods
 
 		/// <summary>
 		///		<para>Evaluates the template.</para>
@@ -332,8 +350,6 @@ namespace NDoc.Core
 
 			return valueBuilder.ToString();
 		}
-
-		#region Helpers
 
 		private void EvaluateDocumentationChildren(XmlNode documentationNode, bool stripPara, bool addPara)
 		{
@@ -621,6 +637,15 @@ namespace NDoc.Core
 					EvaluateChildren(instructionElement);
 				}
 				while (assemblyNavigator.MoveToNextType());
+			}
+		}
+
+		[TemplateInstruction("if-member-has-parameters")]
+		private void IfMemberHasParameters(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.ParameterCount > 0)
+			{
+				EvaluateChildren(instructionElement);
 			}
 		}
 

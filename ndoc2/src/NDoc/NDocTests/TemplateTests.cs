@@ -219,6 +219,32 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <if-member-has-parameters> Tests
+
+	public void Test_IfMemberHasParameters_OneMethodNoParameters()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-has-parameters>true</if-member-has-parameters>",
+				"NDoc.Test.Template.IfMemberHasParameters",
+				"OneMethodNoParameters",
+				"Method1"));
+	}
+
+	public void Test_IfMemberHasParameters_OneMethodOneParameter()
+	{
+		AssertEquals(
+			"true",
+			EvaluateMember(
+				"<if-member-has-parameters>true</if-member-has-parameters>",
+				"NDoc.Test.Template.IfMemberHasParameters",
+				"OneMethodOneParameter",
+				"Method1"));
+	}
+
+	#endregion
+
 	#region <if-not-last-parameter> Tests
 
 	public void Test_IfNotLastParameter_OneMethodOneParameter()
