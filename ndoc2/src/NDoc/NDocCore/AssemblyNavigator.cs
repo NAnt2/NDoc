@@ -132,6 +132,17 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Compares members by their names.</para>
+		/// </summary>
+		private class MemberComparer : IComparer
+		{
+			int IComparer.Compare(object x, object y)
+			{
+				return String.Compare(((MemberInfo)x).Name, ((MemberInfo)y).Name);
+			}
+		}
+
 		private bool IsDelegateType(Type type)
 		{
 			return 
@@ -503,6 +514,23 @@ namespace NDoc.Core
 			return constructors;
 		}
 
+		private ArrayList GetMethods(string access)
+		{
+			ArrayList methods = new ArrayList();
+
+			foreach (MethodInfo method in currentType.GetMethods())
+			{
+				if (AccessMatches(access, method))
+				{
+					methods.Add(method);
+				}
+			}
+
+			methods.Sort(new MemberComparer());
+
+			return methods;
+		}
+
 		public bool TypeHasConstructors(string access)
 		{
 			return GetConstructors(access).Count > 0;
@@ -516,6 +544,17 @@ namespace NDoc.Core
 		public bool MoveToFirstConstructor(string access)
 		{
 			memberEnumerator = GetConstructors(access).GetEnumerator();
+			return MoveToNextMember();
+		}
+
+		public bool TypeHasMethods(string access)
+		{
+			return GetMethods(access).Count > 0;
+		}
+
+		public bool MoveToFirstMethod(string access)
+		{
+			memberEnumerator = GetMethods(access).GetEnumerator();
 			return MoveToNextMember();
 		}
 
@@ -537,6 +576,14 @@ namespace NDoc.Core
 			get
 			{
 				return memberEnumerator.Current as MethodBase;
+			}
+		}
+
+		public string MemberName
+		{
+			get
+			{
+				return ((MemberInfo)memberEnumerator.Current).Name;
 			}
 		}
 	}

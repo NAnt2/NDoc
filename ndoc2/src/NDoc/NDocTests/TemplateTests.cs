@@ -839,4 +839,24 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Constructors",
 				"DefaultConstructor"));
 	}
+
+	public void TestForEachMethodInType()
+	{
+		AssertEquals(
+			"EqualsGetHashCodeGetTypeToString",
+			EvaluateType(
+				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
+				"NDoc.Test.Methods",
+				"NoMethods"));
+	}
+
+	public void TestIfTypeHasMethods()
+	{
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-methods access='public'>true</if-type-has-methods>",
+				"NDoc.Test.Methods",
+				"NoMethods"));
+	}
 }

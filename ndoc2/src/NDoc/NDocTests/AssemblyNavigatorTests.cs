@@ -512,4 +512,41 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNamespace("NDoc.Test"));
 		Assert(navigator.NamespaceHasTypes);
 	}
+
+	public void TestMoveToMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.Methods"));
+
+		Assert(navigator.MoveToType("NoMethods"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Method1", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void TestTypeHasMethodsPublic()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.Methods"));
+
+		Assert(navigator.MoveToType("NoMethods"));
+		Assert(navigator.TypeHasMethods("public"));
+	}
 }

@@ -209,3 +209,37 @@ namespace NDoc.Test.NestedClassWithSummary
 		public class NestedClass {}
 	}
 }
+
+namespace NDoc.Test.Methods
+{
+	public class NoMethods {}
+	
+	public class OneMethod
+	{
+		public void Method1() {}
+	}
+
+	public class TwoMethods
+	{
+		public void Method1() {}
+		public void Method2() {}
+	}
+
+	public class OneMethodWithSummary
+	{
+		/// <summary>This method has a summary.</summary>
+		public void Method1() {}
+	}
+
+	public class OneMethodWithParameterWithSummary
+	{
+		/// <summary>This method has a summary.</summary>
+		public void Method1(int i) {}
+	}
+
+	public class OneMethodWithTwoParametersWithSummary
+	{
+		/// <summary>This method has a summary.</summary>
+		public void Method1(int i, string s) {}
+	}
+}

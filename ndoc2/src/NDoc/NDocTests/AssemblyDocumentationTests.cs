@@ -57,4 +57,25 @@ public class AssemblyDocumentationTests : TestCase
 		AssertNotNull(node);
 		AssertEquals("This is a nested class.", node.InnerText);
 	}
+
+	public void TestMemberSummary()
+	{
+		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithSummary).GetMethod("Method1"));
+		AssertNotNull(node);
+		AssertEquals("This method has a summary.", node.InnerText);
+	}
+
+	public void TestMemberSummaryForMethodWithParameter()
+	{
+		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithParameterWithSummary).GetMethod("Method1"));
+		AssertNotNull(node);
+		AssertEquals("This method has a summary.", node.InnerText);
+	}
+
+	public void TestMemberSummaryForMethodWithTwoParameters()
+	{
+		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithTwoParametersWithSummary).GetMethod("Method1"));
+		AssertNotNull(node);
+		AssertEquals("This method has a summary.", node.InnerText);
+	}
 }

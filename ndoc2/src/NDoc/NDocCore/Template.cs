@@ -174,6 +174,9 @@ namespace NDoc.Core
 				case "for-each-interface-in-namespace":
 					ForEachInterfaceInNamespace(instructionElement);
 					break;
+				case "for-each-method-in-type":
+					ForEachMethodInType(instructionElement);
+					break;
 				case "for-each-namespace":
 					ForEachNamespace(instructionElement);
 					break;
@@ -207,6 +210,9 @@ namespace NDoc.Core
 				case "if-type-has-constructors":
 					IfTypeHasConstructors(instructionElement);
 					break;
+				case "if-type-has-methods":
+					IfTypeHasMethods(instructionElement);
+					break;
 				case "if-type-has-overloaded-constructors":
 					IfTypeHasOverloadedConstructors(instructionElement);
 					break;
@@ -224,6 +230,9 @@ namespace NDoc.Core
 					break;
 				case "implemented-interface-name":
 					ImplementedInterfaceName(instructionElement);
+					break;
+				case "member-name":
+					MemberName(instructionElement);
 					break;
 				case "member-summary":
 					MemberSummary(instructionElement);
@@ -513,6 +522,20 @@ namespace NDoc.Core
 			}
 		}
 
+		private void ForEachMethodInType(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.MoveToFirstMethod(access))
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextMember());
+			}
+		}
+
 		private void ForEachNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstNamespace())
@@ -611,6 +634,16 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasMethods(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.TypeHasMethods(access))
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfTypeHasOverloadedConstructors(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeHasOverloadedConstructors())
@@ -656,6 +689,11 @@ namespace NDoc.Core
 		private void ImplementedInterfaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
+		}
+
+		private void MemberName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.MemberName);
 		}
 
 		private void MemberSummary(XmlElement instructionElement)

@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -67,17 +68,55 @@ namespace NDoc.Core
 
 		private XmlNode GetMemberNode(MethodBase method)
 		{
-			string memberName = "M:";
+			string memberName = null;
 
 			if (method.IsConstructor)
 			{
-				memberName += method.DeclaringType.FullName + ".#ctor";
+				memberName = "M:" + method.DeclaringType.FullName + ".#ctor";
+			}
+			else
+			{
+				memberName = "M:" + method.DeclaringType.FullName + "." + method.Name;
+			}
+
+			if (memberName != null)
+			{
+				int i = 0;
+
+				foreach (ParameterInfo parameter in method.GetParameters())
+				{
+					if (i == 0)
+					{
+						memberName += "(";
+					}
+					else
+					{
+						memberName += ",";
+					}
+
+					string parameterName = parameter.ParameterType.FullName;
+
+					memberName += parameterName;
+
+					++i;
+				}
+
+				if (i > 0)
+				{
+					memberName += ")";
+				}
+
 				return GetMemberNode(memberName);
 			}
 
 			return null;
 		}
 
+		/// <summary>
+		///		<para>Gets the element containing the specified type's summary comments.</para>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		public XmlNode GetTypeSummary(Type type)
 		{
 			XmlNode memberNode = GetMemberNode(type);
@@ -90,6 +129,11 @@ namespace NDoc.Core
 			return null;
 		}
 
+		/// <summary>
+		///		<para>Gets the element containing the specified type's remarks comments.</para>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		public XmlNode GetTypeRemarks(Type type)
 		{
 			XmlNode memberNode = GetMemberNode(type);
@@ -102,6 +146,11 @@ namespace NDoc.Core
 			return null;
 		}
 
+		/// <summary>
+		///		<para>Gets the element containing the specified type's constructors summary comments.</para>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		public XmlNode GetTypeConstructorsSummary(Type type)
 		{
 			string memberName = "M:" + type.FullName + ".#ctor";
@@ -123,6 +172,11 @@ namespace NDoc.Core
 			return null;
 		}
 
+		/// <summary>
+		///		<para>Gets the element containing the specified member's summary comments.</para>
+		/// </summary>
+		/// <param name="method"></param>
+		/// <returns></returns>
 		public XmlNode GetMemberSummary(MethodBase method)
 		{
 			XmlNode memberNode = GetMemberNode(method);
