@@ -25,17 +25,29 @@ namespace NDoc.Core
 
 			CopyResources(styleDirectory, outputDirectory);
 
+			Template namespacesTemplate = new Template();
+			namespacesTemplate.Load(Path.Combine(styleDirectory, @"templates\namespaces.xml"));
+
 			Template namespaceTemplate = new Template();
 			namespaceTemplate.Load(Path.Combine(styleDirectory, @"templates\namespace.xml"));
 
 			Template typeTemplate = new Template();
 			typeTemplate.Load(Path.Combine(styleDirectory, @"templates\type.xml"));
 
+			StreamWriter streamWriter = OpenNamespaces();
+
+			namespacesTemplate.Evaluate(
+				assemblyNavigator, 
+				documentationFile, 
+				streamWriter);
+
+			streamWriter.Close();
+
 			assemblyNavigator.MoveToFirstNamespace();
 
 			do
 			{
-				StreamWriter streamWriter = OpenNamespace(assemblyNavigator.NamespaceName);
+				streamWriter = OpenNamespace(assemblyNavigator.NamespaceName);
 
 				namespaceTemplate.EvaluateNamespace(
 					assemblyNavigator.NamespaceName, 
@@ -63,6 +75,13 @@ namespace NDoc.Core
 				while (assemblyNavigator.MoveToNextType());
 			}
 			while (assemblyNavigator.MoveToNextNamespace());
+		}
+
+		private StreamWriter OpenNamespaces()
+		{
+			string fileName = "index.html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenNamespace(string namespaceName)

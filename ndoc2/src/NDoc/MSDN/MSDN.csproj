@@ -69,6 +69,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "templates\namespaces.xml"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "templates\type.xml"
                     BuildAction = "Content"
                 />

@@ -167,6 +167,9 @@ namespace NDoc.Core
 				case "for-each-interface-in-namespace":
 					ForEachInterfaceInNamespace(instructionElement);
 					break;
+				case "for-each-namespace":
+					ForEachNamespace(instructionElement);
+					break;
 				case "for-each-structure-in-namespace":
 					ForEachStructureInNamespace(instructionElement);
 					break;
@@ -465,6 +468,18 @@ namespace NDoc.Core
 					EvaluateChildren(instructionElement);
 				}
 				while (assemblyNavigator.MoveToNextType());
+			}
+		}
+
+		private void ForEachNamespace(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MoveToFirstNamespace())
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextNamespace());
 			}
 		}
 

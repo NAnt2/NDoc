@@ -21,9 +21,18 @@ public class TemplateTests : TestCase
 		documentation = Path.Combine(directory, "NDocTest.xml");
 		assemblyNavigator = new AssemblyNavigator(assembly);
 	}
-	
+
 	protected override void TearDown()
 	{
+	}
+
+	private string Evaluate(string templateXml)
+	{
+		Template template = new Template();
+		template.LoadXml(templateXml);
+		StringWriter result = new StringWriter();
+		template.Evaluate(assemblyNavigator, documentation, result);
+		return result.ToString();
 	}
 
 	private string EvaluateNamespace(string templateXml, string namespaceName)
@@ -689,5 +698,10 @@ public class TemplateTests : TestCase
 				"<a href=\"{$type-members-link}\"><type-name /> Members</a>",
 				"NDoc.Test",
 				"Class1"));
+	}
+
+	public void TestForEachNamespace()
+	{
+		Assert(Evaluate("<for-each-namespace><namespace-name /></for-each-namespace>").StartsWith("NDoc.TestNDoc.Test."));
 	}
 }

@@ -114,7 +114,7 @@
 				</if-namespace-contains-enumerations>
 				<h4 class="dtH4">See Also</h4>
 				<!-- TODO: Do all namespace pages need a See Also section? What goes here? -->
-				<p><a href="http://ndoc.sourceforge.net/">NDoc Home Page</a></p>
+				<p><a href="index.html">Class Library</a></p>
 				<div class="footer">
 					<hr />
 					<!-- TODO: We should probably let the user specify these via properties. -->
