@@ -171,7 +171,8 @@ namespace NDoc.ConsoleApplication
 
 				if (project.AssemblySlashDocs.Count == 0)
 				{
-					WriteUsage();
+					Console.WriteLine("[Error] Build cannot proceed; No assemblies were specified, or none could be found.");
+					//WriteUsage();
 					return 1;
 				}
 				else
@@ -448,6 +449,13 @@ namespace NDoc.ConsoleApplication
 					if (System.IO.File.Exists(docFile))
 					{
 						project.AssemblySlashDocs.Add(new AssemblySlashDoc(file, docFile));
+					}
+					else
+					{
+						Console.WriteLine("[Warning] No XML doc file found for '" + file + "'");
+						AssemblySlashDoc assemblySlashDoc=new AssemblySlashDoc();
+						assemblySlashDoc.Assembly.Path=file;
+						project.AssemblySlashDocs.Add(assemblySlashDoc);
 					}
 				}
 			}
