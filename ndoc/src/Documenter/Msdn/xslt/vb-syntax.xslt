@@ -404,6 +404,9 @@
 				<xsl:if test="@set != 'true'">
 					<xsl:text>ReadOnly&#160;</xsl:text>
 				</xsl:if>
+				<xsl:if test="@get != 'true'">
+					<xsl:text>WriteOnly&#160;</xsl:text>
+				</xsl:if>
 			</xsl:if>
 			<xsl:text>Property&#160;</xsl:text>
 			<xsl:value-of select="@name" />
