@@ -77,4 +77,10 @@ namespace NDoc.Test.Summaries
 	public class SummaryWithPara {}
 
 	public class NoSummary {}
+
+	/// <summary>
+	///		<para>This summary has two para elements.</para>
+	///		<para>This is the second para.</para>
+	/// </summary>
+	public class SummaryWithTwoParas {}
 }

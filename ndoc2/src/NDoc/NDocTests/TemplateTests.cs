@@ -293,4 +293,36 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Summaries",
 				"NoSummary"));
 	}
+
+	public void TestTypeSummaryWithParaStripFirst()
+	{
+		AssertEquals(
+			"This summary has one para element.",
+			EvaluateType(
+				"<type-summary strip='first' />",
+				"NDoc.Test.Summaries",
+				"SummaryWithPara"));
+	}
+
+	public void TestTypeSummaryWithTwoParasStripFirst()
+	{
+		// See the System.Xml.XPath namespace page in MSDN and look at the 
+		// XPathNodeType summary to see how they only strip the first para element.
+		AssertEquals(
+			"This summary has two para elements.<p>This is the second para.</p>",
+			EvaluateType(
+				"<type-summary strip='first' />",
+				"NDoc.Test.Summaries",
+				"SummaryWithTwoParas"));
+	}
+
+	public void TestTypeSummaryWithoutParaStripFirst()
+	{
+		AssertEquals(
+			"This summary has no para element.",
+			EvaluateType(
+			"<type-summary strip='first' />",
+			"NDoc.Test.Summaries",
+			"SummaryWithoutPara"));
+	}
 }

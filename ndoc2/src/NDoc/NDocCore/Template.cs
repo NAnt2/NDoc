@@ -259,9 +259,15 @@ namespace NDoc.Core
 
 		#region Helpers
 
-		private void EvaluateDocumentationChildren(XmlNode documentationNode)
+		private void EvaluateDocumentationChildren(XmlNode documentationNode, bool stripPara)
 		{
 			XmlNode node = documentationNode.FirstChild;
+
+			if (stripPara && node.Name == "para")
+			{
+				EvaluateDocumentationChildren(node, false);
+				node = node.NextSibling;
+			}
 
 			while (node != null)
 			{
@@ -441,10 +447,11 @@ namespace NDoc.Core
 		private void TypeSummary(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
 			if (node != null)
 			{
-				EvaluateDocumentationChildren(node["summary"]);
+				EvaluateDocumentationChildren(node["summary"], stripPara);
 			}
 		}
 
@@ -460,7 +467,7 @@ namespace NDoc.Core
 		private void Para(XmlElement documentationElement)
 		{
 			resultWriter.WriteStartElement("p");
-			EvaluateDocumentationChildren(documentationElement);
+			EvaluateDocumentationChildren(documentationElement, false);
 			resultWriter.WriteEndElement();
 		}
 
