@@ -29,7 +29,6 @@ public class AssemblyNavigatorTests : TestCase
 
 	public void TestMoveToNamespace()
 	{
-		AssertNull(navigator.NamespaceName);
 		Assert(navigator.MoveToNamespace("NDoc.Test"));
 		AssertEquals("NDoc.Test", navigator.NamespaceName);
 	}
@@ -37,7 +36,7 @@ public class AssemblyNavigatorTests : TestCase
 	public void TestMoveToFirstNamespace()
 	{
 		Assert(navigator.MoveToFirstNamespace());
-		AssertNull(navigator.NamespaceName);
+		AssertEquals("(global)", navigator.NamespaceName);
 	}
 
 	public void TestMoveToNextNamespace()
@@ -481,12 +480,13 @@ public class AssemblyNavigatorTests : TestCase
 	{
 		Assert(navigator.MoveToNamespace("NDoc.Test"));
 		Assert(navigator.MoveToNamespace(null));
-		AssertNull(navigator.NamespaceName);
+		AssertEquals("(global)", navigator.NamespaceName);
 	}
 
 	public void TestPrivateImplementationDetails()
 	{
-		// We should already be in the global namespace.
+		AssertEquals("(global)", navigator.NamespaceName);
+
 		navigator.MoveToFirstClass();
 
 		do
@@ -505,5 +505,11 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNextType());
 		AssertEquals("OuterClass.NestedClass", navigator.TypeName);
 		Assert(!navigator.MoveToNextType());
+	}
+
+	public void TestNamespaceHasTypes()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+		Assert(navigator.NamespaceHasTypes);
 	}
 }

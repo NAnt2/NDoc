@@ -702,7 +702,7 @@ public class TemplateTests : TestCase
 
 	public void TestForEachNamespace()
 	{
-		Assert(Evaluate("<for-each-namespace><namespace-name /></for-each-namespace>").StartsWith("NDoc.TestNDoc.Test."));
+		Assert(Evaluate("<for-each-namespace><namespace-name /></for-each-namespace>").StartsWith("(global)NDoc.TestNDoc.Test."));
 	}
 
 	public void TestTypeSummaryOnTypeWithNoSummary()

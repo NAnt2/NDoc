@@ -37,6 +37,20 @@ namespace NDoc.Core
 			}
 		}
 
+		private bool NamespaceHasAtLeastOneType(string namespaceName)
+		{
+			foreach (Type type in assembly.GetTypes())
+			{
+				if (type.Namespace == namespaceName && 
+					!type.FullName.StartsWith("<PrivateImplementationDetails>"))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		private ArrayList GetNamespaceNames()
 		{
 			ArrayList namespaceNames = new ArrayList();
@@ -45,7 +59,7 @@ namespace NDoc.Core
 
 			foreach (Type type in types)
 			{
-				if (!namespaceNames.Contains(type.Namespace))
+				if (!namespaceNames.Contains(type.Namespace) && NamespaceHasAtLeastOneType(type.Namespace))
 				{
 					namespaceNames.Add(type.Namespace);
 				}
@@ -95,7 +109,7 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return currentNamespaceName;
+				return currentNamespaceName != null ? currentNamespaceName : "(global)";
 			}
 		}
 
@@ -212,6 +226,14 @@ namespace NDoc.Core
 			currentTypes.Sort(new TypeComparer());
 
 			typeEnumerator = null;
+		}
+
+		public bool NamespaceHasTypes
+		{
+			get
+			{
+				return NamespaceHasAtLeastOneType(currentNamespaceName);
+			}
 		}
 
 		public bool NamespaceHasClasses
