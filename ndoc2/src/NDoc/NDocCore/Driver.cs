@@ -31,6 +31,7 @@ namespace NDoc.Core
 
 			Assembly assembly = Assembly.LoadFrom(assemblyFile);
 			AssemblyNavigator assemblyNavigator = new AssemblyNavigator(assembly);
+			AssemblyNavigator assemblyNavigator2 = new AssemblyNavigator(assembly);
 
 			string styleDirectory = Path.Combine(@"..\..\..\", outputStyle);
 
@@ -53,6 +54,9 @@ namespace NDoc.Core
 
 			Template typeMemberOverloadsTemplate = new Template();
 			typeMemberOverloadsTemplate.Load(Path.Combine(styleDirectory, @"templates\type-member-overloads.xml"));
+
+			Template typeMemberTemplate = new Template();
+			typeMemberTemplate.Load(Path.Combine(styleDirectory, @"templates\type-member.xml"));
 
 			StreamWriter streamWriter = OpenNamespaces();
 
@@ -138,6 +142,21 @@ namespace NDoc.Core
 
 									streamWriter.Close();
 								}
+
+								if (!assemblyNavigator.IsMemberInherited)
+								{
+									streamWriter = OpenTypeMember(assemblyNavigator.CurrentType, assemblyNavigator.CurrentMember);
+
+									typeMemberTemplate.EvaluateMember(
+										assemblyNavigator.NamespaceName,
+										assemblyNavigator.TypeName,
+										assemblyNavigator.MemberName,
+										assemblyNavigator2,
+										documentationFile,
+										streamWriter);
+
+									streamWriter.Close();
+								}
 							}
 							while (assemblyNavigator.MoveToNextMember());
 						}
@@ -185,6 +204,14 @@ namespace NDoc.Core
 
 		private StreamWriter OpenTypeMemberOverloads(Type type, MemberInfo member)
 		{
+			string fileName = type.FullName + "." + member.Name + ".html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
+		}
+
+		private StreamWriter OpenTypeMember(Type type, MemberInfo member)
+		{
+#warning Don't forget to pass in the overload ID here.
 			string fileName = type.FullName + "." + member.Name + ".html";
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));

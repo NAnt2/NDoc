@@ -21,6 +21,7 @@ namespace NDoc.Core
 		private int interfaceCount;
 		private int currentInterfaceIndex;
 		private IEnumerator memberEnumerator;
+		private MemberInfo currentMember;
 		private IEnumerator parameterEnumerator;
 		private int currentParameterIndex;
 
@@ -810,7 +811,13 @@ namespace NDoc.Core
 		/// <returns></returns>
 		public bool MoveToNextMember()
 		{
-			return memberEnumerator.MoveNext();
+			if (memberEnumerator.MoveNext())
+			{
+				currentMember = memberEnumerator.Current as MemberInfo;
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -833,7 +840,7 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return memberEnumerator.Current as MemberInfo;
+				return currentMember;
 			}
 		}
 
@@ -846,7 +853,7 @@ namespace NDoc.Core
 			{
 				return
 					memberEnumerator != null ?
-					((MemberInfo)memberEnumerator.Current).Name :
+					currentMember.Name :
 					null;
 			}
 		}
@@ -864,6 +871,7 @@ namespace NDoc.Core
 			{
 				if (((MemberInfo)memberEnumerator.Current).Name == memberName)
 				{
+					currentMember = memberEnumerator.Current as MemberInfo;
 					return true;
 				}
 			}
@@ -878,7 +886,7 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return ((MemberInfo)memberEnumerator.Current).DeclaringType != currentType;
+				return currentMember.DeclaringType != currentType;
 			}
 		}
 
@@ -900,11 +908,11 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return ((MemberInfo)memberEnumerator.Current).DeclaringType.Name;
+				return currentMember.DeclaringType.Name;
 			}
 		}
 
-		private ParameterInfo[] GetParameters(object member)
+		private ParameterInfo[] GetParameters(MemberInfo member)
 		{
 			if (member is MethodBase)
 			{
@@ -921,7 +929,7 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return GetParameters(memberEnumerator.Current).Length;
+				return GetParameters(currentMember).Length;
 			}
 		}
 
@@ -932,7 +940,7 @@ namespace NDoc.Core
 		/// <returns></returns>
 		public bool MoveToFirstParameter()
 		{
-			parameterEnumerator = GetParameters(memberEnumerator.Current).GetEnumerator();
+			parameterEnumerator = GetParameters(currentMember).GetEnumerator();
 			currentParameterIndex = 0;
 			return MoveToNextParameter();
 		}
