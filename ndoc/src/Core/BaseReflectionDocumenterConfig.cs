@@ -851,6 +851,12 @@ namespace NDoc.Core.Reflection
 			return FailureMessages;
 		}
 	
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="property"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		protected override string HandleUnknownPropertyValue(PropertyInfo property, string value)
 		{
 			string FailureMessages = String.Empty;
@@ -859,14 +865,14 @@ namespace NDoc.Core.Reflection
 			// since static members cannot actually be inherited; The extra complexity was 
 			// pointless and caused awkward edge conditions when a static member had the 
 			// same name as an instance member....
-			if (property.Name = "DocumentInheritedMembers")
+			if (property.Name == "DocumentInheritedMembers")
 			{
 				bool newValue = true;
-				if (String.Compare(value, "none", true))
+				if (String.Compare(value, "none", true)==0)
 				{
 					newValue = true;
 				}
-				FailureMessages += base.ReadProperty("DocumentInheritedMembers", newValue);
+				FailureMessages += base.ReadProperty("DocumentInheritedMembers", newValue.ToString());
 			}
 			else
 			{
