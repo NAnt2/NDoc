@@ -623,4 +623,52 @@ public class TemplateTests : TestCase
 			"\xA9",
 			EvaluateNamespace("<!DOCTYPE template [ <!ENTITY copy '&#xA9;'> ]><template>&copy;</template>", "NDoc.Test"));
 	}
+
+	public void TestIfTypeIsAbstract()
+	{
+		AssertEquals(
+			String.Empty, 
+			EvaluateType(
+				"<if-type-is-abstract>true</if-type-is-abstract>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"NormalClass"));
+
+		AssertEquals(
+			"true", 
+			EvaluateType(
+				"<if-type-is-abstract>true</if-type-is-abstract>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"AbstractClass"));
+
+		AssertEquals(
+			String.Empty, 
+			EvaluateType(
+				"<if-type-is-abstract>true</if-type-is-abstract>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"SealedClass"));
+	}
+
+	public void TestIfTypeIsSealed()
+	{
+		AssertEquals(
+			String.Empty, 
+			EvaluateType(
+				"<if-type-is-sealed>true</if-type-is-sealed>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"NormalClass"));
+
+		AssertEquals(
+			String.Empty, 
+			EvaluateType(
+				"<if-type-is-sealed>true</if-type-is-sealed>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"AbstractClass"));
+
+		AssertEquals(
+			"true", 
+			EvaluateType(
+				"<if-type-is-sealed>true</if-type-is-sealed>", 
+				"NDoc.Test.AbstractAndSealed", 
+				"SealedClass"));
+	}
 }

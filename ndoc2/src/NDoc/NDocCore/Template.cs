@@ -197,6 +197,12 @@ namespace NDoc.Core
 				case "if-type-implements-interfaces":
 					IfTypeImplementsInterfaces(instructionElement);
 					break;
+				case "if-type-is-abstract":
+					IfTypeIsAbstract(instructionElement);
+					break;
+				case "if-type-is-sealed":
+					IfTypeIsSealed(instructionElement);
+					break;
 				case "implemented-interface-name":
 					ImplementedInterfaceName(instructionElement);
 					break;
@@ -519,6 +525,22 @@ namespace NDoc.Core
 		private void IfTypeImplementsInterfaces(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeImplementsInterfaces)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfTypeIsAbstract(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.IsTypeAbstract)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfTypeIsSealed(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.IsTypeSealed)
 			{
 				EvaluateChildren(instructionElement);
 			}

@@ -403,5 +403,21 @@ namespace NDoc.Core
 				return currentInterfaceIndex >= interfaceCount;
 			}
 		}
+
+		public bool IsTypeAbstract
+		{
+			get
+			{
+				return currentType.IsAbstract;
+			}
+		}
+
+		public bool IsTypeSealed
+		{
+			get
+			{
+				return currentType.IsSealed;
+			}
+		}
 	}
 }

@@ -408,4 +408,32 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNextInterfaceImplementedByType());
 		Assert(navigator.IsLastImplementedInterface);
 	}
+
+	public void TestIsTypeAbstract()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AbstractAndSealed"));
+
+		Assert(navigator.MoveToType("NormalClass"));
+		Assert(!navigator.IsTypeAbstract);
+
+		Assert(navigator.MoveToType("AbstractClass"));
+		Assert(navigator.IsTypeAbstract);
+
+		Assert(navigator.MoveToType("SealedClass"));
+		Assert(!navigator.IsTypeAbstract);
+	}
+
+	public void TestIsTypeSealed()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AbstractAndSealed"));
+
+		Assert(navigator.MoveToType("NormalClass"));
+		Assert(!navigator.IsTypeSealed);
+
+		Assert(navigator.MoveToType("AbstractClass"));
+		Assert(!navigator.IsTypeSealed);
+
+		Assert(navigator.MoveToType("SealedClass"));
+		Assert(navigator.IsTypeSealed);
+	}
 }

@@ -45,6 +45,8 @@
 					<b>
 						<type-access lang="VB" />
 						<text> </text>
+						<if-type-is-abstract>MustInherit </if-type-is-abstract>
+						<if-type-is-sealed>NotInheritable </if-type-is-sealed>
 						<type-type lang="VB" />
 						<text> </text>
 						<type-name />
@@ -68,6 +70,8 @@
 					<b>
 						<type-access lang="C#" />
 						<text> </text>
+						<if-type-is-abstract>abstract </if-type-is-abstract>
+						<if-type-is-sealed>sealed </if-type-is-sealed>
 						<type-type lang="C#" />
 						<text> </text>
 						<type-name />

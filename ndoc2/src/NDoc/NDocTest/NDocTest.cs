@@ -122,3 +122,10 @@ namespace NDoc.Test.DerivedClassAndImplementsInterfaces
 	public interface Interface2 {}
 	public class DerivedAndImplements : BaseClass, Interface1, Interface2 {}
 }
+
+namespace NDoc.Test.AbstractAndSealed
+{
+	public class NormalClass {}
+	public abstract class AbstractClass {}
+	public sealed class SealedClass {}
+}
