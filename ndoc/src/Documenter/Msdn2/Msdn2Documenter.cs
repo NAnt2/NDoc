@@ -1441,7 +1441,7 @@ namespace NDoc.Documenter.Msdn2
 					arguments.AddParam("ndoc-document-attributes", String.Empty, MyConfig.DocumentAttributes);
 					arguments.AddParam("ndoc-documented-attributes", String.Empty, MyConfig.DocumentedAttributes);
 					arguments.AddParam( "ndoc-net-framework-version", "", utilities.FrameworkVersion );
-					//arguments.AddParam( "ndoc-version", "", MyConfig.Version );
+					arguments.AddParam( "ndoc-version", "", MyConfig.Version );
 
 					arguments.AddParam("ndoc-sdk-doc-base-url", String.Empty, utilities.SdkDocBaseUrl);
 					arguments.AddParam("ndoc-sdk-doc-file-ext", String.Empty, utilities.SdkDocExt);
