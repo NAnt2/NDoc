@@ -12,6 +12,13 @@ namespace NDoc.Core
 	{
 		private string outputDirectory;
 
+		/// <summary>
+		///		<para>Generates the documentation for an assembly.</para>
+		/// </summary>
+		/// <param name="assemblyFile"></param>
+		/// <param name="documentationFile"></param>
+		/// <param name="outputDirectory"></param>
+		/// <param name="outputStyle"></param>
 		public void GenerateDocumentation(
 			string assemblyFile, 
 			string documentationFile,

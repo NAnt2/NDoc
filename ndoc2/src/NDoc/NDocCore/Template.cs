@@ -22,11 +22,19 @@ namespace NDoc.Core
 		private AssemblyDocumentation assemblyDocumentation;
 		private XmlWriter resultWriter;
 
+		/// <summary>
+		///		<para>Loads a template from the specified file.</para>
+		/// </summary>
+		/// <param name="fileName"></param>
 		public void Load(string fileName)
 		{
 			Load(CreateValidatingReader(new XmlTextReader(fileName)));
 		}
 
+		/// <summary>
+		///		<para>Loads a template from the specified XmlReader.</para>
+		/// </summary>
+		/// <param name="reader"></param>
 		public void Load(XmlReader reader)
 		{
 			templateDocument = new XmlDocument();
@@ -34,6 +42,10 @@ namespace NDoc.Core
 			templateDocument.Load(reader);
 		}
 
+		/// <summary>
+		///		<para>Loads the template from a string.</para>
+		/// </summary>
+		/// <param name="xml"></param>
 		public void LoadXml(string xml)
 		{
 			XmlTextReader xmlTextReader = new XmlTextReader(new StringReader(xml));
@@ -48,6 +60,12 @@ namespace NDoc.Core
 			return xmlValidatingReader;
 		}
 
+		/// <summary>
+		///		<para>Evaluates the template.</para>
+		/// </summary>
+		/// <param name="assemblyNavigator"></param>
+		/// <param name="documentation"></param>
+		/// <param name="result"></param>
 		public void Evaluate(
 			AssemblyNavigator assemblyNavigator,
 			string documentation,
@@ -56,6 +74,13 @@ namespace NDoc.Core
 			Evaluate(null, null, null, null, assemblyNavigator, documentation, result);
 		}
 
+		/// <summary>
+		///		<para>Evaluates the template for the specified namespace name.</para>
+		/// </summary>
+		/// <param name="namespaceName"></param>
+		/// <param name="assemblyNavigator"></param>
+		/// <param name="documentation"></param>
+		/// <param name="result"></param>
 		public void EvaluateNamespace(
 			string namespaceName,
 			AssemblyNavigator assemblyNavigator,
@@ -65,6 +90,15 @@ namespace NDoc.Core
 			Evaluate(namespaceName, null, null, null, assemblyNavigator, documentation, result);
 		}
 
+		/// <summary>
+		///		<para>Evaluates the template for the specified namespace name
+		///		and type name.</para>
+		/// </summary>
+		/// <param name="namespaceName"></param>
+		/// <param name="typeName"></param>
+		/// <param name="assemblyNavigator"></param>
+		/// <param name="documentation"></param>
+		/// <param name="result"></param>
 		public void EvaluateType(
 			string namespaceName,
 			string typeName,
@@ -75,6 +109,16 @@ namespace NDoc.Core
 			Evaluate(namespaceName, typeName, null, null, assemblyNavigator, documentation, result);
 		}
 
+		/// <summary>
+		///		<para>Evaluates the template for the specified namespace name,
+		///		type name, and overloaded member name.</para>
+		/// </summary>
+		/// <param name="namespaceName"></param>
+		/// <param name="typeName"></param>
+		/// <param name="membersName"></param>
+		/// <param name="assemblyNavigator"></param>
+		/// <param name="documentation"></param>
+		/// <param name="result"></param>
 		public void EvaluateMembers(
 			string namespaceName,
 			string typeName,
@@ -86,6 +130,16 @@ namespace NDoc.Core
 			Evaluate(namespaceName, typeName, membersName, null, assemblyNavigator, documentation, result);
 		}
 
+		/// <summary>
+		///		<para>Evaluates the template for the specified namespace name.
+		///		type name, and member ID.</para>
+		/// </summary>
+		/// <param name="namespaceName"></param>
+		/// <param name="typeName"></param>
+		/// <param name="memberID"></param>
+		/// <param name="assemblyNavigator"></param>
+		/// <param name="documentation"></param>
+		/// <param name="result"></param>
 		public void EvaluateMember(
 			string namespaceName,
 			string typeName,

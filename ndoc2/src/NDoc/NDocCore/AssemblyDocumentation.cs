@@ -32,6 +32,10 @@ namespace NDoc.Core
 		private XmlDocument _Document;
 		private Hashtable _Hashtable;
 
+		/// <summary>
+		///		<para>Initializes a new instance of the AssemblyDocumentation class.</para>
+		/// </summary>
+		/// <param name="uri"></param>
 		public AssemblyDocumentation(string uri)
 		{
 			_Document = new XmlDocument();

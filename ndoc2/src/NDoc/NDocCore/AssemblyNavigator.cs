@@ -22,6 +22,10 @@ namespace NDoc.Core
 		private int currentInterfaceIndex;
 		private IEnumerator memberEnumerator;
 
+		/// <summary>
+		///		<para>Initializes a new instance of the AssemblyNavigator class.</para>
+		/// </summary>
+		/// <param name="assembly"></param>
 		public AssemblyNavigator(Assembly assembly)
 		{
 			this.assembly = assembly;
@@ -29,6 +33,9 @@ namespace NDoc.Core
 			currentNamespaceName = null;
 		}
 
+		/// <summary>
+		///		<para>Gets the underlying assembly's friendly name.</para>
+		/// </summary>
 		public string AssemblyName
 		{
 			get
@@ -70,6 +77,11 @@ namespace NDoc.Core
 			return namespaceNames;
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's namespace cursor on the specified namespace.</para>
+		/// </summary>
+		/// <param name="namespaceName"></param>
+		/// <returns></returns>
 		public bool MoveToNamespace(string namespaceName)
 		{
 			if (currentNamespaceName != namespaceName && namespaceNames.Contains(namespaceName))
@@ -83,12 +95,22 @@ namespace NDoc.Core
 			return false;
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's namespace cursor on the first
+		///		namespace (in alphabetic order) in the assembly.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstNamespace()
 		{
 			namespaceEnumerator = null;
 			return MoveToNextNamespace();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's namespace cursor on the next
+		///		namespace in the assembly.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToNextNamespace()
 		{
 			if (namespaceEnumerator == null)
@@ -105,6 +127,9 @@ namespace NDoc.Core
 			return false;
 		}
 
+		/// <summary>
+		///		<para>Gets the current namespace's name.</para>
+		/// </summary>
 		public string NamespaceName
 		{
 			get
@@ -113,6 +138,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Gets the current type's name.</para>
+		/// </summary>
 		public string TypeName
 		{
 			get
@@ -151,7 +179,7 @@ namespace NDoc.Core
 				type.BaseType.FullName == "System.MulticastDelegate");
 		}
 
-		public void GetClasses()
+		private void GetClasses()
 		{
 			currentTypes = new ArrayList();
 
@@ -171,7 +199,7 @@ namespace NDoc.Core
 			typeEnumerator = null;
 		}
 
-		public void GetInterfaces()
+		private void GetInterfaces()
 		{
 			currentTypes = new ArrayList();
 
@@ -188,7 +216,7 @@ namespace NDoc.Core
 			typeEnumerator = null;
 		}
 
-		public void GetStructures()
+		private void GetStructures()
 		{
 			currentTypes = new ArrayList();
 
@@ -205,7 +233,7 @@ namespace NDoc.Core
 			typeEnumerator = null;
 		}
 
-		public void GetDelegates()
+		private void GetDelegates()
 		{
 			currentTypes = new ArrayList();
 
@@ -222,7 +250,7 @@ namespace NDoc.Core
 			typeEnumerator = null;
 		}
 
-		public void GetEnumerations()
+		private void GetEnumerations()
 		{
 			currentTypes = new ArrayList();
 
@@ -239,6 +267,10 @@ namespace NDoc.Core
 			typeEnumerator = null;
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		types.</para>
+		/// </summary>
 		public bool NamespaceHasTypes
 		{
 			get
@@ -247,6 +279,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		classes.</para>
+		/// </summary>
 		public bool NamespaceHasClasses
 		{
 			get
@@ -256,6 +292,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		interfaces.</para>
+		/// </summary>
 		public bool NamespaceHasInterfaces
 		{
 			get
@@ -265,6 +305,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		structures.</para>
+		/// </summary>
 		public bool NamespaceHasStructures
 		{
 			get
@@ -274,6 +318,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		delegates.</para>
+		/// </summary>
 		public bool NamespaceHasDelegates
 		{
 			get
@@ -283,6 +331,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current namespace has one or more
+		///		enumerations.</para>
+		/// </summary>
 		public bool NamespaceHasEnumerations
 		{
 			get
@@ -292,36 +344,66 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the first
+		///		class (in alphabetic order) in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstClass()
 		{
 			GetClasses();
 			return MoveToNextType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the first
+		///		interface (in alphabetic order) in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstInterface()
 		{
 			GetInterfaces();
 			return MoveToNextType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the first
+		///		structure (in alphabetic order) in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstStructure()
 		{
 			GetStructures();
 			return MoveToNextType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the first
+		///		delegate (in alphabetic order) in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstDelegate()
 		{
 			GetDelegates();
 			return MoveToNextType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the first
+		///		enumeration (in alphabetic order) in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstEnumeration()
 		{
 			GetEnumerations();
 			return MoveToNextType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the next
+		///		type in the current namespace.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToNextType()
 		{
 			if (typeEnumerator == null)
@@ -359,6 +441,12 @@ namespace NDoc.Core
 			return GetTypeName(type) == typeName;
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's type cursor on the specified 
+		///		type in the current namespace.</para>
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
 		public bool MoveToType(string typeName)
 		{
 			foreach (Type type in assembly.GetTypes())
@@ -373,6 +461,10 @@ namespace NDoc.Core
 			return false;
 		}
 
+		/// <summary>
+		///		<para>Gets the current type pointed to by the navigator's
+		///		type cursor.</para>
+		/// </summary>
 		public Type CurrentType
 		{
 			get
@@ -381,6 +473,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is a class.</para>
+		/// </summary>
 		public bool IsClass
 		{
 			get
@@ -389,6 +484,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is an interface.</para>
+		/// </summary>
 		public bool IsInterface
 		{
 			get
@@ -397,6 +495,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is a structure.</para>
+		/// </summary>
 		public bool IsStructure
 		{
 			get
@@ -405,6 +506,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is a delegate.</para>
+		/// </summary>
 		public bool IsDelegate
 		{
 			get
@@ -413,6 +517,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is an enumeration.</para>
+		/// </summary>
 		public bool IsEnumeration
 		{
 			get
@@ -421,6 +528,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type has a base type
+		///		other than System.Object.</para>
+		/// </summary>
 		public bool TypeHasBaseType
 		{
 			get
@@ -429,6 +540,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type implements any interfaces.</para>
+		/// </summary>
 		public bool TypeImplementsInterfaces
 		{
 			get
@@ -437,6 +551,11 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's implemented interface cursor 
+		///		on the first interface implemented by the current type.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToFirstInterfaceImplementedByType()
 		{
 			Type[] interfaces = currentType.GetInterfaces();
@@ -447,12 +566,20 @@ namespace NDoc.Core
 			return MoveToNextInterfaceImplementedByType();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's implemented interface cursor
+		///		on the next interface implemented by the current type.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToNextInterfaceImplementedByType()
 		{
 			++currentInterfaceIndex;
 			return interfaceEnumerator.MoveNext();
 		}
 
+		/// <summary>
+		///		<para>Gets the current implemented interface's name.</para>
+		/// </summary>
 		public string ImplementedInterfaceName
 		{
 			get
@@ -461,6 +588,11 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Returns true if the implemented interface cursor is 
+		///		pointing to the last implemented interface for the current
+		///		type.</para>
+		/// </summary>
 		public bool IsLastImplementedInterface
 		{
 			get
@@ -469,6 +601,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is abstract.</para>
+		/// </summary>
 		public bool IsTypeAbstract
 		{
 			get
@@ -477,6 +612,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type is sealed.</para>
+		/// </summary>
 		public bool IsTypeSealed
 		{
 			get
@@ -531,38 +669,75 @@ namespace NDoc.Core
 			return methods;
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type has one or more 
+		///		constructors with the specified access.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
 		public bool TypeHasConstructors(string access)
 		{
 			return GetConstructors(access).Count > 0;
 		}
 
+		/// <summary>
+		///		<paa>Checks to see if the current type has more than one
+		///		constructor regardless of their access.</paa>
+		/// </summary>
+		/// <returns></returns>
 		public bool TypeHasOverloadedConstructors()
 		{
 			return GetConstructors(null).Count > 1;
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's member cursor on the first
+		///		constructor for the current type with the specified access.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
 		public bool MoveToFirstConstructor(string access)
 		{
 			memberEnumerator = GetConstructors(access).GetEnumerator();
 			return MoveToNextMember();
 		}
 
+		/// <summary>
+		///		<para>Checks to see if the current type has one or more methods.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
 		public bool TypeHasMethods(string access)
 		{
 			return GetMethods(access).Count > 0;
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's member cursor on the first
+		///		method in the current type with the specified access.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
 		public bool MoveToFirstMethod(string access)
 		{
 			memberEnumerator = GetMethods(access).GetEnumerator();
 			return MoveToNextMember();
 		}
 
+		/// <summary>
+		///		<para>Positions the navigator's member cursor on the next
+		///		member in the type.</para>
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveToNextMember()
 		{
 			return memberEnumerator.MoveNext();
 		}
 
+		/// <summary>
+		///		<para>Gets the current member pointed to by the navigator's
+		///		member cursor.</para>
+		/// </summary>
 		public MemberInfo CurrentMember
 		{
 			get
@@ -571,6 +746,10 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Gets the current method pointed to by the navigator's
+		///		member cursor.</para>
+		/// </summary>
 		public MethodBase CurrentMethod
 		{
 			get
@@ -579,6 +758,9 @@ namespace NDoc.Core
 			}
 		}
 
+		/// <summary>
+		///		<para>Gets the current member's name.</para>
+		/// </summary>
 		public string MemberName
 		{
 			get
