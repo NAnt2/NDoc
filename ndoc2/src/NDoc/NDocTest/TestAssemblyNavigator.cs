@@ -171,6 +171,19 @@ namespace NDoc.Test.AssemblyNavigator
 		}
 	}
 
+	namespace IsMemberStatic
+	{
+		public class OneInstanceMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneStaticMethod
+		{
+			public static void Method1() {}
+		}
+	}
+
 	namespace IsMethod
 	{
 		public class OneConstructor

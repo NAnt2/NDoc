@@ -1157,5 +1157,21 @@ namespace NDoc.Core
 				return String.Empty;
 			}
 		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is static.</para>
+		/// </summary>
+		public bool IsMemberStatic
+		{
+			get
+			{
+				if (currentMember is MethodBase)
+				{
+					return ((MethodBase)currentMember).IsStatic;
+				}
+
+				return false;
+			}
+		}
 	}
 }

@@ -224,6 +224,34 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <if-member-is-static> Tests
+
+	public void Test_IfMemberIsStatic_OneInstanceMethod()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-is-static>true</if-member-is-static>",
+				"NDoc.Test.Template.IfMemberIsStatic",
+				"OneInstanceMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_IfMemberIsStatic_OneStaticMethod()
+	{
+		AssertEquals(
+			"true",
+			EvaluateMember(
+				"<if-member-is-static>true</if-member-is-static>",
+				"NDoc.Test.Template.IfMemberIsStatic",
+				"OneStaticMethod",
+				"Method1",
+				0));
+	}
+
+	#endregion
+
 	#region <if-member-has-parameters> Tests
 
 	public void Test_IfMemberHasParameters_OneMethodNoParameters()

@@ -60,6 +60,9 @@
 								<tr valign="top">
 									<td width="50%">
 										<img src="public-property.bmp" alt="public property" border="0" />
+										<if-member-is-static>
+											<img src="static.bmp" alt="static (Shared in Visual Basic)" border="0" />
+										</if-member-is-static>
 										<a href=""><member-name /></a>
 										<if-member-is-inherited>
 											<text> (inherited from </text>
@@ -83,6 +86,9 @@
 								<tr valign="top">
 									<td width="50%">
 										<img src="public-method.bmp" alt="public method" border="0" />
+										<if-member-is-static>
+											<img src="static.bmp" alt="static (Shared in Visual Basic)" border="0" />
+										</if-member-is-static>
 										<a href="{$member-or-overloads-link}"><member-name /></a>
 										<if-member-is-inherited>
 											<text> (inherited from </text>

@@ -401,6 +401,26 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region IsMemberOverloaded Tests
+
+	public void Test_IsMemberStatic_OneInstanceMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMemberStatic"));
+		Assert(navigator.MoveToType("OneInstanceMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsMemberStatic);
+	}
+
+	public void Test_IsMemberStatic_OneStaticMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMemberStatic"));
+		Assert(navigator.MoveToType("OneStaticMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.IsMemberStatic);
+	}
+
+	#endregion
+
 	#region IsMethod Tests
 
 	public void Test_IsMethod_OneConstructor()

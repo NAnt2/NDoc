@@ -755,6 +755,15 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-member-is-static")]
+		private void IfMemberIsStatic(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.IsMemberStatic)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		[TemplateInstruction("if-namespace-contains-classes")]
 		private void IfNamespaceContainsClasses(XmlElement instructionElement)
 		{

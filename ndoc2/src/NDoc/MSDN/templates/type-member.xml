@@ -43,11 +43,15 @@
 					<span class="lang"><text>[Visual&nbsp;Basic]&nl;</text></span>
 					<b>
 						<member-access lang="VB" />
+						<text> </text>
+						<if-member-is-static>
+							<text>Shared </text>
+						</if-member-is-static>
 						<if-member-has-value-type>
-							<text> Function </text>
+							<text>Function </text>
 						</if-member-has-value-type>
 						<if-member-has-no-value-type>
-							<text> Sub </text>
+							<text>Sub </text>
 						</if-member-has-no-value-type>
 						<member-name />
 						<text>(</text>
@@ -76,6 +80,9 @@
 					<b>
 						<member-access lang="C#" />
 						<text> </text>
+						<if-member-is-static>
+							<text>static </text>
+						</if-member-is-static>
 						<member-value-type-name lang="C#" />
 						<text> </text>
 						<member-name />

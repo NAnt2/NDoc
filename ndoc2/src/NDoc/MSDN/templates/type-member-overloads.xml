@@ -48,6 +48,9 @@
 						<a href="{$member-link}">
 							<member-access lang="VB" />
 							<text> </text>
+							<if-member-is-static>
+								<text>Shared </text>
+							</if-member-is-static>
 							<if-member-has-value-type>
 								<text>Function</text>
 							</if-member-has-value-type>
@@ -76,6 +79,9 @@
 						<a href="{$member-link}">
 							<member-access lang="C#" />
 							<text> </text>
+							<if-member-is-static>
+								<text>static </text>
+							</if-member-is-static>
 							<member-value-type-name lang="C#" />
 							<text> </text>
 							<member-name />

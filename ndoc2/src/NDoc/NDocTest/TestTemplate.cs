@@ -80,6 +80,19 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace IfMemberIsStatic
+	{
+		public class OneInstanceMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneStaticMethod
+		{
+			public static void Method1() {}
+		}
+	}
+
 	namespace IfMemberHasParameters
 	{
 		public class OneMethodNoParameters
