@@ -922,6 +922,38 @@ namespace NDoc.Core
 			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
 		}
 
+		[TemplateInstruction("member-access")]
+		private void MemberAccess(XmlElement instructionElement)
+		{
+			string access = "ERROR";
+
+			string lang = instructionElement.GetAttribute("lang");
+
+			MemberInfo member = assemblyNavigator.CurrentMember;
+
+			if (member is MethodBase)
+			{
+				MethodInfo method = member as MethodInfo;
+
+				switch (method.Attributes & MethodAttributes.MemberAccessMask)
+				{
+					case MethodAttributes.Public:
+						switch (lang)
+						{
+							case "C#":
+								access = "public";
+								break;
+							case "VB":
+								access = "Public";
+								break;
+						}
+						break;
+				}
+			}
+
+			resultWriter.WriteString(access);
+		}
+
 		[TemplateInstruction("member-declaring-type")]
 		private void MemberDeclaringType(XmlElement instructionElement)
 		{

@@ -46,7 +46,7 @@
 						<span class="lang">[Visual&nbsp;Basic]</span>
 						<text> </text>
 						<a href="{$member-link}">
-							<type-access lang="VB" />
+							<member-access lang="VB" />
 							<text> </text>
 							<if-member-has-value-type>
 								<text>Function</text>
@@ -74,7 +74,7 @@
 						<span class="lang">[C#]</span>
 						<text> </text>
 						<a href="{$member-link}">
-							<type-access lang="C#" />
+							<member-access lang="C#" />
 							<text> </text>
 							<member-value-type-name lang="C#" />
 							<text> </text>

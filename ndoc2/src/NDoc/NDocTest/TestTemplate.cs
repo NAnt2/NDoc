@@ -144,6 +144,14 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace MemberAccess
+	{
+		public class OnePublicMethod
+		{
+			public void Method1() {}
+		}
+	}
+
 	namespace MemberDeclaringType
 	{
 		public class NoMembers {}

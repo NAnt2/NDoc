@@ -356,6 +356,34 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <member-access> Tests
+
+	public void Test_MemberAccess_OnePublicMethod_CS()
+	{
+		AssertEquals(
+			"public",
+			EvaluateMember(
+				"<member-access lang='C#' />",
+				"NDoc.Test.Template.MemberAccess",
+				"OnePublicMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_MemberAccess_OnePublicMethod_VB()
+	{
+		AssertEquals(
+			"Public",
+			EvaluateMember(
+				"<member-access lang='VB' />",
+				"NDoc.Test.Template.MemberAccess",
+				"OnePublicMethod",
+				"Method1",
+				0));
+	}
+
+	#endregion
+
 	#region <member-declaring-type> Tests
 
 	public void Test_MemberDeclaringType_NoMembers()
