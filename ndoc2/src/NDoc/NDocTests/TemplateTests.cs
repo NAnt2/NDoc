@@ -572,6 +572,30 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region {$type-link} Tests
+
+	public void Test_TypeLink_OuterClass()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.TypeLink.Class1.html\">Class1</a>",
+			EvaluateType(
+				"<a href=\"{$type-link}\"><type-name /></a>",
+				"NDoc.Test.Template.TypeLink",
+				"Class1"));
+	}
+
+	public void Test_TypeLink_NestedClass()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.TypeLink.Class1.NestedClass.html\">Class1.NestedClass</a>",
+			EvaluateType(
+				"<a href=\"{$type-link}\"><type-name /></a>",
+				"NDoc.Test.Template.TypeLink",
+				"Class1.NestedClass"));
+	}
+
+	#endregion
+
 	// TODO: The following tests need to be rewritten using the same scheme as the preceding tests.
 
 	public void TestLiteralElement()
@@ -782,16 +806,6 @@ public class TemplateTests : TestCase
 					"<for-each-enumeration-in-namespace><type-name /></for-each-enumeration-in-namespace>" +
 				"</template>",
 				"NDoc.Test.TwoOfEverything"));
-	}
-
-	public void TestTypeLinkVariable()
-	{
-		AssertEquals(
-			"<a href=\"NDoc.Test.Class1.html\">Class1</a>",
-			EvaluateType(
-				"<a href=\"{$type-link}\"><type-name /></a>",
-				"NDoc.Test",
-				"Class1"));
 	}
 
 	public void TestTypeSummaryWithoutPara()

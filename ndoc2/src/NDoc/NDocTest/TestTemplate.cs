@@ -238,4 +238,14 @@ namespace NDoc.Test.Template
 			public TwoOverloadedConstructors(int i) {}
 		}
 	}
+
+	namespace TypeLink
+	{
+		public class Class1
+		{
+			public class NestedClass
+			{
+			}
+		}
+	}
 }

@@ -499,46 +499,37 @@ namespace NDoc.Core
 		[TemplateVariable("member-link")]
 		private string MemberLinkVariable()
 		{
-			int id = assemblyNavigator.MemberOverloadID;
-			return assemblyNavigator.NamespaceName + 
-				"." + 
-				assemblyNavigator.TypeName +  
-				"." + 
-				assemblyNavigator.MemberName +
-				(id == 0 ? "" : "-" + id.ToString()) +
-				".html";
+			return Links.GetTypeMemberLink(assemblyNavigator.TypeFullName, assemblyNavigator.MemberName, assemblyNavigator.MemberOverloadID);
 		}
 
 		[TemplateVariable("member-or-overloads-link")]
 		private string MemberOrOverloadsLinkVariable()
 		{
-			return assemblyNavigator.NamespaceName + "." + 
-				assemblyNavigator.TypeName +  "." + 
-				assemblyNavigator.MemberName + ".html";
+			return Links.GetTypeMemberOverloadsLink(assemblyNavigator.TypeFullName, assemblyNavigator.MemberName);
 		}
 
 		[TemplateVariable("namespace-link")]
 		private string NamespaceLinkVariable()
 		{
-			return assemblyNavigator.NamespaceName + ".html";
+			return Links.GetNamespaceLink(assemblyNavigator.NamespaceName);
 		}
 
 		[TemplateVariable("type-link")]
 		private string TypeLinkVariable()
 		{
-			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + ".html";
+			return Links.GetTypeLink(assemblyNavigator.TypeFullName);
 		}
 
 		[TemplateVariable("type-constructors-link")]
 		private string TypeConstructorsLinkVariable()
 		{
-			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-constructors.html";
+			return Links.GetTypeConstructorsLink(assemblyNavigator.TypeFullName);
 		}
 
 		[TemplateVariable("type-members-link")]
 		private string TypeMembersLinkVariable()
 		{
-			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-members.html";
+			return Links.GetTypeMembersLink(assemblyNavigator.TypeFullName);
 		}
 
 		#endregion

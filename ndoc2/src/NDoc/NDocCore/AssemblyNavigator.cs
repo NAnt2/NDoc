@@ -153,6 +153,17 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
+		///		<para>Gets the current type's full name.</para>
+		/// </summary>
+		public string TypeFullName
+		{
+			get
+			{
+				return currentType.FullName;
+			}
+		}
+
+		/// <summary>
 		///		<para>Compares types by their names.</para>
 		/// </summary>
 		private class TypeComparer : IComparer

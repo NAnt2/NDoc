@@ -175,49 +175,49 @@ namespace NDoc.Core
 
 		private StreamWriter OpenNamespaces()
 		{
-			string fileName = "index.html";
+			string fileName = Links.GetNamespacesLink();
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenNamespace(string namespaceName)
 		{
-			string fileName = namespaceName + ".html";
+			string fileName = Links.GetNamespaceLink(namespaceName);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenType(Type type)
 		{
-			string fileName = type.FullName + ".html";
+			string fileName = Links.GetTypeLink(type.FullName);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenTypeMembers(Type type)
 		{
-			string fileName = type.FullName + "-members.html";
+			string fileName = Links.GetTypeMembersLink(type.FullName);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenTypeConstructors(Type type)
 		{
-			string fileName = type.FullName + "-constructors.html";
+			string fileName = Links.GetTypeConstructorsLink(type.FullName);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenTypeMemberOverloads(Type type, MemberInfo member)
 		{
-			string fileName = type.FullName + "." + member.Name + ".html";
+			string fileName = Links.GetTypeMemberOverloadsLink(type.FullName, member.Name);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private StreamWriter OpenTypeMember(Type type, MemberInfo member, int id)
 		{
-			string fileName = type.FullName + "." + member.Name + (id == 0 ? "" : "-" + id.ToString()) + ".html";
+			string fileName = Links.GetTypeMemberLink(type.FullName, member.Name, id);
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
