@@ -1012,7 +1012,9 @@
 			<!-- These are not ecma defined operators, but they are used in Borland's Delphi -->
 			<xsl:when test="$name='op_Round'">Round Operator</xsl:when>
 			<xsl:when test="$name='op_Trunc'">Truncate Operator</xsl:when>
-			<xsl:otherwise>ERROR</xsl:otherwise>
+			<xsl:when test="$name='op_IntDivide'">Integer Divide Operator</xsl:when>
+			<xsl:when test="$name='op_BitwiseXOR'">Bitwise Exclusive Or Operator</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$name"/> operator</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!-- -->
@@ -1043,7 +1045,7 @@
 			<xsl:when test="$name='op_GreaterThan'">operator ></xsl:when>
 			<xsl:when test="$name='op_LessThanOrEqual'">operator &lt;=</xsl:when>
 			<xsl:when test="$name='op_GreaterThanOrEqual'">operator >=</xsl:when>
-			<xsl:otherwise>ERROR</xsl:otherwise>
+			<xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!-- -->

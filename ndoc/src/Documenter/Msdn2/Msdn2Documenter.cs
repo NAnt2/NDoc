@@ -1308,10 +1308,14 @@ namespace NDoc.Documenter.Msdn2
 					string from2 = parameterNode2.Attributes["type"].Value;
 					string to2 = operatorNode.Attributes["returnType"].Value;
 					return "Implicit " + StripNamespace(from2) + " to " + StripNamespace(to2) + " Conversion";
+					
+					//Delphi specific operators
 				case "op_Round": return "Round Operator";
 				case "op_Trunc": return "Truncate Operator";
+				case "op_IntDivide": return "Integer Divide Operator";
+				case "op_BitwiseXOR": return "Bitwise Exclusive Or Operator";
 				default:
-					return "ERROR";
+					return name + " Operator";
 			}
 		}
 

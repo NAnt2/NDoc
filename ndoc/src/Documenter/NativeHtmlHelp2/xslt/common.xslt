@@ -938,16 +938,28 @@
 			<!-- These are not ecma defined operators, but they are used in Borland's Delphi -->
 			<xsl:when test="$name='op_Round'">Round Operator</xsl:when>
 			<xsl:when test="$name='op_Trunc'">Truncate Operator</xsl:when>
-			<xsl:otherwise>ERROR</xsl:otherwise>
+			<xsl:when test="$name='op_IntDivide'">Integer Divide Operator</xsl:when>
+			<xsl:when test="$name='op_BitwiseXOR'">Bitwise Exclusive Or Operator</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$name"/> operator</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!-- -->
 	<xsl:template name="csharp-operator-name">
 		<xsl:param name="name" />
-		<xsl:text>operator&#160;</xsl:text>
-		<xsl:call-template name="operator-symbol">
-			<xsl:with-param name="name" select="$name" />
-		</xsl:call-template>
+		<xsl:variable name="opsymbol">
+			<xsl:call-template name="operator-symbol">
+				<xsl:with-param name="name" select="$name" />
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$opsymbol != ''">
+				<xsl:text>operator&#160;</xsl:text>
+				<xsl:value-of select="$opsymbol" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$name" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<!-- -->
 	<xsl:template name="operator-symbol">
@@ -977,7 +989,7 @@
 			<xsl:when test="$name='op_GreaterThan'">></xsl:when>
 			<xsl:when test="$name='op_LessThanOrEqual'">&lt;=</xsl:when>
 			<xsl:when test="$name='op_GreaterThanOrEqual'">>=</xsl:when>
-			<xsl:otherwise>operator </xsl:otherwise>
+			<xsl:otherwise></xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!-- -->

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:NUtil="urn:ndoc-sourceforge-net:documenters.NativeHtmlHelp2.xsltUtilities"
-	xmlns:MSHelp="http://msdn.microsoft.com/mshelp" 
-	exclude-result-prefixes="NUtil">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:NUtil="urn:ndoc-sourceforge-net:documenters.NativeHtmlHelp2.xsltUtilities"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp" exclude-result-prefixes="NUtil">
 	<!-- -->
 	<xsl:include href="syntax-map.xslt" />
 	<!-- -->
@@ -753,74 +751,93 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<xsl:choose>
-			<xsl:when test="count(./parameter)=2">
-				<I>returnValue</I>
-				<B> = </B>
-				<I>
-					<xsl:value-of select="parameter[1]/@name" />
-				</I>
-				<B>&#160;<xsl:value-of select="$operatorsymbol" />&#160;</B>
-				<I>
-					<xsl:value-of select="parameter[2]/@name" />
-				</I>
-				<B>;</B>
-				<xsl:text>&#10;</xsl:text>
-			</xsl:when>
-			<xsl:when test="@name='op_Increment' or @name = 'op_Decrement'">
-				<I>returnValue</I>
-				<B> = </B>
-				<I>
-					<xsl:value-of select="parameter[1]/@name" />
-				</I>
-				<B><xsl:value-of select="$operatorsymbol" />;</B>
-				<xsl:text>&#10;</xsl:text>
-				<B>-or-</B>
-				<xsl:text>&#10;</xsl:text>
-				<I>returnValue</I>
-				<B> = <xsl:value-of select="$operatorsymbol" /></B>
-				<I>
-					<xsl:value-of select="parameter[1]/@name" />
-				</I>
-				<B>;</B>
-				<xsl:text>&#10;</xsl:text>
-			</xsl:when>
-			<xsl:when test="@name='op_True' or @name = 'op_False'">
-				<I>returnValue</I>
-				<B> = <xsl:value-of select="$operatorsymbol" />;</B>
-				<xsl:text>&#10;</xsl:text>
-			</xsl:when>
-			<xsl:when test="@name = 'op_Explicit'">
-				<xsl:variable name="link-type">
-					<xsl:call-template name="get-datatype">
-						<xsl:with-param name="datatype" select="@returnType" />
-						<xsl:with-param name="lang" select="'JScript'" />
-					</xsl:call-template>
-				</xsl:variable>
-				<I>returnValue</I>
-				<B><xsl:text>&#160;=&#160;</xsl:text>
-				<xsl:call-template name="get-link-for-type-name">
-						<xsl:with-param name="type-name" select="@returnType" />
-						<xsl:with-param name="link-text" select="$link-type" />
-					</xsl:call-template>					
-				<xsl:text>(</xsl:text><I>
-						<xsl:value-of select="parameter[1]/@name" />
-					</I>);</B>
-				<xsl:text>&#10;</xsl:text>
-			</xsl:when>
-			<xsl:when test="@name='op_Implicit'">
-				<I>returnValue</I>
-				<B> = <I>
-						<xsl:value-of select="parameter[1]/@name" />
-					</I>;</B>
-				<xsl:text>&#10;</xsl:text>
+			<xsl:when test="$operatorsymbol=''">
+				<I>returnValue</I> = <B><xsl:value-of select="../@name" />.<xsl:value-of select="@name" />
+				<xsl:text>(</xsl:text></B>
+				<xsl:for-each select="parameter">
+					<i>
+						<xsl:value-of select="@name" />
+					</i>
+					<xsl:if test="position()!= last()">
+						<xsl:text>,&#160;</xsl:text>
+					</xsl:if>
+				</xsl:for-each>
+				<B>
+					<xsl:text>)</xsl:text>
+				</B>
 			</xsl:when>
 			<xsl:otherwise>
-				<I>returnValue</I>
-				<B> = <xsl:value-of select="$operatorsymbol" /></B>
-				<I>
-					<xsl:value-of select="parameter[1]/@name" />
-				</I>
-				<B>;</B>
+				<xsl:choose>
+					<xsl:when test="count(./parameter)=2">
+						<I>returnValue</I>
+						<B> = </B>
+						<I>
+							<xsl:value-of select="parameter[1]/@name" />
+						</I>
+						<B>&#160;<xsl:value-of select="$operatorsymbol" />&#160;</B>
+						<I>
+							<xsl:value-of select="parameter[2]/@name" />
+						</I>
+						<B>;</B>
+						<xsl:text>&#10;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@name='op_Increment' or @name = 'op_Decrement'">
+						<I>returnValue</I>
+						<B> = </B>
+						<I>
+							<xsl:value-of select="parameter[1]/@name" />
+						</I>
+						<B><xsl:value-of select="$operatorsymbol" />;</B>
+						<xsl:text>&#10;</xsl:text>
+						<B>-or-</B>
+						<xsl:text>&#10;</xsl:text>
+						<I>returnValue</I>
+						<B> = <xsl:value-of select="$operatorsymbol" /></B>
+						<I>
+							<xsl:value-of select="parameter[1]/@name" />
+						</I>
+						<B>;</B>
+						<xsl:text>&#10;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@name='op_True' or @name = 'op_False'">
+						<I>returnValue</I>
+						<B> = <xsl:value-of select="$operatorsymbol" />;</B>
+						<xsl:text>&#10;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@name = 'op_Explicit'">
+						<xsl:variable name="link-type">
+							<xsl:call-template name="get-datatype">
+								<xsl:with-param name="datatype" select="@returnType" />
+								<xsl:with-param name="lang" select="'JScript'" />
+							</xsl:call-template>
+						</xsl:variable>
+						<I>returnValue</I>
+						<B><xsl:text>&#160;=&#160;</xsl:text>
+						<xsl:call-template name="get-link-for-type-name">
+							<xsl:with-param name="type-name" select="@returnType" />
+								<xsl:with-param name="link-text" select="$link-type" />
+						</xsl:call-template>					
+						<xsl:text>(</xsl:text><I>
+						<xsl:value-of select="parameter[1]/@name" />
+						</I>);</B>
+						<xsl:text>&#10;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@name='op_Implicit'">
+						<I>returnValue</I>
+						<B> = <I>
+								<xsl:value-of select="parameter[1]/@name" />
+							</I>;</B>
+						<xsl:text>&#10;</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<I>returnValue</I>
+						<B> = <xsl:value-of select="$operatorsymbol" /></B>
+						<I>
+							<xsl:value-of select="parameter[1]/@name" />
+						</I>
+						<B>;</B>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -1029,7 +1046,7 @@
 	<!-- -->
 	<xsl:template name="get-datatype">
 		<xsl:param name="datatype" />
-		<xsl:param name="lang" />
+		<xsl:param name="lang" select="'C#'"/>
 		<xsl:variable name="type-temp">
 			<xsl:call-template name="lang-type">
 				<xsl:with-param name="runtime-type" select="$datatype" />
@@ -1113,8 +1130,12 @@
 			<xsl:for-each select="property | field">
 				<xsl:value-of select="@name" />
 				<xsl:choose>
-				<xsl:when test="$lang='Visual Basic'"><xsl:text>:=</xsl:text></xsl:when>
-				<xsl:otherwise><xsl:text>=</xsl:text></xsl:otherwise>
+					<xsl:when test="$lang='Visual Basic'">
+						<xsl:text>:=</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>=</xsl:text>
+					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:choose>
 					<xsl:when test="@value">
@@ -1122,8 +1143,12 @@
 							<xsl:text>"</xsl:text>
 						</xsl:if>
 						<xsl:choose>
-						<xsl:when test="@type!='System.String' and $lang='Visual Basic'"><xsl:value-of select="NUtil:Replace(@value,'|',' Or ')" /></xsl:when>
-						<xsl:otherwise><xsl:value-of select="@value" /></xsl:otherwise>
+							<xsl:when test="@type!='System.String' and $lang='Visual Basic'">
+								<xsl:value-of select="NUtil:Replace(@value,'|',' Or ')" />
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="@value" />
+							</xsl:otherwise>
 						</xsl:choose>
 						<xsl:if test="@type='System.String'">
 							<xsl:text>"</xsl:text>
