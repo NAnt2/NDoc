@@ -34,6 +34,19 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace ForEachParameterInMember
+	{
+		public class OneMethodNoParameters
+		{
+			public void Method1() {}
+		}
+
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+	}
+
 	namespace ForEachPropertyInType
 	{
 		public class TwoProperties
@@ -67,6 +80,19 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace IfNotLastParameter
+	{
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+
+		public class OneMethodTwoParameters
+		{
+			public void Method1(int i, string s) {}
+		}
+	}
+
 	namespace IfTypeHasProperties
 	{
 		public class NoProperties
@@ -82,6 +108,14 @@ namespace NDoc.Test.Template
 	namespace MemberDeclaringType
 	{
 		public class NoMembers {}
+	}
+
+	namespace MemberLink
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
 	}
 
 	namespace MemberOrOverloadsLink
@@ -106,6 +140,15 @@ namespace NDoc.Test.Template
 			public void Method(int i) {}
 			/// <summary>TwoOverloadedMethods.Method(string) Summary</summary>
 			public void Method(string s) {}
+		}
+	}
+
+	namespace TypeConstructorsLink
+	{
+		public class TwoOverloadedConstructors
+		{
+			public TwoOverloadedConstructors() {}
+			public TwoOverloadedConstructors(int i) {}
 		}
 	}
 }

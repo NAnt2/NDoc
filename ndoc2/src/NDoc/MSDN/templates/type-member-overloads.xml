@@ -43,22 +43,34 @@
 					<blockquote class="dtBlock">
 						<span class="lang">[Visual&nbsp;Basic]</span>
 						<text> </text>
-						<a href="">
+						<a href="{$member-link}">
 							<type-access lang="VB" />
 							<text> </text>
 							<member-name />
 							<text>(</text>
+							<for-each-parameter-in-member>
+								<parameter-type-name />
+								<if-not-last-parameter>
+									<text>, </text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
 							<text>)</text>
 						</a>
 					</blockquote>
 					<blockquote class="dtBlock">
 						<span class="lang">[C#]</span>
 						<text> </text>
-						<a href="">
+						<a href="{$member-link}">
 							<type-access lang="C#" />
 							<text> </text>
 							<member-name />
 							<text>(</text>
+							<for-each-parameter-in-member>
+								<parameter-type-name />
+								<if-not-last-parameter>
+									<text>, </text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
 							<text>);</text>
 						</a>
 					</blockquote>

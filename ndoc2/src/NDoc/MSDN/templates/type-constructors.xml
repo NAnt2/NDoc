@@ -44,6 +44,12 @@
 						<a href="">
 							<type-access lang="VB" />
 							<text> Sub New(</text>
+							<for-each-parameter-in-member>
+								<parameter-type-name />
+								<if-not-last-parameter>
+									<text>, </text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
 							<text>)</text>
 						</a>
 					</blockquote>
@@ -55,6 +61,12 @@
 							<text> </text>
 							<type-name />
 							<text>(</text>
+							<for-each-parameter-in-member>
+								<parameter-type-name />
+								<if-not-last-parameter>
+									<text>, </text>
+								</if-not-last-parameter>
+							</for-each-parameter-in-member>
 							<text>);</text>
 						</a>
 					</blockquote>

@@ -49,6 +49,19 @@ namespace NDoc.Test.AssemblyNavigator
 		public class TwoInterfaces : Interface2, Interface1 {}
 	}
 
+	namespace IsLastParameter
+	{
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+
+		public class OneMethodTwoParameters
+		{
+			public void Method1(int i, string s) {}
+		}
+	}
+
 	namespace IsMemberInherited
 	{
 		public class OneMethod
@@ -228,6 +241,19 @@ namespace NDoc.Test.AssemblyNavigator
 		}
 	}
 
+	namespace MoveToFirstParameter
+	{
+		public class OneMethodNoParameters
+		{
+			public void Method1() {}
+		}
+
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+	}
+
 	namespace MoveToFirstProperty
 	{
 		public class OneMethod
@@ -298,6 +324,19 @@ namespace NDoc.Test.AssemblyNavigator
 	namespace MoveToNextNamespace
 	{
 		// The MoveToNextNamespace test doesn't really use this namespace.
+	}
+
+	namespace MoveToNextParameter
+	{
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+
+		public class OneMethodTwoParameters
+		{
+			public void Method1(int i, string s) {}
+		}
 	}
 
 	namespace MoveToNextType
@@ -483,6 +522,24 @@ namespace NDoc.Test.AssemblyNavigator
 		namespace OneStructure
 		{
 			public struct Structure1 {}
+		}
+	}
+
+	namespace ParameterCount
+	{
+		public class OneMethodNoParameters
+		{
+			public void Method1() {}
+		}
+
+		public class OneMethodOneParameter
+		{
+			public void Method1(int i) {}
+		}
+
+		public class OneMethodTwoParameters
+		{
+			public void Method1(int i, string s) {}
 		}
 	}
 

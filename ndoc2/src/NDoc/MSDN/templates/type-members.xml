@@ -42,7 +42,7 @@
 							<tr valign="top">
 								<td width="50%">
 									<img src="public-method.bmp" alt="public constructor" border="0" />
-									<a href=""><type-name /> Constructor</a>
+									<a href="{$type-constructors-link}"><type-name /> Constructor</a>
 								</td>
 								<td width="50%">
 									<if-type-has-overloaded-constructors>Overloaded. </if-type-has-overloaded-constructors>

@@ -138,6 +138,32 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <for-each-parameter-in-member> Tests
+
+	public void Test_ForEachParameterInMember_OneMethodNoParameters()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<for-each-parameter-in-member><parameter-name /></for-each-parameter-in-member>",
+				"NDoc.Test.Template.ForEachParameterInMember",
+				"OneMethodNoParameters",
+				"Method1"));
+	}
+
+	public void Test_ForEachParameterInMember_OneMethodOneParameter()
+	{
+		AssertEquals(
+			"i",
+			EvaluateMember(
+				"<for-each-parameter-in-member><parameter-name /></for-each-parameter-in-member>",
+				"NDoc.Test.Template.ForEachParameterInMember",
+				"OneMethodOneParameter",
+				"Method1"));
+	}
+
+	#endregion
+
 	#region <for-each-property-in-type> Tests
 
 	public void Test_ForEachPropertyInType_TwoProperties()
@@ -193,6 +219,38 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <if-not-last-parameter> Tests
+
+	public void Test_IfNotLastParameter_OneMethodOneParameter()
+	{
+		AssertEquals(
+			"i",
+			EvaluateMember(
+				"<for-each-parameter-in-member>" +
+					"<parameter-name />" +
+					"<if-not-last-parameter>, </if-not-last-parameter>" +
+				"</for-each-parameter-in-member>",
+				"NDoc.Test.Template.IfNotLastParameter",
+				"OneMethodOneParameter",
+				"Method1"));
+	}
+
+	public void Test_IfNotLastParameter_OneMethodTwoParameters()
+	{
+		AssertEquals(
+			"i, s",
+			EvaluateMember(
+				"<for-each-parameter-in-member>" +
+					"<parameter-name />" +
+					"<if-not-last-parameter>, </if-not-last-parameter>" +
+				"</for-each-parameter-in-member>",
+				"NDoc.Test.Template.IfNotLastParameter",
+				"OneMethodTwoParameters",
+				"Method1"));
+	}
+
+	#endregion
+
 	#region <if-type-has-properties> Tests
 
 	public void Test_IfTypeHasProperties_NoProperties()
@@ -218,6 +276,21 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Template.MemberDeclaringType",
 				"NoMembers",
 				"Equals"));
+	}
+
+	#endregion
+
+	#region {$member-link} Tests
+
+	public void Test_MemberLink_OneMethod()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.MemberLink.OneMethod.Method1.html\">Method1</a>",
+			EvaluateMember(
+				"<a href='{$member-link}'><member-name /></a>",
+				"NDoc.Test.Template.MemberLink",
+				"OneMethod",
+				"Method1"));
 	}
 
 	#endregion
@@ -259,6 +332,20 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Template.MemberOverloadsSummary",
 				"TwoOverloadedMethods",
 				"Method"));
+	}
+
+	#endregion
+
+	#region {$type-constructors-link} Tests
+
+	public void Test_TypeConstructorsLink_TwoOverloadedConstructors()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.TypeConstructorsLink.TwoOverloadedConstructors-constructors.html\">TwoOverloadedConstructors Constructor</a>",
+			EvaluateType(
+				"<a href='{$type-constructors-link}'><type-name /> Constructor</a>",
+				"NDoc.Test.Template.TypeConstructorsLink",
+				"TwoOverloadedConstructors"));
 	}
 
 	#endregion

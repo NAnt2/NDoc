@@ -242,6 +242,9 @@ namespace NDoc.Core
 				case "for-each-overloaded-member-in-type":
 					ForEachOverloadedMemberInType(instructionElement);
 					break;
+				case "for-each-parameter-in-member":
+					ForEachParameterInMember(instructionElement);
+					break;
 				case "for-each-property-in-type":
 					ForEachPropertyInType(instructionElement);
 					break;
@@ -271,6 +274,9 @@ namespace NDoc.Core
 					break;
 				case "if-not-last-implemented-interface":
 					IfNotLastImplementedInterface(instructionElement);
+					break;
+				case "if-not-last-parameter":
+					IfNotLastParameter(instructionElement);
 					break;
 				case "if-type-has-base-type":
 					IfTypeHasBaseType(instructionElement);
@@ -319,6 +325,12 @@ namespace NDoc.Core
 					break;
 				case "namespace-name":
 					NamespaceName(instructionElement);
+					break;
+				case "parameter-name":
+					ParameterName(instructionElement);
+					break;
+				case "parameter-type-name":
+					ParameterTypeName(instructionElement);
 					break;
 				case "template":
 					TemplateInstruction(instructionElement);
@@ -394,6 +406,9 @@ namespace NDoc.Core
 							case "assembly-name":
 								newValue = AssemblyNameVariable;
 								break;
+							case "member-link":
+								newValue = MemberLinkVariable;
+								break;
 							case "member-or-overloads-link":
 								newValue = MemberOrOverloadsLinkVariable;
 								break;
@@ -402,6 +417,9 @@ namespace NDoc.Core
 								break;
 							case "type-link":
 								newValue = TypeLinkVariable;
+								break;
+							case "type-constructors-link":
+								newValue = TypeConstructorsLinkVariable;
 								break;
 							case "type-members-link":
 								newValue = TypeMembersLinkVariable;
@@ -498,6 +516,16 @@ namespace NDoc.Core
 			}
 		}
 
+		private string MemberLinkVariable
+		{
+			get
+			{
+				return assemblyNavigator.NamespaceName + "." + 
+					assemblyNavigator.TypeName +  "." + 
+					assemblyNavigator.MemberName + ".html";
+			}
+		}
+
 		private string MemberOrOverloadsLinkVariable
 		{
 			get
@@ -521,6 +549,14 @@ namespace NDoc.Core
 			get
 			{
 				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + ".html";
+			}
+		}
+
+		private string TypeConstructorsLinkVariable
+		{
+			get
+			{
+				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-constructors.html";
 			}
 		}
 
@@ -659,6 +695,18 @@ namespace NDoc.Core
 			}
 		}
 
+		private void ForEachParameterInMember(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MoveToFirstParameter())
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextParameter());
+			}
+		}
+
 		private void ForEachPropertyInType(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -744,6 +792,14 @@ namespace NDoc.Core
 		private void IfNotLastImplementedInterface(XmlElement instructionElement)
 		{
 			if (!assemblyNavigator.IsLastImplementedInterface)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfNotLastParameter(XmlElement instructionElement)
+		{
+			if (!assemblyNavigator.IsLastParameter)
 			{
 				EvaluateChildren(instructionElement);
 			}
@@ -877,6 +933,16 @@ namespace NDoc.Core
 		private void NamespaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.NamespaceName);
+		}
+
+		private void ParameterName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.ParameterName);
+		}
+
+		private void ParameterTypeName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.ParameterTypeName);
 		}
 
 		private void Text(XmlElement instructionElement)

@@ -213,6 +213,30 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region IsLastParameter Tests
+
+	public void Test_IsLastParameter_OneMethodOneParameter()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsLastParameter"));
+		Assert(navigator.MoveToType("OneMethodOneParameter"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.MoveToFirstParameter());
+		Assert(navigator.IsLastParameter);
+	}
+
+	public void Test_IsLastParameter_OneMethodTwoParameters()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsLastParameter"));
+		Assert(navigator.MoveToType("OneMethodTwoParameters"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.MoveToFirstParameter());
+		Assert(!navigator.IsLastParameter);
+		Assert(navigator.MoveToNextParameter());
+		Assert(navigator.IsLastParameter);
+	}
+
+	#endregion
+
 	#region IsMemberInherited Tests
 
 	public void Test_IsMemberInherited_OneMethod()
@@ -575,6 +599,29 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region MoveToFirstParameter Tests
+
+	public void Test_MoveToFirstParameter_OneMethodNoParameters()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstParameter"));
+		Assert(navigator.MoveToType("OneMethodNoParameters"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.MoveToFirstParameter());
+	}
+
+	public void Test_MoveToFirstParameter_OneMethodOneParameter()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstParameter"));
+		Assert(navigator.MoveToType("OneMethodOneParameter"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.MoveToFirstParameter());
+		AssertEquals("Int32", navigator.ParameterTypeName);
+		AssertEquals("i", navigator.ParameterName);
+		Assert(!navigator.MoveToNextParameter());
+	}
+
+	#endregion
+
 	#region MoveToFirstProperty Tests
 
 	public void Test_MoveToFirstProperty_OneMethod()
@@ -722,6 +769,35 @@ public class AssemblyNavigatorTests : TestCase
 		}
 
 		Assert(n > 2);
+	}
+
+	#endregion
+
+	#region MoveToNextParameter Tests
+
+	public void Test_MoveToNextParameter_OneMethodOneParameter()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToNextParameter"));
+		Assert(navigator.MoveToType("OneMethodOneParameter"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.MoveToFirstParameter());
+		AssertEquals("Int32", navigator.ParameterTypeName);
+		AssertEquals("i", navigator.ParameterName);
+		Assert(!navigator.MoveToNextParameter());
+	}
+
+	public void Test_MoveToNextParameter_OneMethodTwoParameters()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToNextParameter"));
+		Assert(navigator.MoveToType("OneMethodTwoParameters"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.MoveToFirstParameter());
+		AssertEquals("Int32", navigator.ParameterTypeName);
+		AssertEquals("i", navigator.ParameterName);
+		Assert(navigator.MoveToNextParameter());
+		AssertEquals("String", navigator.ParameterTypeName);
+		AssertEquals("s", navigator.ParameterName);
+		Assert(!navigator.MoveToNextParameter());
 	}
 
 	#endregion
@@ -964,6 +1040,34 @@ public class AssemblyNavigatorTests : TestCase
 	{
 		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.NamespaceHasTypes.OneStructure"));
 		Assert(navigator.NamespaceHasTypes);
+	}
+
+	#endregion
+
+	#region ParameterCount Tests
+
+	public void Test_ParameterCount_OneMethodNoParameters()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.ParameterCount"));
+		Assert(navigator.MoveToType("OneMethodNoParameters"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals(0, navigator.ParameterCount);
+	}
+
+	public void Test_ParameterCount_OneMethodOneParameter()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.ParameterCount"));
+		Assert(navigator.MoveToType("OneMethodOneParameter"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals(1, navigator.ParameterCount);
+	}
+
+	public void Test_ParameterCount_OneMethodTwoParameters()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.ParameterCount"));
+		Assert(navigator.MoveToType("OneMethodTwoParameters"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals(2, navigator.ParameterCount);
 	}
 
 	#endregion

@@ -21,6 +21,8 @@ namespace NDoc.Core
 		private int interfaceCount;
 		private int currentInterfaceIndex;
 		private IEnumerator memberEnumerator;
+		private IEnumerator parameterEnumerator;
+		private int currentParameterIndex;
 
 		/// <summary>
 		///		<para>Initializes a new instance of the AssemblyNavigator class.</para>
@@ -899,6 +901,84 @@ namespace NDoc.Core
 			get
 			{
 				return ((MemberInfo)memberEnumerator.Current).DeclaringType.Name;
+			}
+		}
+
+		private ParameterInfo[] GetParameters(object member)
+		{
+			if (member is MethodBase)
+			{
+				return ((MethodBase)member).GetParameters();
+			}
+
+			return new ParameterInfo[0];
+		}
+
+		/// <summary>
+		///		<para>Gets the number of parameters in the current member.</para>
+		/// </summary>
+		public int ParameterCount
+		{
+			get
+			{
+				return GetParameters(memberEnumerator.Current).Length;
+			}
+		}
+
+		/// <summary>
+		///		<para>Positions the navigator's parameter cursor on the
+		///		current member's first parameter.</para>
+		/// </summary>
+		/// <returns></returns>
+		public bool MoveToFirstParameter()
+		{
+			parameterEnumerator = GetParameters(memberEnumerator.Current).GetEnumerator();
+			currentParameterIndex = 0;
+			return MoveToNextParameter();
+		}
+
+		/// <summary>
+		///		<para>Positions the navigator's parameter cursor on the
+		///		current member's next parameter.</para>
+		/// </summary>
+		/// <returns></returns>
+		public bool MoveToNextParameter()
+		{
+			++currentParameterIndex;
+			return parameterEnumerator.MoveNext();
+		}
+
+		/// <summary>
+		///		<para>Gets the current parameter's type's name.</para>
+		/// </summary>
+		public string ParameterTypeName
+		{
+			get
+			{
+				return ((ParameterInfo)parameterEnumerator.Current).ParameterType.Name;
+			}
+		}
+
+		/// <summary>
+		///		<para>Gets the current parameter's name.</para>
+		/// </summary>
+		public string ParameterName
+		{
+			get
+			{
+				return ((ParameterInfo)parameterEnumerator.Current).Name;
+			}
+		}
+
+		/// <summary>
+		///		<para>Returns true if the parameter cursor is pointing to 
+		///		the last parameter for the current member.</para>
+		/// </summary>
+		public bool IsLastParameter
+		{
+			get
+			{
+				return currentParameterIndex == ParameterCount;
 			}
 		}
 	}
