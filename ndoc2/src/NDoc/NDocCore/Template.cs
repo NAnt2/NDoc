@@ -20,7 +20,7 @@ namespace NDoc.Core
 
 		public void Load(string fileName)
 		{
-			Load(new XmlTextReader(fileName));
+			Load(CreateValidatingReader(new XmlTextReader(fileName)));
 		}
 
 		public void Load(XmlReader reader)
@@ -32,7 +32,16 @@ namespace NDoc.Core
 
 		public void LoadXml(string xml)
 		{
-			Load(new XmlTextReader(new StringReader(xml)));
+			XmlTextReader xmlTextReader = new XmlTextReader(new StringReader(xml));
+			Load(CreateValidatingReader(xmlTextReader));
+		}
+
+		private XmlValidatingReader CreateValidatingReader(XmlReader xmlReader)
+		{
+			XmlValidatingReader xmlValidatingReader = new XmlValidatingReader(xmlReader);
+			xmlValidatingReader.ValidationType = ValidationType.None;
+			xmlValidatingReader.EntityHandling = EntityHandling.ExpandEntities;
+			return xmlValidatingReader;
 		}
 
 		public void Evaluate(

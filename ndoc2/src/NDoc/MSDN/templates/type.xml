@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" ?>
 <!DOCTYPE template [
+	<!ENTITY copy "&#xA9;">
 	<!ENTITY in "   ">
 	<!ENTITY nbsp "&#xA0;">
 	<!ENTITY nl "&#xD;&#xA;">
@@ -20,6 +21,7 @@
 				<div id="bannerrow1">
 					<table class="bannerparthead" cellspacing="0">
 						<tr id="hdr">
+							<!-- TODO: The user should be able to specify these via properties. -->
 							<td class="runninghead" nowrap="nowrap">.NET Framework Class Library</td>
 							<td class="product" nowrap="nowrap">&nbsp;</td>
 						</tr>
@@ -85,6 +87,24 @@
 						<text>&nl;</text>
 					</b>
 				</pre>
+				<h4 class="dtH4">See Also</h4>
+				<p>
+					<a href="">
+						<type-name />
+						<text> Members</text>
+					</a>
+					<text> | </text>
+					<a href="">
+						<namespace-name />
+						<text> Namespace</text>
+					</a>
+				</p>
+				<div class="footer">
+					<hr />
+					<!-- TODO: We should probably let the user specify these via properties. -->
+					<p><a href="mailto:ndoc-devel@lists.sourceforge.net">Send comments on this topic.</a></p>
+					<p><a href="http://ndoc.sourceforge.net/">&copy; 2002 NDoc Corporation. All rights reserved.</a></p>
+				</div>
 			</div>
 		</body>
 	</html>

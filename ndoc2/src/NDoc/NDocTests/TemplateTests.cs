@@ -616,4 +616,11 @@ public class TemplateTests : TestCase
 				"NDoc.Test.ImplementsInterfaces",
 				"ImplementsTwoInterfaces"));
 	}
+
+	public void TestCopyEntityReference()
+	{
+		AssertEquals(
+			"\xA9",
+			EvaluateNamespace("<!DOCTYPE template [ <!ENTITY copy '&#xA9;'> ]><template>&copy;</template>", "NDoc.Test"));
+	}
 }

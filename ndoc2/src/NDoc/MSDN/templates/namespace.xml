@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" ?>
 <!DOCTYPE template [
+	<!ENTITY copy "&#xA9;">
 	<!ENTITY nbsp "&#xA0;">
 	<!ENTITY nl "&#xD;&#xA;">
 ]>
@@ -15,6 +16,7 @@
 				<div id="bannerrow1">
 					<table class="bannerparthead" cellspacing="0">
 						<tr id="hdr">
+							<!-- TODO: The user should be able to specify these via properties. -->
 							<td class="runninghead" nowrap="nowrap">.NET Framework Class Library</td>
 							<td class="product" nowrap="nowrap">&nbsp;</td>
 						</tr>
@@ -110,6 +112,15 @@
 						</table>
 					</div>
 				</if-namespace-contains-enumerations>
+				<h4 class="dtH4">See Also</h4>
+				<!-- TODO: Do all namespace pages need a See Also section? What goes here? -->
+				<p><a href="http://ndoc.sourceforge.net/">NDoc Home Page</a></p>
+				<div class="footer">
+					<hr />
+					<!-- TODO: We should probably let the user specify these via properties. -->
+					<p><a href="mailto:ndoc-devel@lists.sourceforge.net">Send comments on this topic.</a></p>
+					<p><a href="http://ndoc.sourceforge.net/">&copy; 2002 NDoc Corporation. All rights reserved.</a></p>
+				</div>
 			</div>
 		</body>
 	</html>
