@@ -239,6 +239,9 @@ namespace NDoc.Core
 				case "for-each-namespace":
 					ForEachNamespace(instructionElement);
 					break;
+				case "for-each-overloaded-member-in-type":
+					ForEachOverloadedMemberInType(instructionElement);
+					break;
 				case "for-each-property-in-type":
 					ForEachPropertyInType(instructionElement);
 					break;
@@ -307,6 +310,9 @@ namespace NDoc.Core
 					break;
 				case "member-name":
 					MemberName(instructionElement);
+					break;
+				case "member-overloads-summary":
+					MemberOverloadsSummary(instructionElement);
 					break;
 				case "member-summary":
 					MemberSummary(instructionElement);
@@ -641,6 +647,18 @@ namespace NDoc.Core
 			}
 		}
 
+		private void ForEachOverloadedMemberInType(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MoveToFirstOverloadedMember(membersName))
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextMember());
+			}
+		}
+
 		private void ForEachPropertyInType(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -832,6 +850,16 @@ namespace NDoc.Core
 		private void MemberName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.MemberName);
+		}
+
+		private void MemberOverloadsSummary(XmlElement instructionElement)
+		{
+			XmlNode node = assemblyDocumentation.GetMemberOverloadsSummary(assemblyNavigator.CurrentType, membersName);
+
+			if (node != null)
+			{
+				EvaluateDocumentationChildren(node, false, true);
+			}
 		}
 
 		private void MemberSummary(XmlElement instructionElement)

@@ -25,6 +25,15 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace ForEachOverloadedMemberInType
+	{
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
 	namespace ForEachPropertyInType
 	{
 		public class TwoProperties
@@ -85,6 +94,17 @@ namespace NDoc.Test.Template
 		public class TwoOverloadedMethods
 		{
 			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
+	namespace MemberOverloadsSummary
+	{
+		public class TwoOverloadedMethods
+		{
+			/// <summary>TwoOverloadedMethods.Method(int) Summary</summary>
+			public void Method(int i) {}
+			/// <summary>TwoOverloadedMethods.Method(string) Summary</summary>
 			public void Method(string s) {}
 		}
 	}

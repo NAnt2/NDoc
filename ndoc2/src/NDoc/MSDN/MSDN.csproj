@@ -81,6 +81,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "templates\type-member-overloads.xml"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "templates\type-members.xml"
                     BuildAction = "Content"
                 />

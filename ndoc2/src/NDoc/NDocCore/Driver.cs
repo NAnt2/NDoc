@@ -51,6 +51,9 @@ namespace NDoc.Core
 			Template typeConstructorsTemplate = new Template();
 			typeConstructorsTemplate.Load(Path.Combine(styleDirectory, @"templates\type-constructors.xml"));
 
+			Template typeMemberOverloadsTemplate = new Template();
+			typeMemberOverloadsTemplate.Load(Path.Combine(styleDirectory, @"templates\type-member-overloads.xml"));
+
 			StreamWriter streamWriter = OpenNamespaces();
 
 			namespacesTemplate.Evaluate(
@@ -113,6 +116,31 @@ namespace NDoc.Core
 
 							streamWriter.Close();
 						}
+
+						if (assemblyNavigator.MoveToFirstMethod("public"))
+						{
+							string previousMethodName = null;
+
+							do
+							{
+								if (assemblyNavigator.MemberName != previousMethodName &&
+									assemblyNavigator.IsMemberOverloaded)
+								{
+									streamWriter = OpenTypeMemberOverloads(assemblyNavigator.CurrentType, assemblyNavigator.CurrentMember);
+
+									typeMemberOverloadsTemplate.EvaluateMembers(
+										assemblyNavigator.NamespaceName,
+										assemblyNavigator.TypeName,
+										assemblyNavigator.MemberName,
+										assemblyNavigator,
+										documentationFile,
+										streamWriter);
+
+									streamWriter.Close();
+								}
+							}
+							while (assemblyNavigator.MoveToNextMember());
+						}
 					}
 					while (assemblyNavigator.MoveToNextType());
 				}
@@ -151,6 +179,13 @@ namespace NDoc.Core
 		private StreamWriter OpenTypeConstructors(Type type)
 		{
 			string fileName = type.FullName + "-constructors.html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
+		}
+
+		private StreamWriter OpenTypeMemberOverloads(Type type, MemberInfo member)
+		{
+			string fileName = type.FullName + "." + member.Name + ".html";
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}

@@ -209,5 +209,18 @@ namespace NDoc.Core
 
 			return null;
 		}
+
+		/// <summary>
+		///		<para>Gets the element containing the summary for the specified
+		///		overloaded members.</para>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="membersName"></param>
+		/// <returns></returns>
+		public XmlNode GetMemberOverloadsSummary(Type type, string membersName)
+		{
+			MemberInfo member = type.GetMember(membersName)[0];
+			return GetMemberSummary(member);
+		}
 	}
 }

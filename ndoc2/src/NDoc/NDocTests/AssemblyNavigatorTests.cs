@@ -562,6 +562,19 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region MoveToFirstOverloadedMember Tests
+
+	public void Test_MoveToFirstOverloadedMember_TwoOverloadedMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstOverloadedMember"));
+		Assert(navigator.MoveToType("TwoOverloadedMethods"));
+		Assert(navigator.MoveToFirstOverloadedMember("Method"));
+		Assert(navigator.MoveToNextMember());
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	#endregion
+
 	#region MoveToFirstProperty Tests
 
 	public void Test_MoveToFirstProperty_OneMethod()

@@ -26,6 +26,12 @@ public class AssemblyDocumentationTests : TestCase
 	{
 	}
 
+	public void Test_GetMemberOverloadsSummary_TwoOverloadedMethods()
+	{
+		XmlNode summaryNode = documentation.GetMemberOverloadsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberOverloadsSummary.TwoOverloadedMethods), "Method");
+		AssertNotNull(summaryNode);
+	}
+
 	public void Test_GetMemberSummary_OneMethodNoSummary()
 	{
 		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.OneMethodNoSummary).GetMethod("Method1"));

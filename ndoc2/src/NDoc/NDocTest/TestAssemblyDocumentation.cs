@@ -1,5 +1,16 @@
 namespace NDoc.Test.AssemblyDocumentation
 {
+	namespace GetMemberOverloadsSummary
+	{
+		public class TwoOverloadedMethods
+		{
+			/// <summary>TwoOverloadedMethods.Method(int) Summary</summary>
+			public void Method(int i) {}
+			/// <summary>TwoOverloadedMethods.Method(string) Summary</summary>
+			public void Method(string s) {}
+		}
+	}
+
 	namespace GetMemberSummary
 	{
 		public class OneMethodNoSummary

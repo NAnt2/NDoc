@@ -219,6 +219,15 @@ namespace NDoc.Test.AssemblyNavigator
 		// The MoveToFirstNamespace test doesn't really use this namespace.
 	}
 
+	namespace MoveToFirstOverloadedMember
+	{
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
 	namespace MoveToFirstProperty
 	{
 		public class OneMethod

@@ -812,6 +812,18 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
+		///		<para>Positions the navigator's member cursor on the first
+		///		overloaded member with the specified name.</para>
+		/// </summary>
+		/// <param name="membersName"></param>
+		/// <returns></returns>
+		public bool MoveToFirstOverloadedMember(string membersName)
+		{
+			memberEnumerator = currentType.GetMember(membersName).GetEnumerator();
+			return MoveToNextMember();
+		}
+
+		/// <summary>
 		///		<para>Gets the current member pointed to by the navigator's
 		///		member cursor.</para>
 		/// </summary>

@@ -59,6 +59,15 @@ public class TemplateTests : TestCase
 		return result.ToString();
 	}
 
+	private string EvaluateMembers(string templateXml, string namespaceName, string typeName, string membersName)
+	{
+		Template template = new Template();
+		template.LoadXml(templateXml);
+		StringWriter result = new StringWriter();
+		template.EvaluateMembers(namespaceName, typeName, membersName, assemblyNavigator, documentation, result);
+		return result.ToString();
+	}
+
 	private string EvaluateMember(string templateXml, string namespaceName, string typeName, string memberID)
 	{
 		Template template = new Template();
@@ -110,6 +119,21 @@ public class TemplateTests : TestCase
 				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
 				"NDoc.Test.Template.ForEachMethodInType",
 				"TwoOverloadedMethods"));
+	}
+
+	#endregion
+
+	#region <for-each-overloaded-member-in-type> Tests
+
+	public void Test_ForEachOverloadedMemberInType_TwoOverloadedMethods()
+	{
+		AssertEquals(
+			"MethodMethod",
+			EvaluateMembers(
+				"<for-each-overloaded-member-in-type><member-name /></for-each-overloaded-member-in-type>",
+				"NDoc.Test.Template.ForEachOverloadedMemberInType",
+				"TwoOverloadedMethods",
+				"Method"));
 	}
 
 	#endregion
@@ -218,6 +242,21 @@ public class TemplateTests : TestCase
 			EvaluateMember(
 				"<a href='{$member-or-overloads-link}'><member-name /></a>",
 				"NDoc.Test.Template.MemberOrOverloadsLink",
+				"TwoOverloadedMethods",
+				"Method"));
+	}
+
+	#endregion
+
+	#region <member-overloads-summary> Tests
+
+	public void Test_MemberOverloadsSummary_TwoOverloadedMethods()
+	{
+		AssertEquals(
+			"<p>TwoOverloadedMethods.Method(int) Summary</p>",
+			EvaluateMembers(
+				"<member-overloads-summary />",
+				"NDoc.Test.Template.MemberOverloadsSummary",
 				"TwoOverloadedMethods",
 				"Method"));
 	}
