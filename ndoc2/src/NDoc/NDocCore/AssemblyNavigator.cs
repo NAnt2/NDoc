@@ -652,13 +652,23 @@ namespace NDoc.Core
 			return constructors;
 		}
 
+		private bool IsProperty(MethodInfo method)
+		{
+			if (method.Name.StartsWith("get_") || method.Name.StartsWith("set_"))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
 		private ArrayList GetMethods(string access)
 		{
 			ArrayList methods = new ArrayList();
 
 			foreach (MethodInfo method in currentType.GetMethods())
 			{
-				if (AccessMatches(access, method))
+				if (!IsProperty(method) && AccessMatches(access, method))
 				{
 					methods.Add(method);
 				}

@@ -22,6 +22,76 @@ public class AssemblyNavigatorTests : TestCase
 	{
 	}
 
+	public void Test_MoveToFirstMethod_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstMethod"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Method1", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_MoveToFirstMethod_OneMethodAndOneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstMethod"));
+		Assert(navigator.MoveToType("OneMethodAndOneProperty"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Method1", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_MoveToFirstMethod_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstMethod"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_MoveToFirstMethod_TwoMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstMethod"));
+		Assert(navigator.MoveToType("TwoMethods"));
+		Assert(navigator.MoveToFirstMethod("public"));
+		AssertEquals("Equals", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetHashCode", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("GetType", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Method1", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Method2", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("ToString", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	// TODO: The following tests need to be rewritten using the same scheme as the preceding tests.
+
 	public void TestAssemblyName()
 	{
 		AssertEquals("NDocTest", navigator.AssemblyName);
