@@ -1500,14 +1500,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			ConstructorInfo[] constructors = type.GetConstructors(bindingFlags);
@@ -1533,14 +1528,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			ConstructorInfo[] constructors = type.GetConstructors(bindingFlags);
@@ -1562,14 +1552,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			FieldInfo[] fields = type.GetFields(bindingFlags);
@@ -1596,14 +1581,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			PropertyInfo[] properties = type.GetProperties(bindingFlags);
@@ -1634,14 +1614,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			MethodInfo[] methods = type.GetMethods(bindingFlags);
@@ -1690,14 +1665,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			MethodInfo[] methods = type.GetMethods(bindingFlags);
@@ -1722,14 +1692,9 @@ namespace NDoc.Core.Reflection
 				BindingFlags.Public | 
 				BindingFlags.NonPublic;
 
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.None)
+			if (!this.rep.DocumentInheritedMembers)
 			{
 				bindingFlags = bindingFlags | BindingFlags.DeclaredOnly;
-			}
-
-			if (this.rep.DocumentInheritedMembers == DocumentedInheritedMembers.InstanceAndStatic)
-			{
-				bindingFlags = bindingFlags | BindingFlags.FlattenHierarchy;
 			}
 
 			EventInfo[] events = type.GetEvents(bindingFlags);
