@@ -438,6 +438,13 @@ namespace NDoc.Core.Reflection
 				return false;
 			}
 
+			//HACK: exclude Net 2.0 Anonymous Methods
+			//These have name starting with "<"
+			if (method.Name.StartsWith("<"))
+			{
+				return false;
+			}
+
 			//Inherited Framework Members
 			if ((!this.rep.DocumentInheritedFrameworkMembers) && 
 				(method.ReflectedType != method.DeclaringType) && 
@@ -547,6 +554,13 @@ namespace NDoc.Core.Reflection
 				(field.IsFamilyAndAssembly && this.rep.DocumentInternals) || 
 				(field.IsPrivate && this.rep.DocumentPrivates))
 				)
+			{
+				return false;
+			}
+
+			//HACK: exclude Net 2.0 Anonymous Method Delegates
+			//These have name starting with "<"
+			if (field.Name.StartsWith("<"))
 			{
 				return false;
 			}
