@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" ?>
+<!DOCTYPE template [
+	<!ENTITY nbsp "&#xA0;">
+]>
+<template>
+	<html>
+		<head>
+			<title><namespace-name /></title>
+			<link rel="stylesheet" href="msdn.css" />
+		</head>
+		<body topmargin="0" id="bodyID" class="dtBODY">
+			<div id="nsbanner">
+				<div id="bannerrow1">
+					<table class="bannerparthead" cellspacing="0">
+						<tr id="hdr">
+							<td class="runninghead" nowrap="nowrap">.NET Framework Class Library</td>
+							<td class="product" nowrap="nowrap">&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+				<div id="TitleRow">
+					<h1 class="dtH1"><namespace-name /> Namespace</h1>
+				</div>
+			</div>
+			<div id="nstext" valign="bottom">
+				<if-namespace-contains-classes>
+					<h3 class="dtH3">Classes</h3>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<tr valign="top">
+								<th width="50%">Class</th>
+								<th width="50%">Description</th>
+							</tr>
+							<for-each-class-in-namespace>
+								<tr valign="top">
+									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
+									<td width="50%"><type-summary /></td>
+								</tr>
+							</for-each-class-in-namespace>
+						</table>
+					</div>
+				</if-namespace-contains-classes>
+				<if-namespace-contains-interfaces>
+					<h3 class="dtH3">Interfaces</h3>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<tr valign="top">
+								<th width="50%">Interface</th>
+								<th width="50%">Description</th>
+							</tr>
+							<for-each-interface-in-namespace>
+								<tr valign="top">
+									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
+									<td width="50%"><type-summary /></td>
+								</tr>
+							</for-each-interface-in-namespace>
+						</table>
+					</div>
+				</if-namespace-contains-interfaces>
+				<if-namespace-contains-structures>
+					<h3 class="dtH3">Structures</h3>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<tr valign="top">
+								<th width="50%">Structure</th>
+								<th width="50%">Description</th>
+							</tr>
+							<for-each-structure-in-namespace>
+								<tr valign="top">
+									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
+									<td width="50%"><type-summary /></td>
+								</tr>
+							</for-each-structure-in-namespace>
+						</table>
+					</div>
+				</if-namespace-contains-structures>
+				<if-namespace-contains-delegates>
+					<h3 class="dtH3">Delegates</h3>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<tr valign="top">
+								<th width="50%">Delegate</th>
+								<th width="50%">Description</th>
+							</tr>
+							<for-each-delegate-in-namespace>
+								<tr valign="top">
+									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
+									<td width="50%"><type-summary /></td>
+								</tr>
+							</for-each-delegate-in-namespace>
+						</table>
+					</div>
+				</if-namespace-contains-delegates>
+				<if-namespace-contains-enumerations>
+					<h3 class="dtH3">Enumerations</h3>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<tr valign="top">
+								<th width="50%">Enumeration</th>
+								<th width="50%">Description</th>
+							</tr>
+							<for-each-enumeration-in-namespace>
+								<tr valign="top">
+									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
+									<td width="50%"><type-summary /></td>
+								</tr>
+							</for-each-enumeration-in-namespace>
+						</table>
+					</div>
+				</if-namespace-contains-enumerations>
+			</div>
+		</body>
+	</html>
+</template>
