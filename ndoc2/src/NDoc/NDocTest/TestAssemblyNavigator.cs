@@ -57,6 +57,20 @@ namespace NDoc.Test.AssemblyNavigator
 		}
 	}
 
+	namespace IsMemberOverloaded
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
 	namespace IsStructure
 	{
 		public class Class1 {}

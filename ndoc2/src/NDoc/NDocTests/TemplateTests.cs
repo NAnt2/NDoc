@@ -13,6 +13,8 @@ public class TemplateTests : TestCase
 	AssemblyNavigator assemblyNavigator;
 	string documentation;
 
+	#region SetUp and TearDown Methods
+
 	protected override void SetUp()
 	{
 		Assembly assembly = typeof(NDoc.Test.Class1).Assembly;
@@ -25,6 +27,10 @@ public class TemplateTests : TestCase
 	protected override void TearDown()
 	{
 	}
+
+	#endregion
+
+	#region Helper Methods
 
 	private string Evaluate(string templateXml)
 	{
@@ -62,7 +68,53 @@ public class TemplateTests : TestCase
 		return result.ToString();
 	}
 
-	#region ForEachPropertyInType Tests
+	#endregion
+
+	#region <for-each-method-in-type> Tests
+
+	public void Test_ForEachMethodInType_OneMethod()
+	{
+		AssertEquals(
+			"EqualsGetHashCodeGetTypeMethod1ToString",
+			EvaluateType(
+				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
+				"NDoc.Test.Template.ForEachMethodInType",
+				"OneMethod"));
+	}
+
+	public void Test_ForEachMethodInType_OneProperty()
+	{
+		AssertEquals(
+			"EqualsGetHashCodeGetTypeToString",
+			EvaluateType(
+				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
+				"NDoc.Test.Template.ForEachMethodInType",
+				"OneProperty"));
+	}
+
+	public void Test_ForEachMethodInType_TwoMethods()
+	{
+		AssertEquals(
+			"EqualsGetHashCodeGetTypeMethod1Method2ToString",
+			EvaluateType(
+				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
+				"NDoc.Test.Template.ForEachMethodInType",
+				"TwoMethods"));
+	}
+
+	public void Test_ForEachMethodInType_TwoOverloadedMethods()
+	{
+		AssertEquals(
+			"EqualsGetHashCodeGetTypeMethodToString",
+			EvaluateType(
+				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
+				"NDoc.Test.Template.ForEachMethodInType",
+				"TwoOverloadedMethods"));
+	}
+
+	#endregion
+
+	#region <for-each-property-in-type> Tests
 
 	public void Test_ForEachPropertyInType_TwoProperties()
 	{
@@ -76,7 +128,7 @@ public class TemplateTests : TestCase
 
 	#endregion
 
-	#region IfMemberIsInherited Tests
+	#region <if-member-is-inherited> Tests
 
 	public void Test_IfMemberIsInherited_NoMembers()
 	{
@@ -102,7 +154,22 @@ public class TemplateTests : TestCase
 
 	#endregion
 
-	#region IfTypeHasProperties Tests
+	#region <if-member-is-overloaded> Tests
+
+	public void Test_IfMemberIsOverloaded_OneMethod()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-is-overloaded>true</if-member-is-overloaded>",
+				"NDoc.Test.Template.IfMemberIsOverloaded",
+				"OneMethod",
+				"Method1"));
+	}
+
+	#endregion
+
+	#region <if-type-has-properties> Tests
 
 	public void Test_IfTypeHasProperties_NoProperties()
 	{
@@ -116,7 +183,7 @@ public class TemplateTests : TestCase
 
 	#endregion
 
-	#region MemberDeclaringType Tests
+	#region <member-declaring-type> Tests
 
 	public void Test_MemberDeclaringType_NoMembers()
 	{
@@ -127,6 +194,32 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Template.MemberDeclaringType",
 				"NoMembers",
 				"Equals"));
+	}
+
+	#endregion
+
+	#region {$member-or-overloads-link} Tests
+
+	public void Test_MemberOrOverloadsLink_OneMethod()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.MemberOrOverloadsLink.OneMethod.Method1.html\">Method1</a>",
+			EvaluateMember(
+				"<a href='{$member-or-overloads-link}'><member-name /></a>",
+				"NDoc.Test.Template.MemberOrOverloadsLink",
+				"OneMethod",
+				"Method1"));
+	}
+
+	public void Test_MemberOrOverloadsLink_TwoOverloadedMethods()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.MemberOrOverloadsLink.TwoOverloadedMethods.Method.html\">Method</a>",
+			EvaluateMember(
+				"<a href='{$member-or-overloads-link}'><member-name /></a>",
+				"NDoc.Test.Template.MemberOrOverloadsLink",
+				"TwoOverloadedMethods",
+				"Method"));
 	}
 
 	#endregion
@@ -918,16 +1011,6 @@ public class TemplateTests : TestCase
 				"<type-constructors-summary strip='first' />",
 				"NDoc.Test.Constructors",
 				"DefaultConstructor"));
-	}
-
-	public void TestForEachMethodInType()
-	{
-		AssertEquals(
-			"EqualsGetHashCodeGetTypeToString",
-			EvaluateType(
-				"<for-each-method-in-type access='public'><member-name /></for-each-method-in-type>",
-				"NDoc.Test.Methods",
-				"NoMethods"));
 	}
 
 	public void TestIfTypeHasMethods()

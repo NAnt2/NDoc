@@ -225,6 +225,26 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region IsMemberOverloaded Tests
+
+	public void Test_IsMemberOverloaded_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMemberOverloaded"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsMemberOverloaded);
+	}
+
+	public void Test_IsMemberOverloaded_TwoOverloadedMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMemberOverloaded"));
+		Assert(navigator.MoveToType("TwoOverloadedMethods"));
+		Assert(navigator.MoveToMember("Method"));
+		Assert(navigator.IsMemberOverloaded);
+	}
+
+	#endregion
+
 	#region IsStructure Tests
 
 	public void Test_IsStructure_Class1()

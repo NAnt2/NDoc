@@ -14,3 +14,7 @@ output in the examples\NDocTest directory.
 
 Don't add anything to the NDocTest project unless you add a unit test for
 whatever you want to check in the NDocTests project.
+
+To document NDocCore, use these "Command Line Arguments":
+
+-d ..\..\..\..\..\examples\NDocCore NDocCore.dll,NDocCore.xml

@@ -869,6 +869,17 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
+		///		<para>Checks to see if the current member is overloaded.</para>
+		/// </summary>
+		public bool IsMemberOverloaded
+		{
+			get
+			{
+				return currentType.GetMember(MemberName).Length > 1;
+			}
+		}
+
+		/// <summary>
 		///		<para>Gets the name of the current member's declaring type.</para>
 		/// </summary>
 		public string MemberDeclaringType

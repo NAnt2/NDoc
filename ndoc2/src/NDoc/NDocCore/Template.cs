@@ -248,6 +248,9 @@ namespace NDoc.Core
 				case "if-member-is-inherited":
 					IfMemberIsInherited(instructionElement);
 					break;
+				case "if-member-is-overloaded":
+					IfMemberIsOverloaded(instructionElement);
+					break;
 				case "if-namespace-contains-classes":
 					IfNamespaceContainsClasses(instructionElement);
 					break;
@@ -385,6 +388,9 @@ namespace NDoc.Core
 							case "assembly-name":
 								newValue = AssemblyNameVariable;
 								break;
+							case "member-or-overloads-link":
+								newValue = MemberOrOverloadsLinkVariable;
+								break;
 							case "namespace-link":
 								newValue = NamespaceLinkVariable;
 								break;
@@ -483,6 +489,16 @@ namespace NDoc.Core
 			get
 			{
 				return assemblyNavigator.AssemblyName;
+			}
+		}
+
+		private string MemberOrOverloadsLinkVariable
+		{
+			get
+			{
+				return assemblyNavigator.NamespaceName + "." + 
+					assemblyNavigator.TypeName +  "." + 
+					assemblyNavigator.MemberName + ".html";
 			}
 		}
 
@@ -599,9 +615,15 @@ namespace NDoc.Core
 
 			if (assemblyNavigator.MoveToFirstMethod(access))
 			{
+				string previousMethodName = null;
+
 				do
 				{
-					EvaluateChildren(instructionElement);
+					if (assemblyNavigator.MemberName != previousMethodName)
+					{
+						EvaluateChildren(instructionElement);
+						previousMethodName = assemblyNavigator.MemberName;
+					}
 				}
 				while (assemblyNavigator.MoveToNextMember());
 			}
@@ -648,6 +670,14 @@ namespace NDoc.Core
 		private void IfMemberIsInherited(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.IsMemberInherited)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfMemberIsOverloaded(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.IsMemberOverloaded)
 			{
 				EvaluateChildren(instructionElement);
 			}
