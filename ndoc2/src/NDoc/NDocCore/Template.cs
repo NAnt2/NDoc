@@ -323,6 +323,9 @@ namespace NDoc.Core
 				case "member-summary":
 					MemberSummary(instructionElement);
 					break;
+				case "member-type":
+					MemberType(instructionElement);
+					break;
 				case "namespace-name":
 					NamespaceName(instructionElement);
 					break;
@@ -928,6 +931,42 @@ namespace NDoc.Core
 			{
 				EvaluateDocumentationChildren(node, stripPara, true);
 			}
+		}
+
+		private string GetMemberType(string lang)
+		{
+			switch (lang)
+			{
+				case "":
+					if (assemblyNavigator.IsConstructor)
+					{
+						return "Constructor";
+					}
+					else if (assemblyNavigator.IsEvent)
+					{
+						return "Event";
+					}
+					else if (assemblyNavigator.IsField)
+					{
+						return "Field";
+					}
+					else if (assemblyNavigator.IsMethod)
+					{
+						return "Method";
+					}
+					else if (assemblyNavigator.IsProperty)
+					{
+						return "Property";
+					}
+					break;
+			}
+
+			return "ERROR";
+		}
+
+		private void MemberType(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(GetMemberType(instructionElement.GetAttribute("lang")));
 		}
 
 		private void NamespaceName(XmlElement instructionElement)

@@ -265,6 +265,65 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <member-type> Tests
+
+	public void Test_MemberType_OneConstructor()
+	{
+		AssertEquals(
+			"Constructor",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneConstructor",
+				".ctor"));
+	}
+
+	public void Test_MemberType_OneEvent()
+	{
+		AssertEquals(
+			"Event",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneEvent",
+				"Event1"));
+	}
+
+	public void Test_MemberType_OneField()
+	{
+		AssertEquals(
+			"Field",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneField",
+				"Field1"));
+	}
+
+	public void Test_MemberType_OneMethod()
+	{
+		AssertEquals(
+			"Method",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneMethod",
+				"Method1"));
+	}
+
+	public void Test_MemberType_OneProperty()
+	{
+		AssertEquals(
+			"Property",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneProperty",
+				"Property1"));
+	}
+
+	#endregion
+	
 	#region <member-declaring-type> Tests
 
 	public void Test_MemberDeclaringType_NoMembers()

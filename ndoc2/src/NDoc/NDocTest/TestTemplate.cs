@@ -105,6 +105,35 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace MemberType
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
+		}
+	}
+
 	namespace MemberDeclaringType
 	{
 		public class NoMembers {}

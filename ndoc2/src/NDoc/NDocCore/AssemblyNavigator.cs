@@ -683,7 +683,7 @@ namespace NDoc.Core
 			return constructors;
 		}
 
-		private bool IsProperty(MethodInfo method)
+		private bool IsPropertyMethod(MethodInfo method)
 		{
 			if (method.Name.StartsWith("get_") || method.Name.StartsWith("set_"))
 			{
@@ -699,7 +699,7 @@ namespace NDoc.Core
 
 			foreach (MethodInfo method in currentType.GetMethods())
 			{
-				if (!IsProperty(method) && AccessMatches(access, method))
+				if (!IsPropertyMethod(method) && AccessMatches(access, method))
 				{
 					methods.Add(method);
 				}
@@ -987,6 +987,61 @@ namespace NDoc.Core
 			get
 			{
 				return currentParameterIndex == ParameterCount;
+			}
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is a constructor.</para>
+		/// </summary>
+		public bool IsConstructor
+		{
+			get
+			{
+				return currentMember is ConstructorInfo;
+			}
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is an event.</para>
+		/// </summary>
+		public bool IsEvent
+		{
+			get
+			{
+				return currentMember is EventInfo;
+			}
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is a field.</para>
+		/// </summary>
+		public bool IsField
+		{
+			get
+			{
+				return currentMember is FieldInfo;
+			}
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is a method.</para>
+		/// </summary>
+		public bool IsMethod
+		{
+			get
+			{
+				return currentMember is MethodInfo;
+			}
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is a property.</para>
+		/// </summary>
+		public bool IsProperty
+		{
+			get
+			{
+				return currentMember is PropertyInfo;
 			}
 		}
 	}

@@ -74,6 +74,50 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region IsConstructor Tests
+
+	public void Test_IsConstructor_OneConstructor()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsConstructor"));
+		Assert(navigator.MoveToType("OneConstructor"));
+		Assert(navigator.MoveToMember(".ctor"));
+		Assert(navigator.IsConstructor);
+	}
+
+	public void Test_IsConstructor_OneEvent()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsConstructor"));
+		Assert(navigator.MoveToType("OneEvent"));
+		Assert(navigator.MoveToMember("Event1"));
+		Assert(!navigator.IsConstructor);
+	}
+
+	public void Test_IsConstructor_OneField()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsConstructor"));
+		Assert(navigator.MoveToType("OneField"));
+		Assert(navigator.MoveToMember("Field1"));
+		Assert(!navigator.IsConstructor);
+	}
+
+	public void Test_IsConstructor_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsConstructor"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsConstructor);
+	}
+
+	public void Test_IsConstructor_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsConstructor"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToMember("Property1"));
+		Assert(!navigator.IsConstructor);
+	}
+
+	#endregion
+
 	#region IsDelegate Tests
 
 	public void Test_IsDelegate_Class1()
@@ -148,6 +192,94 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEnumeration"));
 		Assert(navigator.MoveToType("Structure1"));
 		Assert(!navigator.IsEnumeration);
+	}
+
+	#endregion
+
+	#region IsEvent Tests
+
+	public void Test_IsEvent_OneConstructor()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEvent"));
+		Assert(navigator.MoveToType("OneConstructor"));
+		Assert(navigator.MoveToMember(".ctor"));
+		Assert(!navigator.IsEvent);
+	}
+
+	public void Test_IsEvent_OneEvent()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEvent"));
+		Assert(navigator.MoveToType("OneEvent"));
+		Assert(navigator.MoveToMember("Event1"));
+		Assert(navigator.IsEvent);
+	}
+
+	public void Test_IsEvent_OneField()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEvent"));
+		Assert(navigator.MoveToType("OneField"));
+		Assert(navigator.MoveToMember("Field1"));
+		Assert(!navigator.IsEvent);
+	}
+
+	public void Test_IsEvent_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEvent"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsEvent);
+	}
+
+	public void Test_IsEvent_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsEvent"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToMember("Property1"));
+		Assert(!navigator.IsEvent);
+	}
+
+	#endregion
+
+	#region IsField Tests
+
+	public void Test_IsField_OneConstructor()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsField"));
+		Assert(navigator.MoveToType("OneConstructor"));
+		Assert(navigator.MoveToMember(".ctor"));
+		Assert(!navigator.IsField);
+	}
+
+	public void Test_IsField_OneEvent()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsField"));
+		Assert(navigator.MoveToType("OneEvent"));
+		Assert(navigator.MoveToMember("Event1"));
+		Assert(!navigator.IsField);
+	}
+
+	public void Test_IsField_OneField()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsField"));
+		Assert(navigator.MoveToType("OneField"));
+		Assert(navigator.MoveToMember("Field1"));
+		Assert(navigator.IsField);
+	}
+
+	public void Test_IsField_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsField"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsField);
+	}
+
+	public void Test_IsField_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsField"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToMember("Property1"));
+		Assert(!navigator.IsField);
 	}
 
 	#endregion
@@ -265,6 +397,94 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToType("TwoOverloadedMethods"));
 		Assert(navigator.MoveToMember("Method"));
 		Assert(navigator.IsMemberOverloaded);
+	}
+
+	#endregion
+
+	#region IsMethod Tests
+
+	public void Test_IsMethod_OneConstructor()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMethod"));
+		Assert(navigator.MoveToType("OneConstructor"));
+		Assert(navigator.MoveToMember(".ctor"));
+		Assert(!navigator.IsMethod);
+	}
+
+	public void Test_IsMethod_OneEvent()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMethod"));
+		Assert(navigator.MoveToType("OneEvent"));
+		Assert(navigator.MoveToMember("Event1"));
+		Assert(!navigator.IsMethod);
+	}
+
+	public void Test_IsMethod_OneField()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMethod"));
+		Assert(navigator.MoveToType("OneField"));
+		Assert(navigator.MoveToMember("Field1"));
+		Assert(!navigator.IsMethod);
+	}
+
+	public void Test_IsMethod_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMethod"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(navigator.IsMethod);
+	}
+
+	public void Test_IsMethod_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMethod"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToMember("Property1"));
+		Assert(!navigator.IsMethod);
+	}
+
+	#endregion
+
+	#region IsProperty Tests
+
+	public void Test_IsProperty_OneConstructor()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsProperty"));
+		Assert(navigator.MoveToType("OneConstructor"));
+		Assert(navigator.MoveToMember(".ctor"));
+		Assert(!navigator.IsProperty);
+	}
+
+	public void Test_IsProperty_OneEvent()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsProperty"));
+		Assert(navigator.MoveToType("OneEvent"));
+		Assert(navigator.MoveToMember("Event1"));
+		Assert(!navigator.IsProperty);
+	}
+
+	public void Test_IsProperty_OneField()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsProperty"));
+		Assert(navigator.MoveToType("OneField"));
+		Assert(navigator.MoveToMember("Field1"));
+		Assert(!navigator.IsProperty);
+	}
+
+	public void Test_IsProperty_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsProperty"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsProperty);
+	}
+
+	public void Test_IsProperty_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsProperty"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToMember("Property1"));
+		Assert(navigator.IsProperty);
 	}
 
 	#endregion

@@ -10,7 +10,8 @@
 		<head>
 			<title>
 				<member-name />
-				<text> Method</text>
+				<text> </text>
+				<member-type />
 			</title>
 			<link rel="stylesheet" href="msdn.css" />
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,7 +32,8 @@
 						<type-name />
 						<text>.</text>
 						<member-name />
-						<text> Method</text>
+						<text> </text>
+						<member-type />
 					</h1>
 				</div>
 			</div>

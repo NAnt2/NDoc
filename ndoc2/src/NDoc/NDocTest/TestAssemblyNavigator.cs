@@ -14,6 +14,35 @@ namespace NDoc.Test.AssemblyNavigator
 		public struct Structure1 {}
 	}
 
+	namespace IsConstructor
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
+		}
+	}
+
 	namespace IsDelegate
 	{
 		public class Class1 {}
@@ -30,6 +59,64 @@ namespace NDoc.Test.AssemblyNavigator
 		public enum Enumeration1 {}
 		public interface Interface1 {}
 		public struct Structure1 {}
+	}
+
+	namespace IsEvent
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
+		}
+	}
+
+	namespace IsField
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
+		}
 	}
 
 	namespace IsInterface
@@ -81,6 +168,64 @@ namespace NDoc.Test.AssemblyNavigator
 		{
 			public void Method(int i) {}
 			public void Method(string s) {}
+		}
+	}
+
+	namespace IsMethod
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
+		}
+	}
+
+	namespace IsProperty
+	{
+		public class OneConstructor
+		{
+			public OneConstructor() {}
+		}
+
+		public class OneEvent
+		{
+			public event System.EventHandler Event1;
+			private void StopWarning() { Event1(this, new System.EventArgs()); }
+		}
+
+		public class OneField
+		{
+			public int Field1;
+		}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class OneProperty
+		{
+			public int Property1 { get { return 0; } }
 		}
 	}
 
