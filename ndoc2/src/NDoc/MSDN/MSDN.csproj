@@ -77,6 +77,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "templates\type-constructors.xml"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "templates\type-members.xml"
                     BuildAction = "Content"
                 />
