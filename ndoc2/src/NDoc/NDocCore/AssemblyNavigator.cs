@@ -667,7 +667,9 @@ namespace NDoc.Core
 		{
 			ArrayList constructors = new ArrayList();
 
-			foreach (ConstructorInfo constructor in currentType.GetConstructors())
+			BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+			foreach (ConstructorInfo constructor in currentType.GetConstructors(bindingFlags))
 			{
 				if (AccessMatches(access, constructor))
 				{
