@@ -252,6 +252,62 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <if-member-has-no-value-type> Tests
+
+	public void Test_IfMemberHasNoValueType_IntMethod()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-has-no-value-type>true</if-member-has-no-value-type>",
+				"NDoc.Test.Template.IfMemberHasNoValueType",
+				"IntMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_IfMemberHasNoValueType_VoidMethod()
+	{
+		AssertEquals(
+			"true",
+			EvaluateMember(
+				"<if-member-has-no-value-type>true</if-member-has-no-value-type>",
+				"NDoc.Test.Template.IfMemberHasNoValueType",
+				"VoidMethod",
+				"Method1",
+				0));
+	}
+
+	#endregion
+
+	#region <if-member-has-value-type> Tests
+
+	public void Test_IfMemberHasValueType_IntMethod()
+	{
+		AssertEquals(
+			"true",
+			EvaluateMember(
+				"<if-member-has-value-type>true</if-member-has-value-type>",
+				"NDoc.Test.Template.IfMemberHasValueType",
+				"IntMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_IfMemberHasValueType_VoidMethod()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-has-value-type>true</if-member-has-value-type>",
+				"NDoc.Test.Template.IfMemberHasValueType",
+				"VoidMethod",
+				"Method1",
+				0));
+	}
+
+	#endregion
+
 	#region <if-not-last-parameter> Tests
 
 	public void Test_IfNotLastParameter_OneMethodOneParameter()
@@ -300,70 +356,6 @@ public class TemplateTests : TestCase
 
 	#endregion
 
-	#region <member-type> Tests
-
-	public void Test_MemberType_OneConstructor()
-	{
-		AssertEquals(
-			"Constructor",
-			EvaluateMember(
-				"<member-type />",
-				"NDoc.Test.Template.MemberType",
-				"OneConstructor",
-				".ctor",
-				0));
-	}
-
-	public void Test_MemberType_OneEvent()
-	{
-		AssertEquals(
-			"Event",
-			EvaluateMember(
-				"<member-type />",
-				"NDoc.Test.Template.MemberType",
-				"OneEvent",
-				"Event1",
-				0));
-	}
-
-	public void Test_MemberType_OneField()
-	{
-		AssertEquals(
-			"Field",
-			EvaluateMember(
-				"<member-type />",
-				"NDoc.Test.Template.MemberType",
-				"OneField",
-				"Field1",
-				0));
-	}
-
-	public void Test_MemberType_OneMethod()
-	{
-		AssertEquals(
-			"Method",
-			EvaluateMember(
-				"<member-type />",
-				"NDoc.Test.Template.MemberType",
-				"OneMethod",
-				"Method1",
-				0));
-	}
-
-	public void Test_MemberType_OneProperty()
-	{
-		AssertEquals(
-			"Property",
-			EvaluateMember(
-				"<member-type />",
-				"NDoc.Test.Template.MemberType",
-				"OneProperty",
-				"Property1",
-				0));
-	}
-
-	#endregion
-	
 	#region <member-declaring-type> Tests
 
 	public void Test_MemberDeclaringType_NoMembers()
@@ -450,6 +442,98 @@ public class TemplateTests : TestCase
 
 	#endregion
 
+	#region <member-type> Tests
+
+	public void Test_MemberType_OneConstructor()
+	{
+		AssertEquals(
+			"Constructor",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneConstructor",
+				".ctor",
+				0));
+	}
+
+	public void Test_MemberType_OneEvent()
+	{
+		AssertEquals(
+			"Event",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneEvent",
+				"Event1",
+				0));
+	}
+
+	public void Test_MemberType_OneField()
+	{
+		AssertEquals(
+			"Field",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneField",
+				"Field1",
+				0));
+	}
+
+	public void Test_MemberType_OneMethod()
+	{
+		AssertEquals(
+			"Method",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_MemberType_OneProperty()
+	{
+		AssertEquals(
+			"Property",
+			EvaluateMember(
+				"<member-type />",
+				"NDoc.Test.Template.MemberType",
+				"OneProperty",
+				"Property1",
+				0));
+	}
+
+	#endregion
+
+	#region <member-value-type-name> Tests
+
+	public void Test_MemberValueTypeName_IntMethod()
+	{
+		AssertEquals(
+			"Int32",
+			EvaluateMember(
+				"<member-value-type-name />",
+				"NDoc.Test.Template.MemberValueTypeName",
+				"IntMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_MemberValueTypeName_VoidMethod()
+	{
+		AssertEquals(
+			"Void",
+			EvaluateMember(
+				"<member-value-type-name />",
+				"NDoc.Test.Template.MemberValueTypeName",
+				"VoidMethod",
+				"Method1",
+				0));
+	}
+
+	#endregion
+	
 	#region {$type-constructors-link} Tests
 
 	public void Test_TypeConstructorsLink_TwoOverloadedConstructors()

@@ -1079,5 +1079,26 @@ namespace NDoc.Core
 				return id;
 			}
 		}
+
+		/// <summary>
+		///		<para>Gets the current member's value type's name.</para>
+		/// </summary>
+		/// <remarks>
+		///		<para>Fields return their field type's name. Properties 
+		///		return their value type's name. Methods return their return 
+		///		type's name.</para>
+		/// </remarks>
+		public string MemberValueTypeName
+		{
+			get
+			{
+				if (currentMember is MethodInfo)
+				{
+					return ((MethodInfo)currentMember).ReturnType.Name;
+				}
+				
+				return String.Empty;
+			}
+		}
 	}
 }

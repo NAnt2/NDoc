@@ -43,30 +43,41 @@
 					<span class="lang"><text>[Visual&nbsp;Basic]&nl;</text></span>
 					<b>
 						<member-access lang="VB" />
-						<text> Function </text>
+						<if-member-has-value-type>
+							<text> Function </text>
+						</if-member-has-value-type>
+						<if-member-has-no-value-type>
+							<text> Sub </text>
+						</if-member-has-no-value-type>
 						<member-name />
 						<text>(</text>
 						<if-member-has-parameters>
-							<text>&nl;</text>
+							<text> _&nl;</text>
 							<for-each-parameter-in-member>
 								<text>&in;</text>
 								<parameter-name />
 								<text> As </text>
 								<parameter-type-name />
 								<if-not-last-parameter>
-									<text>,&nl;</text>
+									<text>, _&nl;</text>
 								</if-not-last-parameter>
 							</for-each-parameter-in-member>
-							<text>&nl;</text>
+							<text> _&nl;</text>
 						</if-member-has-parameters>
 						<text>)</text>
+						<if-member-has-value-type>
+							<text> As </text>
+							<member-value-type-name />
+						</if-member-has-value-type>
 					</b>
 				</pre>
 				<pre class="syntax">
 					<span class="lang"><text>[C#]&nl;</text></span>
 					<b>
 						<member-access lang="C#" />
-						<text> void </text>
+						<text> </text>
+						<member-value-type-name />
+						<text> </text>
 						<member-name />
 						<text>(</text>
 						<if-member-has-parameters>

@@ -93,6 +93,32 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace IfMemberHasNoValueType
+	{
+		public class IntMethod
+		{
+			public int Method1() { return 0; }
+		}
+
+		public class VoidMethod
+		{
+			public void Method1() {}
+		}
+	}
+
+	namespace IfMemberHasValueType
+	{
+		public class IntMethod
+		{
+			public int Method1() { return 0; }
+		}
+
+		public class VoidMethod
+		{
+			public void Method1() {}
+		}
+	}
+
 	namespace IfNotLastParameter
 	{
 		public class OneMethodOneParameter
@@ -188,6 +214,19 @@ namespace NDoc.Test.Template
 		public class OneProperty
 		{
 			public int Property1 { get { return 0; } }
+		}
+	}
+
+	namespace MemberValueTypeName
+	{
+		public class IntMethod
+		{
+			public int Method1() { return 0; }
+		}
+
+		public class VoidMethod
+		{
+			public void Method1() {}
 		}
 	}
 

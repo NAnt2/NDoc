@@ -659,6 +659,24 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-member-has-no-value-type")]
+		private void IfMemberHasNoValueType(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MemberValueTypeName == "Void")
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		[TemplateInstruction("if-member-has-value-type")]
+		private void IfMemberHasValueType(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MemberValueTypeName != "Void")
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		[TemplateInstruction("if-member-is-inherited")]
 		private void IfMemberIsInherited(XmlElement instructionElement)
 		{
@@ -915,6 +933,12 @@ namespace NDoc.Core
 		private void MemberType(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(GetMemberType(instructionElement.GetAttribute("lang")));
+		}
+
+		[TemplateInstruction("member-value-type-name")]
+		private void MemberValueTypeName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.MemberValueTypeName);
 		}
 
 		[TemplateInstruction("namespace-name")]
