@@ -436,7 +436,7 @@ namespace NDoc.Gui
 			// cancelToolBarButton
 			// 
 			this.cancelToolBarButton.Enabled = false;
-			this.cancelToolBarButton.ImageIndex = 5;
+			this.cancelToolBarButton.ImageIndex = 4;
 			this.cancelToolBarButton.ToolTipText = "Cancel";
 			// 
 			// documenterHeaderGroupBox
@@ -485,7 +485,7 @@ namespace NDoc.Gui
 			// 
 			// viewToolBarButton
 			// 
-			this.viewToolBarButton.ImageIndex = 6;
+			this.viewToolBarButton.ImageIndex = 5;
 			this.viewToolBarButton.ToolTipText = "View Documentation (Ctrl+Shift+V)";
 			// 
 			// statusBar
@@ -512,7 +512,7 @@ namespace NDoc.Gui
 			// 
 			// openToolBarButton
 			// 
-			this.openToolBarButton.ImageIndex = 2;
+			this.openToolBarButton.ImageIndex = 1;
 			this.openToolBarButton.ToolTipText = "Open ";
 			// 
 			// separatorToolBarButton
@@ -521,12 +521,12 @@ namespace NDoc.Gui
 			// 
 			// solutionToolBarButton
 			// 
-			this.solutionToolBarButton.ImageIndex = 1;
+			this.solutionToolBarButton.ImageIndex = 6;
 			this.solutionToolBarButton.ToolTipText = "New from Visual Studio Solution";
 			// 
 			// saveToolBarButton
 			// 
-			this.saveToolBarButton.ImageIndex = 3;
+			this.saveToolBarButton.ImageIndex = 2;
 			this.saveToolBarButton.ToolTipText = "Save";
 			// 
 			// editButton
@@ -599,8 +599,8 @@ namespace NDoc.Gui
 			this.toolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
 			this.toolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
 																					   this.newToolBarButton,
-																					   this.solutionToolBarButton,
 																					   this.openToolBarButton,
+																					   this.solutionToolBarButton,
 																					   this.saveToolBarButton,
 																					   this.separatorToolBarButton,
 																					   this.buildToolBarButton,
@@ -618,7 +618,7 @@ namespace NDoc.Gui
 			// 
 			// buildToolBarButton
 			// 
-			this.buildToolBarButton.ImageIndex = 4;
+			this.buildToolBarButton.ImageIndex = 3;
 			this.buildToolBarButton.ToolTipText = "Build Documentation (Ctrl+Shift+B)";
 			// 
 			// MainForm
