@@ -445,29 +445,38 @@ namespace NDoc.Documenter.Msdn2
 #endif
 				}
 
-				if ((MyConfig.OutputTarget & OutputType.HtmlHelp) > 0)
+				if (MyConfig.SkipCompile) 
 				{
-					OnDocBuildingStep(85, "Compiling HTML Help file...");
-					htmlHelp.CompileProject();
+					workspace.RemoveResourceDirectory();
+					// copy everything to the output dir
+					workspace.SaveOutputs( "*.*" );
+					workspace.CleanIntermediates();
 				}
-				else
+				else 
 				{
+					if ((MyConfig.OutputTarget & OutputType.HtmlHelp) > 0)
+					{
+						OnDocBuildingStep(85, "Compiling HTML Help file...");
+						htmlHelp.CompileProject();
+					}
+					else
+					{
 #if !DEBUG
 					//remove .hhc file
 					File.Delete(htmlHelp.GetPathToContentsFile());
 #endif
-				}
+					}
+					// if we're only building a CHM, copy that to the Outpur dir
+					if ((MyConfig.OutputTarget & OutputType.HtmlHelp) > 0 && (MyConfig.OutputTarget & OutputType.Web) == 0) 
+					{
+						workspace.SaveOutputs( "*.chm" );
+					}
+					else
+					{
+						// copy everything to the output dir (cause the help file is all the html, not just one chm)
+						workspace.SaveOutputs( "*.*" );
+					}
 
-				OnDocBuildingStep(90, "Writing documentation to output path");
-				// if we're only building a CHM, copy that to the Outpur dir
-				if ((MyConfig.OutputTarget & OutputType.HtmlHelp) > 0 && (MyConfig.OutputTarget & OutputType.Web) == 0) 
-				{
-					workspace.SaveOutputs( "*.chm" );
-				} 
-				else 
-				{
-					// otherwise copy everything to the output dir (cause the help file is all the html, not just one chm)
-					workspace.SaveOutputs( "*.*" );
 				}
 				
 				if ( MyConfig.CleanIntermediates )

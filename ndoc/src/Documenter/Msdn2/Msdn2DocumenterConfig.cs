@@ -213,7 +213,26 @@ namespace NDoc.Documenter.Msdn2
 				SetDirty();
 			}
 		}
-	
+
+		bool _SkipCompile = false;
+		
+		/// <summary>
+		/// Gets or sets a flag indicting whether to skip the compile stage of the build process.
+		/// </summary>
+		[Category("Documentation Main Settings")]
+		[Description("If true, the build process will skip the compile stage.")]
+		[DefaultValue(false)]
+		public bool SkipCompile
+		{
+			get { return _SkipCompile; }
+
+			set
+			{
+				_SkipCompile = value;
+				SetDirty();
+			}
+		}
+
 		#endregion
 
 		/// <summary>Gets or sets the IncludeFavorites property.</summary>
@@ -455,25 +474,6 @@ namespace NDoc.Documenter.Msdn2
 				SetDirty();
 			}
 		}	
-
-//		string _Version = "1.0.0.0";
-//
-//		/// <summary>Get's or sets the version property</summary>
-//		/// <remarks>The version number for the help file (#.#.#.#)</remarks>
-//		[Category("HTML Help Options")]
-//		[Description("The version number for the help file (#.#.#.#)")]
-//		[DefaultValue("1.0.0.0")]
-//		public string Version
-//		{
-//			get { return _Version; }
-//
-//			set
-//			{
-//				_Version = value;
-//				SetDirty();
-//			}
-//		}
-	
 
 		/// <summary>
 		/// 

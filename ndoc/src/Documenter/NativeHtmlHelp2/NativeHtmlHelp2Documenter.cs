@@ -238,29 +238,40 @@ namespace NDoc.Documenter.NativeHtmlHelp2
 
 				toc.Save( workspace.WorkingDirectory );
 
-				//then compile the HxC into an HxS
-				OnDocBuildingStep( 65, "Compiling Html Help 2 Files..." );
-				CompileHxCFile( workspace );
-
-				// copy outputs to the final build location
-				workspace.SaveOutputs( "*.Hxs" );
-				workspace.SaveOutputs( "*.HxI" );
-
-				// do clean up and final registration steps
-				OnDocBuildingStep( 95, "Finishing up..." );
-
-				if ( MyConfig.RegisterTitleWithNamespace )
-					RegisterTitleWithCollection( workspace );
-				else if ( MyConfig.RegisterTitleAsCollection )
-					RegisterTitleAsCollection( workspace );
-
 				// create collection level files
 				if( MyConfig.GenerateCollectionFiles )
 					CreateCollectionFiles( workspace );
 
-				workspace.RemoveResourceDirectory();
-				if ( MyConfig.CleanIntermediates )
+				if (MyConfig.SkipCompile)
+				{
+					workspace.RemoveResourceDirectory();
+					// copy everything to the output dir
+					workspace.SaveOutputs( "*.*" );
 					workspace.CleanIntermediates();
+				}
+				else
+				{
+					//then compile the HxC into an HxS
+					OnDocBuildingStep( 65, "Compiling Html Help 2 Files..." );
+					CompileHxCFile( workspace );
+
+					// copy outputs to the final build location
+					workspace.SaveOutputs( "*.Hxs" );
+					workspace.SaveOutputs( "*.HxI" );
+
+					// do clean up and final registration steps
+					OnDocBuildingStep( 95, "Registering Generated Help File..." );
+
+					if ( MyConfig.RegisterTitleWithNamespace )
+						RegisterTitleWithCollection( workspace );
+					else if ( MyConfig.RegisterTitleAsCollection )
+						RegisterTitleAsCollection( workspace );
+					workspace.RemoveResourceDirectory();
+
+					if ( MyConfig.CleanIntermediates )
+						workspace.CleanIntermediates();
+				}
+
 
 #if DEBUG
 				Trace.WriteLine( string.Format( "It took a total of {0} seconds", ( Environment.TickCount - start ) / 1000 ) );

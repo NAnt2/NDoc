@@ -142,6 +142,25 @@ namespace NDoc.Documenter.NativeHtmlHelp2
 			}
 		}
 
+		private bool _SkipCompile = false;
+		
+		/// <summary>
+		/// Gets or sets a flag indicting whether to skip the compile stage of the build process.
+		/// </summary>
+		[Category("Documentation Main Settings")]
+		[Description("If true, the build process will skip the compile stage.")]
+		[DefaultValue(false)]
+		public bool SkipCompile
+		{
+			get { return _SkipCompile; }
+
+			set
+			{
+				_SkipCompile = value;
+				SetDirty();
+			}
+		}
+
 		#endregion
 
 		#region Deployment properties
@@ -462,6 +481,7 @@ namespace NDoc.Documenter.NativeHtmlHelp2
 			}
 		}
 
+		
 		#endregion
 
 		#region Additonal content properties
