@@ -1036,7 +1036,7 @@
 		</p>
 		<p>
 			<b>Assembly: </b>
-			<xsl:value-of select="../../../@name" /> (in <xsl:value-of select="../../@name" />)
+			<xsl:value-of select="../../../@name" /> (in <xsl:value-of select="../../../@filename" />)
 		</p>
 		<xsl:call-template name="permissions" />
 		<xsl:apply-templates select="documentation/node()" mode="type-requirements-section" />

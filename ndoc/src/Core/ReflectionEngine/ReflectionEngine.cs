@@ -259,7 +259,7 @@ namespace NDoc.Core.Reflection
 
 						int starta = Environment.TickCount;
 
-						WriteAssembly(writer, assembly);
+						WriteAssembly(writer, assembly, Path.GetFileName(AssemblyFileName));
 
 						Trace.WriteLine("Completed " + assembly.FullName);
 						Trace.WriteLine(((Environment.TickCount - starta) / 1000.0).ToString() + " sec.");
@@ -802,7 +802,7 @@ namespace NDoc.Core.Reflection
 			return true;
 		}
 
-		private void WriteAssembly(XmlWriter writer, Assembly assembly)
+		private void WriteAssembly(XmlWriter writer, Assembly assembly, string fileName)
 		{
 			IsDelphiAssembly = this.ReferencesBorlandDelphi(assembly);
 
@@ -810,6 +810,7 @@ namespace NDoc.Core.Reflection
 
 			writer.WriteStartElement("assembly");
 			writer.WriteAttributeString("name", assemblyName.Name);
+			writer.WriteAttributeString("filename", fileName);
 
 			if (this.rep.AssemblyVersionInfo==AssemblyVersionInformationType.AssemblyVersion)
 			{

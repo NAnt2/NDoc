@@ -266,7 +266,7 @@
 					</p>
 					<p>
 						<b>Assembly: </b>
-						<xsl:value-of select="../../../@name" /> (in <xsl:value-of select="../../@name" />)
+						<xsl:value-of select="../../../@name" /> (in <xsl:value-of select="../../../@filename" />)
 					</p>
 					<xsl:if test="documentation/permission">
 						<p>
