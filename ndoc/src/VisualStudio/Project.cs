@@ -82,7 +82,10 @@ namespace NDoc.VisualStudio
 		/// <param name="path">The path to the project file.</param>
 		public void Read(string path)
 		{
-			_ProjectDocument = new XPathDocument(path);
+			using(StreamReader reader = new StreamReader(path))
+			{
+				_ProjectDocument = new XPathDocument(reader);
+			}
 			_ProjectNavigator = _ProjectDocument.CreateNavigator();
 		}
 
