@@ -1068,6 +1068,9 @@ namespace NDoc.Gui
 			this.options.ShowProgressOnBuild = settings.GetSetting( "gui", "showProgressOnBuild", false );
 			this.options.MRUSize = settings.GetSetting( "gui", "mruSize", 8 );
 
+			settings = new Settings( Settings.MachineSettingsFile );
+			this.options.HtmlHelpWorkshopLocation = settings.GetSetting("compilers", "htmlHelpWorkshopLocation", "");
+			
 			int index = 0;
 
 			foreach (IDocumenter documenter in project.Documenters)
@@ -1114,6 +1117,11 @@ namespace NDoc.Gui
 					recentProjectFilenames.RemoveAt(this.options.MRUSize);
 
 				settings.SetSettingList( "gui", "mru", "project", recentProjectFilenames );			
+			}
+
+			using (Settings settings = new Settings( Settings.MachineSettingsFile ))
+			{
+				settings.SetSetting("compilers", "htmlHelpWorkshopLocation", this.options.HtmlHelpWorkshopLocation);
 			}
 		}
 
