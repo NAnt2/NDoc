@@ -54,16 +54,26 @@
 	<xsl:template name="get-link-for-type">
 		<xsl:param name="type" />
 		<xsl:param name="link-text" />
+		<xsl:variable name="tid">
+			<xsl:choose>
+				<xsl:when test="$type/@id">
+					<xsl:value-of select="$type/@id" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$type" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<xsl:variable name="filename">
 			<xsl:choose>
-				<xsl:when test="starts-with(substring-after($type,':'), 'System.')">
+				<xsl:when test="starts-with(substring-after($tid,':'), 'System.')">
 					<xsl:call-template name="get-filename-for-system-type">
-						<xsl:with-param name="type-name" select="substring-after($type,':')" />
+						<xsl:with-param name="type-name" select="substring-after($tid,':')" />
 					</xsl:call-template>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="get-filename-for-type">
-						<xsl:with-param name="id" select="$type" />
+						<xsl:with-param name="id" select="$tid" />
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>

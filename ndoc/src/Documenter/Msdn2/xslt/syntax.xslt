@@ -836,8 +836,8 @@
 							<xsl:with-param name="lang" select="$lang" />
 						</xsl:call-template>
 					</xsl:variable>
-					<xsl:call-template name="get-link-for-type-name">
-						<xsl:with-param name="type-name" select="./base/@type" />
+					<xsl:call-template name="get-link-for-type">
+						<xsl:with-param name="type" select="./base" />
 						<xsl:with-param name="link-text" select="$link-type" />
 					</xsl:call-template>
 				</xsl:if>
@@ -872,8 +872,8 @@
 								<xsl:with-param name="lang" select="$lang" />
 							</xsl:call-template>
 						</xsl:variable>
-						<xsl:call-template name="get-link-for-type-name">
-							<xsl:with-param name="type-name" select="./base/@type" />
+						<xsl:call-template name="get-link-for-type">
+							<xsl:with-param name="type" select="./base" />
 							<xsl:with-param name="link-text" select="$link-type" />
 						</xsl:call-template>
 						<xsl:if test="implements[not(@inherited)]">
