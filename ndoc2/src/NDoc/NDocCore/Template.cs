@@ -17,6 +17,8 @@ namespace NDoc.Core
 
 		private Hashtable instructions;
 		private Hashtable variables;
+		private Hashtable vbTypeNames;
+		private Hashtable csTypeNames;
 		private XmlDocument templateDocument;
 		private string namespaceName;
 		private string typeName;
@@ -38,6 +40,9 @@ namespace NDoc.Core
 		{
 			FindInstructions();
 			FindVariables();
+
+			SetUpCSTypeNames();
+			SetUpVBTypeNames();
 		}
 
 		#endregion
@@ -79,6 +84,70 @@ namespace NDoc.Core
 					variables.Add(templateVariable.Name, variable);
 				}
 			}
+		}
+
+		private void SetUpCSTypeNames()
+		{
+			csTypeNames = new Hashtable();
+
+			csTypeNames.Add("System.Boolean", "bool");
+			csTypeNames.Add("System.Byte", "byte");
+			csTypeNames.Add("System.Char", "char");
+			csTypeNames.Add("System.Decimal", "decimal");
+			csTypeNames.Add("System.Double", "double");
+			csTypeNames.Add("System.Int16", "short");
+			csTypeNames.Add("System.Int32", "int");
+			csTypeNames.Add("System.Int64", "long");
+			csTypeNames.Add("System.Object", "object");
+			csTypeNames.Add("System.SByte", "sbyte");
+			csTypeNames.Add("System.Single", "float");
+			csTypeNames.Add("System.String", "string");
+			csTypeNames.Add("System.UInt16", "ushort");
+			csTypeNames.Add("System.UInt32", "uint");
+			csTypeNames.Add("System.UInt64", "ulong");
+			csTypeNames.Add("System.Void", "void");
+		}
+
+		private void SetUpVBTypeNames()
+		{
+			vbTypeNames = new Hashtable();
+
+			vbTypeNames.Add("System.Boolean", "Boolean");
+			vbTypeNames.Add("System.Byte", "Byte");
+			vbTypeNames.Add("System.Char", "Char");
+			vbTypeNames.Add("System.DateTime", "Date");
+			vbTypeNames.Add("System.Decimal", "Decimal");
+			vbTypeNames.Add("System.Double", "Double");
+			vbTypeNames.Add("System.Int16", "Short");
+			vbTypeNames.Add("System.Int32", "Integer");
+			vbTypeNames.Add("System.Int64", "Long");
+			vbTypeNames.Add("System.Object", "Object");
+			vbTypeNames.Add("System.Single", "Single");
+			vbTypeNames.Add("System.String", "String");
+		}
+
+		private string GetTypeName(string lang, string fullName, string defaultName)
+		{
+			string name = null;
+
+			if (lang != null && lang.Length > 0)
+			{
+				if (lang == "VB")
+				{
+					name = vbTypeNames[fullName] as string;
+				}
+				else if (lang == "C#")
+				{
+					name = csTypeNames[fullName] as string;
+				}
+			}
+
+			if (name == null || name == String.Empty)
+			{
+				name = defaultName;
+			}
+
+			return name;
 		}
 
 		#endregion
@@ -662,7 +731,7 @@ namespace NDoc.Core
 		[TemplateInstruction("if-member-has-no-value-type")]
 		private void IfMemberHasNoValueType(XmlElement instructionElement)
 		{
-			if (assemblyNavigator.MemberValueTypeName == "Void")
+			if (assemblyNavigator.MemberValueTypeFullName == "System.Void")
 			{
 				EvaluateChildren(instructionElement);
 			}
@@ -671,7 +740,7 @@ namespace NDoc.Core
 		[TemplateInstruction("if-member-has-value-type")]
 		private void IfMemberHasValueType(XmlElement instructionElement)
 		{
-			if (assemblyNavigator.MemberValueTypeName != "Void")
+			if (assemblyNavigator.MemberValueTypeFullName != "System.Void")
 			{
 				EvaluateChildren(instructionElement);
 			}
@@ -938,7 +1007,9 @@ namespace NDoc.Core
 		[TemplateInstruction("member-value-type-name")]
 		private void MemberValueTypeName(XmlElement instructionElement)
 		{
-			resultWriter.WriteString(assemblyNavigator.MemberValueTypeName);
+			string lang = instructionElement.GetAttribute("lang");
+			string name = GetTypeName(lang, assemblyNavigator.MemberValueTypeFullName, assemblyNavigator.MemberValueTypeName);
+			resultWriter.WriteString(name);
 		}
 
 		[TemplateInstruction("namespace-name")]
@@ -956,7 +1027,9 @@ namespace NDoc.Core
 		[TemplateInstruction("parameter-type-name")]
 		private void ParameterTypeName(XmlElement instructionElement)
 		{
-			resultWriter.WriteString(assemblyNavigator.ParameterTypeName);
+			string lang = instructionElement.GetAttribute("lang");
+			string name = GetTypeName(lang, assemblyNavigator.ParameterTypeFullName, assemblyNavigator.ParameterTypeName);
+			resultWriter.WriteString(name);
 		}
 
 		[TemplateInstruction("text")]

@@ -532,6 +532,30 @@ public class TemplateTests : TestCase
 				0));
 	}
 
+	public void Test_MemberValueTypeName_IntMethod_CS()
+	{
+		AssertEquals(
+			"int",
+			EvaluateMember(
+				"<member-value-type-name lang='C#' />",
+				"NDoc.Test.Template.MemberValueTypeName",
+				"IntMethod",
+				"Method1",
+				0));
+	}
+
+	public void Test_MemberValueTypeName_IntMethod_VB()
+	{
+		AssertEquals(
+			"Integer",
+			EvaluateMember(
+				"<member-value-type-name lang='VB' />",
+				"NDoc.Test.Template.MemberValueTypeName",
+				"IntMethod",
+				"Method1",
+				0));
+	}
+
 	#endregion
 	
 	#region {$type-constructors-link} Tests

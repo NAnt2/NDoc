@@ -45,7 +45,7 @@
 							<type-access lang="VB" />
 							<text> Sub New(</text>
 							<for-each-parameter-in-member>
-								<parameter-type-name />
+								<parameter-type-name lang="VB" />
 								<if-not-last-parameter>
 									<text>, </text>
 								</if-not-last-parameter>
@@ -62,7 +62,7 @@
 							<type-name />
 							<text>(</text>
 							<for-each-parameter-in-member>
-								<parameter-type-name />
+								<parameter-type-name lang="C#" />
 								<if-not-last-parameter>
 									<text>, </text>
 								</if-not-last-parameter>

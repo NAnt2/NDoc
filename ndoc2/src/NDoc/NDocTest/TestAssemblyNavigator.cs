@@ -271,6 +271,19 @@ namespace NDoc.Test.AssemblyNavigator
 		}
 	}
 
+	namespace MemberValueTypeFullName
+	{
+		public class IntMethod
+		{
+			public int Method1() { return 0; }
+		}
+
+		public class VoidMethod
+		{
+			public void Method1() {}
+		}
+	}
+
 	namespace MemberValueTypeName
 	{
 		public class IntMethod

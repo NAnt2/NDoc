@@ -982,6 +982,17 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
+		///		<para>Gets the current parameter's type's full name.</para>
+		/// </summary>
+		public string ParameterTypeFullName
+		{
+			get
+			{
+				return ((ParameterInfo)parameterEnumerator.Current).ParameterType.FullName;
+			}
+		}
+
+		/// <summary>
 		///		<para>Gets the current parameter's name.</para>
 		/// </summary>
 		public string ParameterName
@@ -1080,6 +1091,16 @@ namespace NDoc.Core
 			}
 		}
 
+		private Type GetCurrentMemberValueType()
+		{
+			if (currentMember is MethodInfo)
+			{
+				return ((MethodInfo)currentMember).ReturnType;
+			}
+
+			return null;
+		}
+
 		/// <summary>
 		///		<para>Gets the current member's value type's name.</para>
 		/// </summary>
@@ -1092,9 +1113,34 @@ namespace NDoc.Core
 		{
 			get
 			{
-				if (currentMember is MethodInfo)
+				Type valueType = GetCurrentMemberValueType();
+
+				if (valueType != null)
 				{
-					return ((MethodInfo)currentMember).ReturnType.Name;
+					return valueType.Name;
+				}
+				
+				return String.Empty;
+			}
+		}
+
+		/// <summary>
+		///		<para>Gets the current member's value type's full name.</para>
+		/// </summary>
+		/// <remarks>
+		///		<para>Fields return their field type's name. Properties 
+		///		return their value type's name. Methods return their return 
+		///		type's name.</para>
+		/// </remarks>
+		public string MemberValueTypeFullName
+		{
+			get
+			{
+				Type valueType = GetCurrentMemberValueType();
+
+				if (valueType != null)
+				{
+					return valueType.FullName;
 				}
 				
 				return String.Empty;

@@ -48,15 +48,26 @@
 						<a href="{$member-link}">
 							<type-access lang="VB" />
 							<text> </text>
+							<if-member-has-value-type>
+								<text>Function</text>
+							</if-member-has-value-type>
+							<if-member-has-no-value-type>
+								<text>Sub</text>
+							</if-member-has-no-value-type>
+							<text> </text>
 							<member-name />
 							<text>(</text>
 							<for-each-parameter-in-member>
-								<parameter-type-name />
+								<parameter-type-name lang="VB" />
 								<if-not-last-parameter>
 									<text>, </text>
 								</if-not-last-parameter>
 							</for-each-parameter-in-member>
 							<text>)</text>
+							<if-member-has-value-type>
+								<text> As </text>
+								<member-value-type-name lang="VB" />
+							</if-member-has-value-type>
 						</a>
 					</blockquote>
 					<blockquote class="dtBlock">
@@ -65,10 +76,12 @@
 						<a href="{$member-link}">
 							<type-access lang="C#" />
 							<text> </text>
+							<member-value-type-name lang="C#" />
+							<text> </text>
 							<member-name />
 							<text>(</text>
 							<for-each-parameter-in-member>
-								<parameter-type-name />
+								<parameter-type-name lang="C#" />
 								<if-not-last-parameter>
 									<text>, </text>
 								</if-not-last-parameter>

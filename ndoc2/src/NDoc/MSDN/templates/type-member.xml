@@ -57,7 +57,7 @@
 								<text>&in;</text>
 								<parameter-name />
 								<text> As </text>
-								<parameter-type-name />
+								<parameter-type-name lang="VB" />
 								<if-not-last-parameter>
 									<text>, _&nl;</text>
 								</if-not-last-parameter>
@@ -67,7 +67,7 @@
 						<text>)</text>
 						<if-member-has-value-type>
 							<text> As </text>
-							<member-value-type-name />
+							<member-value-type-name lang="VB" />
 						</if-member-has-value-type>
 					</b>
 				</pre>
@@ -76,7 +76,7 @@
 					<b>
 						<member-access lang="C#" />
 						<text> </text>
-						<member-value-type-name />
+						<member-value-type-name lang="C#" />
 						<text> </text>
 						<member-name />
 						<text>(</text>
@@ -84,7 +84,7 @@
 							<text>&nl;</text>
 							<for-each-parameter-in-member>
 								<text>&in;</text>
-								<parameter-type-name />
+								<parameter-type-name lang="C#" />
 								<text> </text>
 								<parameter-name />
 								<if-not-last-parameter>

@@ -613,6 +613,26 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region MemberValueTypeFullName Tests
+
+	public void Test_MemberValueTypeFullName_IntMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MemberValueTypeFullName"));
+		Assert(navigator.MoveToType("IntMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals("System.Int32", navigator.MemberValueTypeFullName);
+	}
+
+	public void Test_MemberValueTypeFullName_VoidMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MemberValueTypeFullName"));
+		Assert(navigator.MoveToType("VoidMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals("System.Void", navigator.MemberValueTypeFullName);
+	}
+
+	#endregion
+
 	#region MemberValueTypeName Tests
 
 	public void Test_MemberValueTypeName_IntMethod()
