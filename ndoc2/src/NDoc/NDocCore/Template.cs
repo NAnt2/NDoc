@@ -13,6 +13,8 @@ namespace NDoc.Core
 	/// </summary>
 	public class Template
 	{
+		private Hashtable instructions;
+		private Hashtable variables;
 		private XmlDocument templateDocument;
 		private string namespaceName;
 		private string typeName;
@@ -21,6 +23,52 @@ namespace NDoc.Core
 		private AssemblyNavigator assemblyNavigator;
 		private AssemblyDocumentation assemblyDocumentation;
 		private XmlWriter resultWriter;
+
+		/// <summary>
+		///		<para>Initializes a new instance of the Template class.</para>
+		/// </summary>
+		public Template()
+		{
+			FindInstructions();
+			FindVariables();
+		}
+
+		private delegate void Instruction(XmlElement instructionElement);
+		private delegate string Variable();
+
+		private void FindInstructions()
+		{
+			instructions = new Hashtable();
+
+			foreach (MethodInfo method in this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic))
+			{
+				TemplateInstructionAttribute templateInstruction = 
+					Attribute.GetCustomAttribute(method, typeof(TemplateInstructionAttribute)) as TemplateInstructionAttribute;
+
+				if (templateInstruction != null)
+				{
+					Instruction instruction = Delegate.CreateDelegate(typeof(Instruction), this, method.Name) as Instruction;
+					instructions.Add(templateInstruction.Name, instruction);
+				}
+			}
+		}
+
+		private void FindVariables()
+		{
+			variables = new Hashtable();
+
+			foreach (MethodInfo method in this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic))
+			{
+				TemplateVariableAttribute templateVariable = 
+					Attribute.GetCustomAttribute(method, typeof(TemplateVariableAttribute)) as TemplateVariableAttribute;
+
+				if (templateVariable != null)
+				{
+					Variable variable = Delegate.CreateDelegate(typeof(Variable), this, method.Name) as Variable;
+					variables.Add(templateVariable.Name, variable);
+				}
+			}
+		}
 
 		/// <summary>
 		///		<para>Loads a template from the specified file.</para>
@@ -210,164 +258,17 @@ namespace NDoc.Core
 
 		private void Execute(XmlElement instructionElement)
 		{
-			switch (instructionElement.LocalName)
+			if (instructions.Contains(instructionElement.LocalName))
 			{
-				case "assembly-name":
-					AssemblyName(instructionElement);
-					break;
-				case "for-each-class-in-namespace":
-					ForEachClassInNamespace(instructionElement);
-					break;
-				case "for-each-constructor-in-type":
-					ForEachConstructorInType(instructionElement);
-					break;
-				case "for-each-delegate-in-namespace":
-					ForEachDelegateInNamespace(instructionElement);
-					break;
-				case "for-each-enumeration-in-namespace":
-					ForEachEnumerationInNamespace(instructionElement);
-					break;
-				case "for-each-interface-implemented-by-type":
-					ForEachInterfaceImplementedByType(instructionElement);
-					break;
-				case "for-each-interface-in-namespace":
-					ForEachInterfaceInNamespace(instructionElement);
-					break;
-				case "for-each-method-in-type":
-					ForEachMethodInType(instructionElement);
-					break;
-				case "for-each-namespace":
-					ForEachNamespace(instructionElement);
-					break;
-				case "for-each-overloaded-member-in-type":
-					ForEachOverloadedMemberInType(instructionElement);
-					break;
-				case "for-each-parameter-in-member":
-					ForEachParameterInMember(instructionElement);
-					break;
-				case "for-each-property-in-type":
-					ForEachPropertyInType(instructionElement);
-					break;
-				case "for-each-structure-in-namespace":
-					ForEachStructureInNamespace(instructionElement);
-					break;
-				case "if-member-is-inherited":
-					IfMemberIsInherited(instructionElement);
-					break;
-				case "if-member-is-overloaded":
-					IfMemberIsOverloaded(instructionElement);
-					break;
-				case "if-namespace-contains-classes":
-					IfNamespaceContainsClasses(instructionElement);
-					break;
-				case "if-namespace-contains-delegates":
-					IfNamespaceContainsDelegates(instructionElement);
-					break;
-				case "if-namespace-contains-enumerations":
-					IfNamespaceContainsEnumerations(instructionElement);
-					break;
-				case "if-namespace-contains-interfaces":
-					IfNamespaceContainsInterfaces(instructionElement);
-					break;
-				case "if-namespace-contains-structures":
-					IfNamespaceContainsStructures(instructionElement);
-					break;
-				case "if-not-last-implemented-interface":
-					IfNotLastImplementedInterface(instructionElement);
-					break;
-				case "if-not-last-parameter":
-					IfNotLastParameter(instructionElement);
-					break;
-				case "if-type-has-base-type":
-					IfTypeHasBaseType(instructionElement);
-					break;
-				case "if-type-has-base-type-or-implements-interfaces":
-					IfTypeHasBaseTypeOrImplementsInterfaces(instructionElement);
-					break;
-				case "if-type-has-constructors":
-					IfTypeHasConstructors(instructionElement);
-					break;
-				case "if-type-has-methods":
-					IfTypeHasMethods(instructionElement);
-					break;
-				case "if-type-has-overloaded-constructors":
-					IfTypeHasOverloadedConstructors(instructionElement);
-					break;
-				case "if-type-has-properties":
-					IfTypeHasProperties(instructionElement);
-					break;
-				case "if-type-has-remarks":
-					IfTypeHasRemarks(instructionElement);
-					break;
-				case "if-type-implements-interfaces":
-					IfTypeImplementsInterfaces(instructionElement);
-					break;
-				case "if-type-is-abstract":
-					IfTypeIsAbstract(instructionElement);
-					break;
-				case "if-type-is-sealed":
-					IfTypeIsSealed(instructionElement);
-					break;
-				case "implemented-interface-name":
-					ImplementedInterfaceName(instructionElement);
-					break;
-				case "member-declaring-type":
-					MemberDeclaringType(instructionElement);
-					break;
-				case "member-name":
-					MemberName(instructionElement);
-					break;
-				case "member-overloads-summary":
-					MemberOverloadsSummary(instructionElement);
-					break;
-				case "member-summary":
-					MemberSummary(instructionElement);
-					break;
-				case "member-type":
-					MemberType(instructionElement);
-					break;
-				case "namespace-name":
-					NamespaceName(instructionElement);
-					break;
-				case "parameter-name":
-					ParameterName(instructionElement);
-					break;
-				case "parameter-type-name":
-					ParameterTypeName(instructionElement);
-					break;
-				case "template":
-					TemplateInstruction(instructionElement);
-					break;
-				case "text":
-					Text(instructionElement);
-					break;
-				case "type-access":
-					TypeAccess(instructionElement);
-					break;
-				case "type-base-type-name":
-					TypeBaseTypeName(instructionElement);
-					break;
-				case "type-constructors-summary":
-					TypeConstructorsSummary(instructionElement);
-					break;
-				case "type-name":
-					TypeName(instructionElement);
-					break;
-				case "type-remarks":
-					TypeRemarks(instructionElement);
-					break;
-				case "type-summary":
-					TypeSummary(instructionElement);
-					break;
-				case "type-type":
-					TypeType(instructionElement);
-					break;
-				default:
-					resultWriter.WriteStartElement(instructionElement.LocalName);
-					WriteAttributes(instructionElement);
-					EvaluateChildren(instructionElement);
-					resultWriter.WriteEndElement();
-					break;
+				Instruction instruction = instructions[instructionElement.LocalName] as Instruction;
+				instruction(instructionElement);
+			}
+			else
+			{
+				resultWriter.WriteStartElement(instructionElement.LocalName);
+				WriteAttributes(instructionElement);
+				EvaluateChildren(instructionElement);
+				resultWriter.WriteEndElement();
 			}
 		}
 
@@ -402,34 +303,17 @@ namespace NDoc.Core
 
 					if (i < value.Length && value[i] == '}')
 					{
+						string variableName = nameBuilder.ToString();
 						string newValue;
 
-						switch (nameBuilder.ToString())
+						if (variables.Contains(variableName))
 						{
-							case "assembly-name":
-								newValue = AssemblyNameVariable;
-								break;
-							case "member-link":
-								newValue = MemberLinkVariable;
-								break;
-							case "member-or-overloads-link":
-								newValue = MemberOrOverloadsLinkVariable;
-								break;
-							case "namespace-link":
-								newValue = NamespaceLinkVariable;
-								break;
-							case "type-link":
-								newValue = TypeLinkVariable;
-								break;
-							case "type-constructors-link":
-								newValue = TypeConstructorsLinkVariable;
-								break;
-							case "type-members-link":
-								newValue = TypeMembersLinkVariable;
-								break;
-							default:
-								newValue = "{$" + nameBuilder.ToString() + "}";
-								break;
+							Variable variable = variables[variableName] as Variable;
+							newValue = variable();
+						}
+						else
+						{
+							newValue = "{$" + variableName + "}";
 						}
 
 						valueBuilder.Append(newValue);
@@ -511,80 +395,68 @@ namespace NDoc.Core
 
 		#region Variables
 
-		private string AssemblyNameVariable
+		[TemplateVariable("assembly-name")]
+		private string AssemblyNameVariable()
 		{
-			get
-			{
-				return assemblyNavigator.AssemblyName;
-			}
+			return assemblyNavigator.AssemblyName;
 		}
 
-		private string MemberLinkVariable
+		[TemplateVariable("member-link")]
+		private string MemberLinkVariable()
 		{
-			get
-			{
-				int id = assemblyNavigator.MemberOverloadID;
-				return assemblyNavigator.NamespaceName + 
-					"." + 
-					assemblyNavigator.TypeName +  
-					"." + 
-					assemblyNavigator.MemberName +
-					(id == 0 ? "" : "-" + id.ToString()) +
-					".html";
-			}
+			int id = assemblyNavigator.MemberOverloadID;
+			return assemblyNavigator.NamespaceName + 
+				"." + 
+				assemblyNavigator.TypeName +  
+				"." + 
+				assemblyNavigator.MemberName +
+				(id == 0 ? "" : "-" + id.ToString()) +
+				".html";
 		}
 
-		private string MemberOrOverloadsLinkVariable
+		[TemplateVariable("member-or-overloads-link")]
+		private string MemberOrOverloadsLinkVariable()
 		{
-			get
-			{
-				return assemblyNavigator.NamespaceName + "." + 
-					assemblyNavigator.TypeName +  "." + 
-					assemblyNavigator.MemberName + ".html";
-			}
+			return assemblyNavigator.NamespaceName + "." + 
+				assemblyNavigator.TypeName +  "." + 
+				assemblyNavigator.MemberName + ".html";
 		}
 
-		private string NamespaceLinkVariable
+		[TemplateVariable("namespace-link")]
+		private string NamespaceLinkVariable()
 		{
-			get
-			{
-				return assemblyNavigator.NamespaceName + ".html";
-			}
+			return assemblyNavigator.NamespaceName + ".html";
 		}
 
-		private string TypeLinkVariable
+		[TemplateVariable("type-link")]
+		private string TypeLinkVariable()
 		{
-			get
-			{
-				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + ".html";
-			}
+			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + ".html";
 		}
 
-		private string TypeConstructorsLinkVariable
+		[TemplateVariable("type-constructors-link")]
+		private string TypeConstructorsLinkVariable()
 		{
-			get
-			{
-				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-constructors.html";
-			}
+			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-constructors.html";
 		}
 
-		private string TypeMembersLinkVariable
+		[TemplateVariable("type-members-link")]
+		private string TypeMembersLinkVariable()
 		{
-			get
-			{
-				return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-members.html";
-			}
+			return assemblyNavigator.NamespaceName + "." + assemblyNavigator.TypeName + "-members.html";
 		}
 
 		#endregion
 
 		#region Instructions
 
+		[TemplateInstruction("assembly-name")]
 		private void AssemblyName(XmlElement instructionElement)
 		{
-			resultWriter.WriteString(AssemblyNameVariable);
+			resultWriter.WriteString(AssemblyNameVariable());
 		}
 
+		[TemplateInstruction("for-each-class-in-namespace")]
 		private void ForEachClassInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstClass())
@@ -597,6 +469,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-constructor-in-type")]
 		private void ForEachConstructorInType(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -611,6 +484,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-delegate-in-namespace")]
 		private void ForEachDelegateInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstDelegate())
@@ -623,6 +497,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-enumeration-in-namespace")]
 		private void ForEachEnumerationInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstEnumeration())
@@ -635,6 +510,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-interface-implemented-by-type")]
 		private void ForEachInterfaceImplementedByType(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstInterfaceImplementedByType())
@@ -647,6 +523,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-interface-in-namespace")]
 		private void ForEachInterfaceInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstInterface())
@@ -659,6 +536,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-method-in-type")]
 		private void ForEachMethodInType(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -679,6 +557,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-namespace")]
 		private void ForEachNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstNamespace())
@@ -691,6 +570,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-overloaded-member-in-type")]
 		private void ForEachOverloadedMemberInType(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstOverloadedMember(membersName))
@@ -703,6 +583,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-parameter-in-member")]
 		private void ForEachParameterInMember(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstParameter())
@@ -715,6 +596,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-property-in-type")]
 		private void ForEachPropertyInType(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -729,6 +611,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("for-each-structure-in-namespace")]
 		private void ForEachStructureInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstStructure())
@@ -741,6 +624,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-member-is-inherited")]
 		private void IfMemberIsInherited(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.IsMemberInherited)
@@ -749,6 +633,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-member-is-overloaded")]
 		private void IfMemberIsOverloaded(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.IsMemberOverloaded)
@@ -757,6 +642,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-namespace-contains-classes")]
 		private void IfNamespaceContainsClasses(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasClasses)
@@ -765,6 +651,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-namespace-contains-delegates")]
 		private void IfNamespaceContainsDelegates(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasDelegates)
@@ -773,6 +660,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-namespace-contains-enumerations")]
 		private void IfNamespaceContainsEnumerations(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasEnumerations)
@@ -781,6 +669,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-namespace-contains-interfaces")]
 		private void IfNamespaceContainsInterfaces(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasInterfaces)
@@ -789,6 +678,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-namespace-contains-structures")]
 		private void IfNamespaceContainsStructures(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasStructures)
@@ -797,6 +687,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-not-last-implemented-interface")]
 		private void IfNotLastImplementedInterface(XmlElement instructionElement)
 		{
 			if (!assemblyNavigator.IsLastImplementedInterface)
@@ -805,6 +696,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-not-last-parameter")]
 		private void IfNotLastParameter(XmlElement instructionElement)
 		{
 			if (!assemblyNavigator.IsLastParameter)
@@ -813,6 +705,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-base-type")]
 		private void IfTypeHasBaseType(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeHasBaseType)
@@ -821,6 +714,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-base-type-or-implements-interfaces")]
 		private void IfTypeHasBaseTypeOrImplementsInterfaces(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeHasBaseType || assemblyNavigator.TypeImplementsInterfaces)
@@ -829,6 +723,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-constructors")]
 		private void IfTypeHasConstructors(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -839,6 +734,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-methods")]
 		private void IfTypeHasMethods(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -849,6 +745,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-overloaded-constructors")]
 		private void IfTypeHasOverloadedConstructors(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeHasOverloadedConstructors())
@@ -857,6 +754,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-properties")]
 		private void IfTypeHasProperties(XmlElement instructionElement)
 		{
 			string access = instructionElement.GetAttribute("access");
@@ -867,6 +765,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-has-remarks")]
 		private void IfTypeHasRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetTypeRemarks(assemblyNavigator.CurrentType);
@@ -877,6 +776,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-implements-interfaces")]
 		private void IfTypeImplementsInterfaces(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeImplementsInterfaces)
@@ -885,6 +785,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-is-abstract")]
 		private void IfTypeIsAbstract(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.IsTypeAbstract)
@@ -893,6 +794,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("if-type-is-sealed")]
 		private void IfTypeIsSealed(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.IsTypeSealed)
@@ -901,21 +803,25 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("implemented-interface-name")]
 		private void ImplementedInterfaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
 		}
 
+		[TemplateInstruction("member-declaring-type")]
 		private void MemberDeclaringType(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.MemberDeclaringType);
 		}
 
+		[TemplateInstruction("member-name")]
 		private void MemberName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.MemberName);
 		}
 
+		[TemplateInstruction("member-overloads-summary")]
 		private void MemberOverloadsSummary(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetMemberOverloadsSummary(assemblyNavigator.CurrentType, membersName);
@@ -926,6 +832,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("member-summary")]
 		private void MemberSummary(XmlElement instructionElement)
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
@@ -969,36 +876,43 @@ namespace NDoc.Core
 			return "ERROR";
 		}
 
+		[TemplateInstruction("member-type")]
 		private void MemberType(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(GetMemberType(instructionElement.GetAttribute("lang")));
 		}
 
+		[TemplateInstruction("namespace-name")]
 		private void NamespaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.NamespaceName);
 		}
 
+		[TemplateInstruction("parameter-name")]
 		private void ParameterName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ParameterName);
 		}
 
+		[TemplateInstruction("parameter-type-name")]
 		private void ParameterTypeName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ParameterTypeName);
 		}
 
+		[TemplateInstruction("text")]
 		private void Text(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(instructionElement.InnerText);
 		}
 
+		[TemplateInstruction("template")]
 		private void TemplateInstruction(XmlElement instructionElement)
 		{
 			EvaluateChildren(instructionElement);
 		}
 
+		[TemplateInstruction("type-access")]
 		private void TypeAccess(XmlElement instructionElement)
 		{
 			string access = "ERROR";
@@ -1032,11 +946,13 @@ namespace NDoc.Core
 			resultWriter.WriteString(access);
 		}
 
+		[TemplateInstruction("type-base-type-name")]
 		private void TypeBaseTypeName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.CurrentType.BaseType.Name);
 		}
 
+		[TemplateInstruction("type-constructors-summary")]
 		private void TypeConstructorsSummary(XmlElement instructionElement)
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
@@ -1064,11 +980,13 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("type-name")]
 		private void TypeName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.TypeName);
 		}
 
+		[TemplateInstruction("type-remarks")]
 		private void TypeRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetTypeRemarks(assemblyNavigator.CurrentType);
@@ -1079,6 +997,7 @@ namespace NDoc.Core
 			}
 		}
 
+		[TemplateInstruction("type-summary")]
 		private void TypeSummary(XmlElement instructionElement)
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
@@ -1166,6 +1085,7 @@ namespace NDoc.Core
 			return "ERROR";
 		}
 
+		[TemplateInstruction("type-type")]
 		private void TypeType(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(GetTypeType(instructionElement.GetAttribute("lang")));

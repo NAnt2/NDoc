@@ -16,7 +16,7 @@
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "Library"
-                RootNamespace = "NDocCore"
+                RootNamespace = "NDoc.Core"
                 StartupObject = ""
             >
                 <Config
@@ -88,6 +88,11 @@
                 />
                 <File
                     RelPath = "AssemblyNavigator.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Attributes.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
