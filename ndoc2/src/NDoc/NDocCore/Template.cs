@@ -152,6 +152,9 @@ namespace NDoc.Core
 				case "for-each-enumeration-in-namespace":
 					ForEachEnumerationInNamespace(instructionElement);
 					break;
+				case "for-each-interface-implemented-by-type":
+					ForEachInterfaceImplementedByType(instructionElement);
+					break;
 				case "for-each-interface-in-namespace":
 					ForEachInterfaceInNamespace(instructionElement);
 					break;
@@ -173,6 +176,9 @@ namespace NDoc.Core
 				case "if-namespace-contains-structures":
 					IfNamespaceContainsStructures(instructionElement);
 					break;
+				case "if-not-last-implemented-interface":
+					IfNotLastImplementedInterface(instructionElement);
+					break;
 				case "if-type-has-base-type":
 					IfTypeHasBaseType(instructionElement);
 					break;
@@ -181,6 +187,9 @@ namespace NDoc.Core
 					break;
 				case "if-type-implements-interfaces":
 					IfTypeImplementsInterfaces(instructionElement);
+					break;
+				case "implemented-interface-name":
+					ImplementedInterfaceName(instructionElement);
 					break;
 				case "namespace-name":
 					NamespaceName(instructionElement);
@@ -398,6 +407,18 @@ namespace NDoc.Core
 			}
 		}
 
+		private void ForEachInterfaceImplementedByType(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.MoveToFirstInterfaceImplementedByType())
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextInterfaceImplementedByType());
+			}
+		}
+
 		private void ForEachInterfaceInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstInterface())
@@ -462,6 +483,14 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfNotLastImplementedInterface(XmlElement instructionElement)
+		{
+			if (!assemblyNavigator.IsLastImplementedInterface)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfTypeHasBaseType(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.TypeHasBaseType)
@@ -484,6 +513,11 @@ namespace NDoc.Core
 			{
 				EvaluateChildren(instructionElement);
 			}
+		}
+
+		private void ImplementedInterfaceName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
 		}
 
 		private void NamespaceName(XmlElement instructionElement)

@@ -579,4 +579,41 @@ public class TemplateTests : TestCase
 				"NDoc.Test.ImplementsInterfaces",
 				"ImplementsTwoInterfaces"));
 	}
+
+	public void TestForEachInterfaceImplementedByType()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<for-each-interface-implemented-by-type><implemented-interface-name /></for-each-interface-implemented-by-type>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsZeroInterfaces"));
+
+		AssertEquals(
+			"Interface1",
+			EvaluateType(
+				"<for-each-interface-implemented-by-type><implemented-interface-name /></for-each-interface-implemented-by-type>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsOneInterface"));
+
+		AssertEquals(
+			"Interface1Interface2",
+			EvaluateType(
+				"<for-each-interface-implemented-by-type><implemented-interface-name /></for-each-interface-implemented-by-type>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsTwoInterfaces"));
+	}
+
+	public void TestIfNotLastImplementedInterface()
+	{
+		AssertEquals(
+			"Interface1, Interface2",
+			EvaluateType(
+				"<for-each-interface-implemented-by-type>" +
+					"<implemented-interface-name />" +
+					"<if-not-last-implemented-interface>, </if-not-last-implemented-interface>" +
+				"</for-each-interface-implemented-by-type>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsTwoInterfaces"));
+	}
 }

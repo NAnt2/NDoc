@@ -377,4 +377,35 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToType("ImplementsTwoInterfaces"));
 		Assert(navigator.TypeImplementsInterfaces);
 	}
+
+	public void TestMoveToInterfaceImplementedByType()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.ImplementsInterfaces"));
+
+		Assert(navigator.MoveToType("ImplementsZeroInterfaces"));
+		Assert(!navigator.MoveToFirstInterfaceImplementedByType());
+
+		Assert(navigator.MoveToType("ImplementsOneInterface"));
+		Assert(navigator.MoveToFirstInterfaceImplementedByType());
+		AssertEquals("Interface1", navigator.ImplementedInterfaceName);
+		Assert(!navigator.MoveToNextInterfaceImplementedByType());
+
+		Assert(navigator.MoveToType("ImplementsTwoInterfaces"));
+		Assert(navigator.MoveToFirstInterfaceImplementedByType());
+		AssertEquals("Interface1", navigator.ImplementedInterfaceName);
+		Assert(navigator.MoveToNextInterfaceImplementedByType());
+		AssertEquals("Interface2", navigator.ImplementedInterfaceName);
+		Assert(!navigator.MoveToNextInterfaceImplementedByType());
+	}
+
+	public void TestIsLastImplementedInterface()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.ImplementsInterfaces"));
+
+		Assert(navigator.MoveToType("ImplementsTwoInterfaces"));
+		Assert(navigator.MoveToFirstInterfaceImplementedByType());
+		Assert(!navigator.IsLastImplementedInterface);
+		Assert(navigator.MoveToNextInterfaceImplementedByType());
+		Assert(navigator.IsLastImplementedInterface);
+	}
 }

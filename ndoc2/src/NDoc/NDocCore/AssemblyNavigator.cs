@@ -13,6 +13,9 @@ namespace NDoc.Core
 		private ArrayList currentTypes;
 		private IEnumerator typeEnumerator;
 		private Type currentType;
+		private IEnumerator interfaceEnumerator;
+		private int interfaceCount;
+		private int currentInterfaceIndex;
 
 		public AssemblyNavigator(Assembly assembly)
 		{
@@ -366,6 +369,38 @@ namespace NDoc.Core
 			get
 			{
 				return currentType.GetInterfaces().Length > 0;
+			}
+		}
+
+		public bool MoveToFirstInterfaceImplementedByType()
+		{
+			Type[] interfaces = currentType.GetInterfaces();
+			interfaceEnumerator = interfaces.GetEnumerator();
+			interfaceCount = interfaces.Length;
+			currentInterfaceIndex = 0;
+						
+			return MoveToNextInterfaceImplementedByType();
+		}
+
+		public bool MoveToNextInterfaceImplementedByType()
+		{
+			++currentInterfaceIndex;
+			return interfaceEnumerator.MoveNext();
+		}
+
+		public string ImplementedInterfaceName
+		{
+			get
+			{
+				return ((Type)interfaceEnumerator.Current).Name;
+			}
+		}
+
+		public bool IsLastImplementedInterface
+		{
+			get
+			{
+				return currentInterfaceIndex >= interfaceCount;
 			}
 		}
 	}

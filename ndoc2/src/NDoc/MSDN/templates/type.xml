@@ -54,6 +54,10 @@
 						</if-type-has-base-type>
 						<if-type-implements-interfaces>
 							<text>&in;Implements </text>
+							<for-each-interface-implemented-by-type>
+								<implemented-interface-name />
+								<if-not-last-implemented-interface>, </if-not-last-implemented-interface>
+							</for-each-interface-implemented-by-type>
 						</if-type-implements-interfaces>
 					</b>
 				</pre>
@@ -73,6 +77,10 @@
 									<text>, </text>
 								</if-type-implements-interfaces>
 							</if-type-has-base-type>
+							<for-each-interface-implemented-by-type>
+								<implemented-interface-name />
+								<if-not-last-implemented-interface>, </if-not-last-implemented-interface>
+							</for-each-interface-implemented-by-type>
 						</if-type-has-base-type-or-implements-interfaces>
 						<text>&nl;</text>
 					</b>
