@@ -18,6 +18,12 @@ namespace NDoc.Test.AssemblyDocumentation
 			/// <summary>OneParameterWithSummary.Method1(int) Summary</summary>
 			public void Method1(int i) {}
 		}
+
+		public class OnePropertyWithSummary
+		{
+			/// <summary>OnePropertyWithSummary.Property1 Summary</summary>
+			public int Property1 { get { return 0; } }
+		}
 		
 		public class TwoParametersWithSummary
 		{

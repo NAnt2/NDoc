@@ -53,6 +53,28 @@ public class TemplateTests : TestCase
 		return result.ToString();
 	}
 
+	public void Test_ForEachPropertyInType_TwoProperties()
+	{
+		AssertEquals(
+			"Property1Property2",
+			EvaluateType(
+				"<for-each-property-in-type access='public'><member-name /></for-each-property-in-type>",
+				"NDoc.Test.Template.ForEachPropertyInType",
+				"TwoProperties"));
+	}
+
+	public void Test_IfTypeHasProperties_NoProperties()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-properties access='public'>true</if-type-has-properties>",
+				"NDoc.Test.Template.IfTypeHasProperties",
+				"NoProperties"));
+	}
+
+	// TODO: The following tests need to be rewritten using the same scheme as the preceding tests.
+
 	public void TestLiteralElement()
 	{
 		AssertEquals("<foo />", EvaluateNamespace("<foo />", "NDoc.Test"));

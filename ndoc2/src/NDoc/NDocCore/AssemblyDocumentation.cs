@@ -116,6 +116,14 @@ namespace NDoc.Core
 			return null;
 		}
 
+		private XmlNode GetMemberNode(PropertyInfo property)
+		{
+			string memberName = null;
+
+			memberName = "P:" + property.DeclaringType.FullName + "." + property.Name;
+			return GetMemberNode(memberName);
+		}
+
 		/// <summary>
 		///		<para>Gets the element containing the specified type's summary comments.</para>
 		/// </summary>
@@ -179,11 +187,20 @@ namespace NDoc.Core
 		/// <summary>
 		///		<para>Gets the element containing the specified member's summary comments.</para>
 		/// </summary>
-		/// <param name="method"></param>
+		/// <param name="member"></param>
 		/// <returns></returns>
-		public XmlNode GetMemberSummary(MethodBase method)
+		public XmlNode GetMemberSummary(MemberInfo member)
 		{
-			XmlNode memberNode = GetMemberNode(method);
+			XmlNode memberNode = null;
+
+			if (member is MethodBase)
+			{
+				memberNode = GetMemberNode(member as MethodBase);
+			}
+			else if (member is PropertyInfo)
+			{
+				memberNode = GetMemberNode(member as PropertyInfo);
+			}
 
 			if (memberNode != null)
 			{

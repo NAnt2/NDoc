@@ -90,6 +90,50 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(!navigator.MoveToNextMember());
 	}
 
+	public void Test_MoveToFirstProperty_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstProperty"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(!navigator.MoveToFirstProperty("public"));
+	}
+
+	public void Test_MoveToFirstProperty_OneMethodAndOneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstProperty"));
+		Assert(navigator.MoveToType("OneMethodAndOneProperty"));
+		Assert(navigator.MoveToFirstProperty("public"));
+		AssertEquals("Property1", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_MoveToFirstProperty_OneProperty()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstProperty"));
+		Assert(navigator.MoveToType("OneProperty"));
+		Assert(navigator.MoveToFirstProperty("public"));
+		AssertEquals("Property1", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_MoveToFirstProperty_TwoProperties()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstProperty"));
+		Assert(navigator.MoveToType("TwoProperties"));
+		Assert(navigator.MoveToFirstProperty("public"));
+		AssertEquals("Property1", navigator.MemberName);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals("Property2", navigator.MemberName);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	public void Test_TypeHasProperties_NoProperties()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.TypeHasProperties"));
+		Assert(navigator.MoveToType("NoProperties"));
+		Assert(!navigator.TypeHasProperties("public"));
+	}
+
+
 	// TODO: The following tests need to be rewritten using the same scheme as the preceding tests.
 
 	public void TestAssemblyName()

@@ -52,6 +52,24 @@
 						</table>
 					</div>
 				</if-type-has-constructors>
+				<if-type-has-properties access="public">
+					<h4 class="dtH4">Public Properties</h4>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<for-each-property-in-type access="public">
+								<tr valign="top">
+									<td width="50%">
+										<img src="public-property.bmp" alt="public property" border="0" />
+										<a href=""><member-name /></a>
+									</td>
+									<td width="50%">
+										<member-summary strip="first" />
+									</td>
+								</tr>
+							</for-each-property-in-type>
+						</table>
+					</div>
+				</if-type-has-properties>
 				<if-type-has-methods access="public">
 					<h4 class="dtH4">Public Methods</h4>
 					<div class="tablediv">

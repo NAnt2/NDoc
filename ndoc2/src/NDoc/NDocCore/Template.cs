@@ -234,6 +234,9 @@ namespace NDoc.Core
 				case "for-each-namespace":
 					ForEachNamespace(instructionElement);
 					break;
+				case "for-each-property-in-type":
+					ForEachPropertyInType(instructionElement);
+					break;
 				case "for-each-structure-in-namespace":
 					ForEachStructureInNamespace(instructionElement);
 					break;
@@ -269,6 +272,9 @@ namespace NDoc.Core
 					break;
 				case "if-type-has-overloaded-constructors":
 					IfTypeHasOverloadedConstructors(instructionElement);
+					break;
+				case "if-type-has-properties":
+					IfTypeHasProperties(instructionElement);
 					break;
 				case "if-type-has-remarks":
 					IfTypeHasRemarks(instructionElement);
@@ -602,6 +608,20 @@ namespace NDoc.Core
 			}
 		}
 
+		private void ForEachPropertyInType(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.MoveToFirstProperty(access))
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextMember());
+			}
+		}
+
 		private void ForEachStructureInNamespace(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.MoveToFirstStructure())
@@ -706,6 +726,16 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasProperties(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.TypeHasProperties(access))
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfTypeHasRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetTypeRemarks(assemblyNavigator.CurrentType);
@@ -754,7 +784,7 @@ namespace NDoc.Core
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
-			XmlNode node = assemblyDocumentation.GetMemberSummary(assemblyNavigator.CurrentMethod);
+			XmlNode node = assemblyDocumentation.GetMemberSummary(assemblyNavigator.CurrentMember);
 
 			if (node != null)
 			{

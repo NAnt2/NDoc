@@ -637,6 +637,32 @@ namespace NDoc.Core
 			return false;
 		}
 
+		private bool AccessMatches(string access, PropertyInfo property)
+		{
+			if (access == null || access == String.Empty)
+			{
+				return true;
+			}
+		
+			MethodInfo method = null;
+
+			if (property.CanRead)
+			{
+				method = property.GetGetMethod();
+			}
+			else if (property.CanWrite)
+			{
+				method = property.GetSetMethod();
+			}
+
+			if (method != null)
+			{
+				return AccessMatches(access, method);
+			}
+
+			return false;
+		}
+
 		private ArrayList GetConstructors(string access)
 		{
 			ArrayList constructors = new ArrayList();
@@ -677,6 +703,23 @@ namespace NDoc.Core
 			methods.Sort(new MemberComparer());
 
 			return methods;
+		}
+
+		private ArrayList GetProperties(string access)
+		{
+			ArrayList properties = new ArrayList();
+
+			foreach (PropertyInfo property in currentType.GetProperties())
+			{
+				if (AccessMatches(access, property))
+				{
+					properties.Add(property);
+				}
+			}
+
+			properties.Sort(new MemberComparer());
+
+			return properties;
 		}
 
 		/// <summary>
@@ -723,6 +766,16 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
+		///		<para>Checks to see if the current type has one or more properties.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
+		public bool TypeHasProperties(string access)
+		{
+			return GetProperties(access).Count > 0;
+		}
+
+		/// <summary>
 		///		<para>Positions the navigator's member cursor on the first
 		///		method in the current type with the specified access.</para>
 		/// </summary>
@@ -731,6 +784,18 @@ namespace NDoc.Core
 		public bool MoveToFirstMethod(string access)
 		{
 			memberEnumerator = GetMethods(access).GetEnumerator();
+			return MoveToNextMember();
+		}
+
+		/// <summary>
+		///		<para>Positions the navigator's memeber cursor on the first
+		///		property in the current type with the specified acces.</para>
+		/// </summary>
+		/// <param name="access"></param>
+		/// <returns></returns>
+		public bool MoveToFirstProperty(string access)
+		{
+			memberEnumerator = GetProperties(access).GetEnumerator();
 			return MoveToNextMember();
 		}
 
@@ -757,25 +822,16 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
-		///		<para>Gets the current method pointed to by the navigator's
-		///		member cursor.</para>
-		/// </summary>
-		public MethodBase CurrentMethod
-		{
-			get
-			{
-				return memberEnumerator.Current as MethodBase;
-			}
-		}
-
-		/// <summary>
 		///		<para>Gets the current member's name.</para>
 		/// </summary>
 		public string MemberName
 		{
 			get
 			{
-				return ((MemberInfo)memberEnumerator.Current).Name;
+				return 
+					memberEnumerator != null ? 
+					((MemberInfo)memberEnumerator.Current).Name : 
+					null;
 			}
 		}
 	}

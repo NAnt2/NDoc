@@ -46,6 +46,13 @@ public class AssemblyDocumentationTests : TestCase
 		AssertEquals("OneParameterWithSummary.Method1(int) Summary", summaryNode.InnerText);
 	}
 
+	public void Test_GetMemberSummary_OnePropertyWithSummary()
+	{
+		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.OnePropertyWithSummary).GetProperty("Property1"));
+		AssertNotNull(summaryNode);
+		AssertEquals("OnePropertyWithSummary.Property1 Summary", summaryNode.InnerText);
+	}
+
 	public void Test_GetMemberSummary_TwoParametersWithSummary()
 	{
 		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.TwoParametersWithSummary).GetMethod("Method1"));
