@@ -621,16 +621,11 @@ namespace NDoc.Core
 
 		private void IfTypeHasRemarks(XmlElement instructionElement)
 		{
-			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+			XmlNode node = assemblyDocumentation.GetTypeRemarks(assemblyNavigator.CurrentType);
 
 			if (node != null)
 			{
-				XmlNode remarks = node["remarks"];
-
-				if (remarks != null)
-				{
-					EvaluateChildren(instructionElement);
-				}
+				EvaluateChildren(instructionElement);
 			}
 		}
 
@@ -667,16 +662,11 @@ namespace NDoc.Core
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
-			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentMethod);
+			XmlNode node = assemblyDocumentation.GetMemberSummary(assemblyNavigator.CurrentMethod);
 
 			if (node != null)
 			{
-				XmlNode summary = node["summary"];
-
-				if (summary != null)
-				{
-					EvaluateDocumentationChildren(summary, stripPara, true);
-				}
+				EvaluateDocumentationChildren(node, stripPara, true);
 			}
 		}
 
@@ -752,16 +742,11 @@ namespace NDoc.Core
 
 		private void TypeRemarks(XmlElement instructionElement)
 		{
-			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+			XmlNode node = assemblyDocumentation.GetTypeRemarks(assemblyNavigator.CurrentType);
 
 			if (node != null)
 			{
-				XmlNode remarks = node["remarks"];
-
-				if (remarks != null)
-				{
-					EvaluateDocumentationChildren(remarks, false, true);
-				}
+				EvaluateDocumentationChildren(node, false, true);
 			}
 		}
 
@@ -769,16 +754,11 @@ namespace NDoc.Core
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
-			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
+			XmlNode node = assemblyDocumentation.GetTypeSummary(assemblyNavigator.CurrentType);
 
 			if (node != null)
 			{
-				XmlNode summary = node["summary"];
-
-				if (summary != null)
-				{
-					EvaluateDocumentationChildren(summary, stripPara, true);
-				}
+				EvaluateDocumentationChildren(node, stripPara, true);
 			}
 		}
 

@@ -54,34 +54,18 @@ namespace NDoc.Core
 			}
 		}
 
-		public XmlNode GetMemberNode(string memberName)
+		private XmlNode GetMemberNode(string memberName)
 		{
 			return _Hashtable[memberName] as XmlNode;
 		}
 
-		public XmlNode GetParamNode(XmlNode memberNode, string paramName)
-		{
-			string xpath = String.Format("param[@name='{1}']", paramName);
-			return memberNode.SelectSingleNode(xpath);
-		}
-
-		public XmlNode GetReturnsNode(XmlNode memberNode)
-		{
-			return memberNode.SelectSingleNode("returns");
-		}
-
-		public XmlNode GetValueNode(XmlNode memberNode)
-		{
-			return memberNode.SelectSingleNode("value");
-		}
-
-		public XmlNode GetMemberNode(Type type)
+		private XmlNode GetMemberNode(Type type)
 		{
 			string memberName = "T:" + type.FullName.Replace('+', '.');
 			return GetMemberNode(memberName);
 		}
 
-		public XmlNode GetMemberNode(MethodBase method)
+		private XmlNode GetMemberNode(MethodBase method)
 		{
 			string memberName = "M:";
 
@@ -89,6 +73,30 @@ namespace NDoc.Core
 			{
 				memberName += method.DeclaringType.FullName + ".#ctor";
 				return GetMemberNode(memberName);
+			}
+
+			return null;
+		}
+
+		public XmlNode GetTypeSummary(Type type)
+		{
+			XmlNode memberNode = GetMemberNode(type);
+
+			if (memberNode != null)
+			{
+				return memberNode["summary"];
+			}
+
+			return null;
+		}
+
+		public XmlNode GetTypeRemarks(Type type)
+		{
+			XmlNode memberNode = GetMemberNode(type);
+
+			if (memberNode != null)
+			{
+				return memberNode["remarks"];
 			}
 
 			return null;
@@ -110,6 +118,18 @@ namespace NDoc.Core
 						return summaryNode;
 					}
 				}
+			}
+
+			return null;
+		}
+
+		public XmlNode GetMemberSummary(MethodBase method)
+		{
+			XmlNode memberNode = GetMemberNode(method);
+
+			if (memberNode != null)
+			{
+				return memberNode["summary"];
 			}
 
 			return null;
