@@ -59,6 +59,8 @@ namespace NDoc.Core.Reflection
 		BaseInterfacesCollection baseInterfaces;
 		AttributeUsageDisplayFilter attributeFilter;
 
+		bool IsDelphiAssembly;
+
 
 		/// <summary>
 		/// Gets the namespaces from assembly.
@@ -135,6 +137,22 @@ namespace NDoc.Core.Reflection
 			{
 				assemblyLoader.Deinstall();
 			}
+		}
+
+		/// <summary>
+		///   Determines whether or not the specified assembly references the Borland.Delphi assembly.
+		/// </summary>
+		/// <param name="assy">The assembly to check.</param>
+		/// <returns>true if the specified assembly references the Borland.Delphi assembly.</returns>
+		private bool ReferencesBorlandDelphi(Assembly assy)
+		{
+			AssemblyName[] refList = assy.GetReferencedAssemblies();
+			foreach (AssemblyName assyName in refList)
+			{
+				if (assyName.Name == "Borland.Delphi")
+					return true;
+			}
+			return false;
 		}
 
 		/// <summary>Builds an Xml file combining the reflected metadata with the /doc comments.</summary>
@@ -394,6 +412,15 @@ namespace NDoc.Core.Reflection
 					return false;
 			}
 
+			// Ignore Borland Delphi's meta classes and Unit class
+			if (IsDelphiAssembly)
+			{
+				if (type.DeclaringType != null && type.Name == String.Format("@Meta{0}", type.DeclaringType.Name))
+					return false;
+				if (type.Name == "Unit" || type.Namespace.EndsWith("Units"))
+					return false;
+			}
+
 			return 
 				!type.FullName.StartsWith("<PrivateImplementationDetails>") && 
 				(declaringType == null || MustDocumentType(declaringType)) && 
@@ -446,15 +473,47 @@ namespace NDoc.Core.Reflection
 				return false;
 			}
 
-			//Inherited Framework Members
-			if ((!this.rep.DocumentInheritedFrameworkMembers) && 
-				(method.ReflectedType != method.DeclaringType) && 
-				(method.DeclaringType.FullName.StartsWith("System.") || 
-				method.DeclaringType.FullName.StartsWith("Microsoft.")))
+			if (IsDelphiAssembly)
 			{
-				return false;
+				//ignore Borland Delphi's standard methods
+				if (method.Name == "ClassName" ||
+					method.Name == "ClassInfo" ||
+					method.Name == "ClassNameIs" ||
+					method.Name == "ClassParent" ||
+					method.Name == "ClassType" || 
+					method.Name == "Dispatch" ||
+					method.Name == "FieldAddress" ||
+					method.Name == "Free" || 
+					method.Name == "InheritsFrom" ||
+					method.Name == "MethodAddress" ||
+					method.Name == "MethodName" ||
+					method.Name == "@__CloneHelper__" ||
+					method.Name == "__Initialize__")
+				{
+					return false;
+				}
+				//Inherited Framework Members for Delphi
+				if ((!this.rep.DocumentInheritedFrameworkMembers) && 
+					(method.ReflectedType != method.DeclaringType) && 
+					(
+					method.DeclaringType.FullName.StartsWith("System.") || 
+					method.DeclaringType.FullName.StartsWith("Borland.")))
+				{
+					return false;
+				}
 			}
-
+			else
+			{
+				//Inherited Framework Members for MS .Net
+				if ((!this.rep.DocumentInheritedFrameworkMembers) && 
+					(method.ReflectedType != method.DeclaringType) && 
+					(
+					method.DeclaringType.FullName.StartsWith("System.") || 
+					method.DeclaringType.FullName.StartsWith("Microsoft.")))
+				{
+					return false;
+				}
+			}
 			
 			// Methods containing '.' in their name that aren't constructors are probably
 			// explicit interface implementations, we check whether we document those or not.
@@ -745,6 +804,8 @@ namespace NDoc.Core.Reflection
 
 		private void WriteAssembly(XmlWriter writer, Assembly assembly)
 		{
+			IsDelphiAssembly = this.ReferencesBorlandDelphi(assembly);
+
 			AssemblyName assemblyName = assembly.GetName();
 
 			writer.WriteStartElement("assembly");
@@ -3665,6 +3726,8 @@ namespace NDoc.Core.Reflection
 			{
 				//attempt to load the assembly
 				Assembly assembly = assemblyLoader.LoadAssembly(assemblyFileName);
+
+				IsDelphiAssembly = this.ReferencesBorlandDelphi(assembly);
 
 				// loop through all types in assembly
 				foreach (Type type in assembly.GetTypes())
