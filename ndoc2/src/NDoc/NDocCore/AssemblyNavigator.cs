@@ -48,7 +48,7 @@ namespace NDoc.Core
 		{
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == namespaceName && 
+				if (type.Namespace == namespaceName &&
 					!type.FullName.StartsWith("<PrivateImplementationDetails>"))
 				{
 					return true;
@@ -173,7 +173,7 @@ namespace NDoc.Core
 
 		private bool IsDelegateType(Type type)
 		{
-			return 
+			return
 				type.IsClass &&
 				(type.BaseType.FullName == "System.Delegate" ||
 				type.BaseType.FullName == "System.MulticastDelegate");
@@ -185,8 +185,8 @@ namespace NDoc.Core
 
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == currentNamespaceName && 
-					type.IsClass && 
+				if (type.Namespace == currentNamespaceName &&
+					type.IsClass &&
 					!IsDelegateType(type) &&
 					!type.FullName.StartsWith("<PrivateImplementationDetails>"))
 				{
@@ -423,7 +423,7 @@ namespace NDoc.Core
 		internal static string GetTypeName(Type type)
 		{
 			string name = type.FullName;
-			
+
 			int indexOfDot = name.LastIndexOf('.');
 
 			if (indexOfDot != -1)
@@ -442,7 +442,7 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
-		///		<para>Positions the navigator's type cursor on the specified 
+		///		<para>Positions the navigator's type cursor on the specified
 		///		type in the current namespace.</para>
 		/// </summary>
 		/// <param name="typeName"></param>
@@ -457,7 +457,7 @@ namespace NDoc.Core
 					return true;
 				}
 			}
-			
+
 			return false;
 		}
 
@@ -552,7 +552,7 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
-		///		<para>Positions the navigator's implemented interface cursor 
+		///		<para>Positions the navigator's implemented interface cursor
 		///		on the first interface implemented by the current type.</para>
 		/// </summary>
 		/// <returns></returns>
@@ -562,7 +562,7 @@ namespace NDoc.Core
 			interfaceEnumerator = interfaces.GetEnumerator();
 			interfaceCount = interfaces.Length;
 			currentInterfaceIndex = 0;
-						
+
 			return MoveToNextInterfaceImplementedByType();
 		}
 
@@ -589,7 +589,7 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
-		///		<para>Returns true if the implemented interface cursor is 
+		///		<para>Returns true if the implemented interface cursor is
 		///		pointing to the last implemented interface for the current
 		///		type.</para>
 		/// </summary>
@@ -643,7 +643,7 @@ namespace NDoc.Core
 			{
 				return true;
 			}
-		
+
 			MethodInfo method = null;
 
 			if (property.CanRead)
@@ -725,7 +725,7 @@ namespace NDoc.Core
 		}
 
 		/// <summary>
-		///		<para>Checks to see if the current type has one or more 
+		///		<para>Checks to see if the current type has one or more
 		///		constructors with the specified access.</para>
 		/// </summary>
 		/// <param name="access"></param>
@@ -830,9 +830,9 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return 
-					memberEnumerator != null ? 
-					((MemberInfo)memberEnumerator.Current).Name : 
+				return
+					memberEnumerator != null ?
+					((MemberInfo)memberEnumerator.Current).Name :
 					null;
 			}
 		}

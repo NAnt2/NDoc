@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" ?>
+<?xml version="1.0" ?>
 <!DOCTYPE template [
 	<!ENTITY copy "&#xA9;">
 	<!ENTITY in "   ">
@@ -64,7 +64,7 @@
 										<if-member-is-inherited>
 											<text> (inherited from </text>
 											<b><member-declaring-type /></b>
-											<text>)</text>											
+											<text>)</text>
 										</if-member-is-inherited>
 									</td>
 									<td width="50%">
@@ -87,7 +87,7 @@
 										<if-member-is-inherited>
 											<text> (inherited from </text>
 											<b><member-declaring-type /></b>
-											<text>)</text>											
+											<text>)</text>
 										</if-member-is-inherited>
 									</td>
 									<td width="50%">

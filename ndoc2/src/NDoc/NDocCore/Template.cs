@@ -8,7 +8,7 @@ using System.Xml;
 namespace NDoc.Core
 {
 	/// <summary>
-	///		<para>Represents an XML-based template used to generate 
+	///		<para>Represents an XML-based template used to generate
 	///		customizable documentation output.</para>
 	/// </summary>
 	public class Template
@@ -163,13 +163,13 @@ namespace NDoc.Core
 			this.namespaceName = namespaceName;
 			this.typeName = typeName;
 			this.membersName = membersName;
-			this.memberID = memberID;			
+			this.memberID = memberID;
 			this.assemblyNavigator = assemblyNavigator;
 			assemblyDocumentation = new AssemblyDocumentation(documentation);
 			resultWriter = new XmlTextWriter(result);
 
 			assemblyNavigator.MoveToNamespace(namespaceName);
-			
+
 			if (typeName != null)
 			{
 				assemblyNavigator.MoveToType(typeName);
@@ -352,9 +352,9 @@ namespace NDoc.Core
 			foreach (XmlAttribute attribute in element.Attributes)
 			{
 				resultWriter.WriteAttributeString(
-					attribute.Prefix, 
-					attribute.LocalName, 
-					attribute.NamespaceURI, 
+					attribute.Prefix,
+					attribute.LocalName,
+					attribute.NamespaceURI,
 					ExpandVariables(attribute.Value));
 			}
 		}

@@ -286,52 +286,52 @@ public class TemplateTests : TestCase
 	public void TestForEachClassInNamespace()
 	{
 		AssertEquals(
-			"Class1Class2", 
+			"Class1Class2",
 			EvaluateNamespace(
-				"<for-each-class-in-namespace><type-name /></for-each-class-in-namespace>", 
+				"<for-each-class-in-namespace><type-name /></for-each-class-in-namespace>",
 				"NDoc.Test.TwoClasses"));
 	}
 
 	public void TestForEachInterfaceInNamespace()
 	{
 		AssertEquals(
-			"Interface1Interface2", 
+			"Interface1Interface2",
 			EvaluateNamespace(
-				"<for-each-interface-in-namespace><type-name /></for-each-interface-in-namespace>", 
+				"<for-each-interface-in-namespace><type-name /></for-each-interface-in-namespace>",
 				"NDoc.Test.TwoInterfaces"));
 	}
 
 	public void TestForEachStructureInNamespace()
 	{
 		AssertEquals(
-			"Structure1Structure2", 
+			"Structure1Structure2",
 			EvaluateNamespace(
-				"<for-each-structure-in-namespace><type-name /></for-each-structure-in-namespace>", 
+				"<for-each-structure-in-namespace><type-name /></for-each-structure-in-namespace>",
 				"NDoc.Test.TwoStructures"));
 	}
 
 	public void TestForEachDelegateInNamespace()
 	{
 		AssertEquals(
-			"Delegate1Delegate2", 
+			"Delegate1Delegate2",
 			EvaluateNamespace(
-				"<for-each-delegate-in-namespace><type-name /></for-each-delegate-in-namespace>", 
+				"<for-each-delegate-in-namespace><type-name /></for-each-delegate-in-namespace>",
 				"NDoc.Test.TwoDelegates"));
 	}
 
 	public void TestForEachEnumerationInNamespace()
 	{
 		AssertEquals(
-			"Enumeration1Enumeration2", 
+			"Enumeration1Enumeration2",
 			EvaluateNamespace(
-				"<for-each-enumeration-in-namespace><type-name /></for-each-enumeration-in-namespace>", 
+				"<for-each-enumeration-in-namespace><type-name /></for-each-enumeration-in-namespace>",
 				"NDoc.Test.TwoEnumerations"));
 	}
 
 	public void TestForEachOfEverythingInNamespace()
 	{
 		AssertEquals(
-			"Class1Class2Interface1Interface2Structure1Structure2Delegate1Delegate2Enumeration1Enumeration2", 
+			"Class1Class2Interface1Interface2Structure1Structure2Delegate1Delegate2Enumeration1Enumeration2",
 			EvaluateNamespace(
 				"<template>" +
 					"<for-each-class-in-namespace><type-name /></for-each-class-in-namespace>" +
@@ -395,7 +395,7 @@ public class TemplateTests : TestCase
 
 	public void TestTypeSummaryWithTwoParasStripFirst()
 	{
-		// See the System.Xml.XPath namespace page in MSDN and look at the 
+		// See the System.Xml.XPath namespace page in MSDN and look at the
 		// XPathNodeType summary to see how they only strip the first para element.
 		AssertEquals(
 			"This summary has two para elements.<p>This is the second para.</p>",
@@ -716,48 +716,48 @@ public class TemplateTests : TestCase
 	public void TestIfTypeIsAbstract()
 	{
 		AssertEquals(
-			String.Empty, 
+			String.Empty,
 			EvaluateType(
-				"<if-type-is-abstract>true</if-type-is-abstract>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-abstract>true</if-type-is-abstract>",
+				"NDoc.Test.AbstractAndSealed",
 				"NormalClass"));
 
 		AssertEquals(
-			"true", 
+			"true",
 			EvaluateType(
-				"<if-type-is-abstract>true</if-type-is-abstract>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-abstract>true</if-type-is-abstract>",
+				"NDoc.Test.AbstractAndSealed",
 				"AbstractClass"));
 
 		AssertEquals(
-			String.Empty, 
+			String.Empty,
 			EvaluateType(
-				"<if-type-is-abstract>true</if-type-is-abstract>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-abstract>true</if-type-is-abstract>",
+				"NDoc.Test.AbstractAndSealed",
 				"SealedClass"));
 	}
 
 	public void TestIfTypeIsSealed()
 	{
 		AssertEquals(
-			String.Empty, 
+			String.Empty,
 			EvaluateType(
-				"<if-type-is-sealed>true</if-type-is-sealed>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-sealed>true</if-type-is-sealed>",
+				"NDoc.Test.AbstractAndSealed",
 				"NormalClass"));
 
 		AssertEquals(
-			String.Empty, 
+			String.Empty,
 			EvaluateType(
-				"<if-type-is-sealed>true</if-type-is-sealed>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-sealed>true</if-type-is-sealed>",
+				"NDoc.Test.AbstractAndSealed",
 				"AbstractClass"));
 
 		AssertEquals(
-			"true", 
+			"true",
 			EvaluateType(
-				"<if-type-is-sealed>true</if-type-is-sealed>", 
-				"NDoc.Test.AbstractAndSealed", 
+				"<if-type-is-sealed>true</if-type-is-sealed>",
+				"NDoc.Test.AbstractAndSealed",
 				"SealedClass"));
 	}
 

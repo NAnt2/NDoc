@@ -13,7 +13,7 @@ public class NDocConsole
 				"Usage: NDocConsole [options] assembly[,documentation] ...\n" +
 				"Options:\n" +
 				"  -d directory         Output directory\n" +
-				"  -s style             Output syle\n" + 
+				"  -s style             Output syle\n" +
 				"  -t                   Display timing information"
 			);
 		}

@@ -6,9 +6,9 @@ namespace NDoc.Tests
 	{
 		public AllTests(string name) : base(name) { }
 
-		public static ITest Suite 
+		public static ITest Suite
 		{
-			get 
+			get
 			{
 				TestSuite suite =  new TestSuite();
 

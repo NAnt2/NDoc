@@ -3,7 +3,7 @@ using System;
 // This creates a global namespace.
 public class Class1 {}
 
-// As long as all the other namespaces in this assembly are prefixed with 
+// As long as all the other namespaces in this assembly are prefixed with
 // NDoc.Test, this will always be the second namespace.
 namespace NDoc.Test
 {
@@ -145,7 +145,7 @@ namespace NDoc.Test.Remarks
 namespace NDoc.Test.Constructors
 {
 	public class DefaultConstructor {}
-	
+
 	public class PrivateConstructor
 	{
 		private PrivateConstructor() { }
@@ -193,7 +193,7 @@ namespace NDoc.Test.Constructors
 
 namespace NDoc.Test.PrivateImplementationDetails
 {
-	/// <summary>This class causes the &lt;PrivateImplementationDetails> 
+	/// <summary>This class causes the &lt;PrivateImplementationDetails>
 	/// class to appear in the compiled assembly.</summary>
 	public class PrivateImplementationDetails
 	{
@@ -213,7 +213,7 @@ namespace NDoc.Test.NestedClassWithSummary
 namespace NDoc.Test.Methods
 {
 	public class NoMethods {}
-	
+
 	public class OneMethod
 	{
 		public void Method1() {}

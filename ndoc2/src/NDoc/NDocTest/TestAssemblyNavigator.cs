@@ -252,7 +252,7 @@ namespace NDoc.Test.AssemblyNavigator
 	namespace MoveToMember
 	{
 		public class NoMembers {}
-		
+
 		public class OneMethod
 		{
 			public void Method1() {}

@@ -24,12 +24,12 @@ namespace NDoc.Test.AssemblyDocumentation
 			/// <summary>OnePropertyWithSummary.Property1 Summary</summary>
 			public int Property1 { get { return 0; } }
 		}
-		
+
 		public class TwoParametersWithSummary
 		{
 			/// <summary>TwoParametersWithSummary.Method1(int,string) Summary</summary>
 			public void Method1(int i, string s) {}
-		}		
+		}
 	}
 
 	namespace GetTypeConstructorsSummary

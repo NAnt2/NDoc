@@ -5,7 +5,7 @@ using System.Reflection;
 namespace NDoc.Core
 {
 	/// <summary>
-	///		<para>Performs all the work necessary to generate documentation for an 
+	///		<para>Performs all the work necessary to generate documentation for an
 	///		assembly.</para>
 	/// </summary>
 	public class Driver
@@ -20,7 +20,7 @@ namespace NDoc.Core
 		/// <param name="outputDirectory"></param>
 		/// <param name="outputStyle"></param>
 		public void GenerateDocumentation(
-			string assemblyFile, 
+			string assemblyFile,
 			string documentationFile,
 			string outputDirectory,
 			string outputStyle)
@@ -54,8 +54,8 @@ namespace NDoc.Core
 			StreamWriter streamWriter = OpenNamespaces();
 
 			namespacesTemplate.Evaluate(
-				assemblyNavigator, 
-				documentationFile, 
+				assemblyNavigator,
+				documentationFile,
 				streamWriter);
 
 			streamWriter.Close();
@@ -67,9 +67,9 @@ namespace NDoc.Core
 				streamWriter = OpenNamespace(assemblyNavigator.NamespaceName);
 
 				namespaceTemplate.EvaluateNamespace(
-					assemblyNavigator.NamespaceName, 
-					assemblyNavigator, 
-					documentationFile, 
+					assemblyNavigator.NamespaceName,
+					assemblyNavigator,
+					documentationFile,
 					streamWriter);
 
 				streamWriter.Close();
@@ -81,10 +81,10 @@ namespace NDoc.Core
 						streamWriter = OpenType(assemblyNavigator.CurrentType);
 
 						typeTemplate.EvaluateType(
-							assemblyNavigator.NamespaceName, 
+							assemblyNavigator.NamespaceName,
 							assemblyNavigator.TypeName,
-							assemblyNavigator, 
-							documentationFile, 
+							assemblyNavigator,
+							documentationFile,
 							streamWriter);
 
 						streamWriter.Close();
