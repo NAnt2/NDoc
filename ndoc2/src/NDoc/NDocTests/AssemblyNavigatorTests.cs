@@ -590,6 +590,29 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region MemberOverloadID Tests
+
+	public void Test_MemberOverloadID_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MemberOverloadID"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals(0, navigator.MemberOverloadID);
+	}
+
+	public void Test_MemberOverloadID_TwoOverloadedMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MemberOverloadID"));
+		Assert(navigator.MoveToType("TwoOverloadedMethods"));
+		Assert(navigator.MoveToFirstOverloadedMember("Method"));
+		AssertEquals(1, navigator.MemberOverloadID);
+		Assert(navigator.MoveToNextMember());
+		AssertEquals(2, navigator.MemberOverloadID);
+		Assert(!navigator.MoveToNextMember());
+	}
+
+	#endregion
+
 	#region MoveToFirstClass Tests
 
 	public void Test_MoveToFirstClass_OneClass()

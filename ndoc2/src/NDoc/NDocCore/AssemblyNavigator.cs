@@ -170,7 +170,21 @@ namespace NDoc.Core
 		{
 			int IComparer.Compare(object x, object y)
 			{
-				return String.Compare(((MemberInfo)x).Name, ((MemberInfo)y).Name);
+				string x1 = ((MemberInfo)x).ToString();
+				
+				if (x1.IndexOf(' ') != -1)
+				{
+					x1 = x1.Substring(x1.IndexOf(' ') + 1);
+				}
+
+				string y1 = ((MemberInfo)y).ToString();
+
+				if (y1.IndexOf(' ') != -1)
+				{
+					y1 = y1.Substring(y1.IndexOf(' ') + 1);
+				}
+
+				return String.Compare(x1, y1);
 			}
 		}
 
@@ -1042,6 +1056,27 @@ namespace NDoc.Core
 			get
 			{
 				return currentMember is PropertyInfo;
+			}
+		}
+
+		/// <summary>
+		///		<para>Gets the overload ID for the current member.</para>
+		/// </summary>
+		public int MemberOverloadID
+		{
+			get
+			{
+				int id = 0;
+				
+				MemberInfo[] members = currentType.GetMember(MemberName);
+
+				if (members.Length > 1)
+				{
+					Array.Sort(members, new MemberComparer());
+					id = Array.IndexOf(members, currentMember) + 1;
+				}
+
+				return id;
 			}
 		}
 	}

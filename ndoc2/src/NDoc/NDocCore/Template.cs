@@ -523,9 +523,14 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return assemblyNavigator.NamespaceName + "." + 
-					assemblyNavigator.TypeName +  "." + 
-					assemblyNavigator.MemberName + ".html";
+				int id = assemblyNavigator.MemberOverloadID;
+				return assemblyNavigator.NamespaceName + 
+					"." + 
+					assemblyNavigator.TypeName +  
+					"." + 
+					assemblyNavigator.MemberName +
+					(id == 0 ? "" : "-" + id.ToString()) +
+					".html";
 			}
 		}
 

@@ -105,6 +105,50 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace MemberDeclaringType
+	{
+		public class NoMembers {}
+	}
+
+	namespace MemberLink
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
+	namespace MemberOrOverloadsLink
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
+	namespace MemberOverloadsSummary
+	{
+		public class TwoOverloadedMethods
+		{
+			/// <summary>TwoOverloadedMethods.Method(int) Summary</summary>
+			public void Method(int i) {}
+			/// <summary>TwoOverloadedMethods.Method(string) Summary</summary>
+			public void Method(string s) {}
+		}
+	}
+
 	namespace MemberType
 	{
 		public class OneConstructor
@@ -131,44 +175,6 @@ namespace NDoc.Test.Template
 		public class OneProperty
 		{
 			public int Property1 { get { return 0; } }
-		}
-	}
-
-	namespace MemberDeclaringType
-	{
-		public class NoMembers {}
-	}
-
-	namespace MemberLink
-	{
-		public class OneMethod
-		{
-			public void Method1() {}
-		}
-	}
-
-	namespace MemberOrOverloadsLink
-	{
-		public class OneMethod
-		{
-			public void Method1() {}
-		}
-
-		public class TwoOverloadedMethods
-		{
-			public void Method(int i) {}
-			public void Method(string s) {}
-		}
-	}
-
-	namespace MemberOverloadsSummary
-	{
-		public class TwoOverloadedMethods
-		{
-			/// <summary>TwoOverloadedMethods.Method(int) Summary</summary>
-			public void Method(int i) {}
-			/// <summary>TwoOverloadedMethods.Method(string) Summary</summary>
-			public void Method(string s) {}
 		}
 	}
 

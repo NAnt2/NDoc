@@ -352,6 +352,17 @@ public class TemplateTests : TestCase
 				"Method1"));
 	}
 
+	public void Test_MemberLink_TwoOverloadedMethods()
+	{
+		AssertEquals(
+			"<a href=\"NDoc.Test.Template.MemberLink.TwoOverloadedMethods.Method-1.html\" /><a href=\"NDoc.Test.Template.MemberLink.TwoOverloadedMethods.Method-2.html\" />",
+			EvaluateMembers(
+				"<for-each-overloaded-member-in-type><a href=\"{$member-link}\" /></for-each-overloaded-member-in-type>",
+				"NDoc.Test.Template.MemberLink",
+				"TwoOverloadedMethods",
+				"Method"));
+	}
+
 	#endregion
 
 	#region {$member-or-overloads-link} Tests

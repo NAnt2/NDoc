@@ -257,6 +257,20 @@ namespace NDoc.Test.AssemblyNavigator
 		public class NoMembers {}
 	}
 
+	namespace MemberOverloadID
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+
+		public class TwoOverloadedMethods
+		{
+			public void Method(int i) {}
+			public void Method(string s) {}
+		}
+	}
+
 	namespace MoveToFirstClass
 	{
 		namespace OneClass

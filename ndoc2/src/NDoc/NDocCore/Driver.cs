@@ -75,7 +75,7 @@ namespace NDoc.Core
 
 				namespaceTemplate.EvaluateNamespace(
 					assemblyNavigator.NamespaceName,
-					assemblyNavigator,
+					assemblyNavigator2,
 					documentationFile,
 					streamWriter);
 
@@ -90,7 +90,7 @@ namespace NDoc.Core
 						typeTemplate.EvaluateType(
 							assemblyNavigator.NamespaceName,
 							assemblyNavigator.TypeName,
-							assemblyNavigator,
+							assemblyNavigator2,
 							documentationFile,
 							streamWriter);
 
@@ -101,7 +101,7 @@ namespace NDoc.Core
 						typeMembersTemplate.EvaluateType(
 							assemblyNavigator.NamespaceName,
 							assemblyNavigator.TypeName,
-							assemblyNavigator,
+							assemblyNavigator2,
 							documentationFile,
 							streamWriter);
 
@@ -114,7 +114,7 @@ namespace NDoc.Core
 							typeConstructorsTemplate.EvaluateType(
 								assemblyNavigator.NamespaceName,
 								assemblyNavigator.TypeName,
-								assemblyNavigator,
+								assemblyNavigator2,
 								documentationFile,
 								streamWriter);
 
@@ -136,7 +136,7 @@ namespace NDoc.Core
 										assemblyNavigator.NamespaceName,
 										assemblyNavigator.TypeName,
 										assemblyNavigator.MemberName,
-										assemblyNavigator,
+										assemblyNavigator2,
 										documentationFile,
 										streamWriter);
 
@@ -145,7 +145,10 @@ namespace NDoc.Core
 
 								if (!assemblyNavigator.IsMemberInherited)
 								{
-									streamWriter = OpenTypeMember(assemblyNavigator.CurrentType, assemblyNavigator.CurrentMember);
+									streamWriter = OpenTypeMember(
+										assemblyNavigator.CurrentType, 
+										assemblyNavigator.CurrentMember,
+										assemblyNavigator.MemberOverloadID);
 
 									typeMemberTemplate.EvaluateMember(
 										assemblyNavigator.NamespaceName,
@@ -209,10 +212,9 @@ namespace NDoc.Core
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
-		private StreamWriter OpenTypeMember(Type type, MemberInfo member)
+		private StreamWriter OpenTypeMember(Type type, MemberInfo member, int id)
 		{
-#warning Don't forget to pass in the overload ID here.
-			string fileName = type.FullName + "." + member.Name + ".html";
+			string fileName = type.FullName + "." + member.Name + (id == 0 ? "" : "-" + id.ToString()) + ".html";
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
