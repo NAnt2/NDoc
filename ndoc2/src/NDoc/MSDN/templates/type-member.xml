@@ -85,6 +85,33 @@
 						<text>)</text>
 					</b>
 				</pre>
+				<h4 class="dtH4">See Also</h4>
+				<p>
+					<a href="{$type-link}">
+						<type-name />
+						<text> </text>
+						<type-type />
+					</a>
+					<text> | </text>
+					<a href="{$type-members-link}">
+						<type-name />
+						<text> Members</text>
+					</a>
+					<text> | </text>
+					<a href="{$namespace-link}">
+						<namespace-name />
+						<text> Namespace</text>
+					</a>
+					<if-member-is-overloaded>
+						<text> | </text>
+						<a href="{$member-or-overloads-link}">
+							<type-name />
+							<text>.</text>
+							<member-name />
+							<text> Overload List</text>
+						</a>
+					</if-member-is-overloaded>
+				</p>
 				<div class="footer">
 					<hr />
 					<!-- TODO: We should probably let the user specify these via properties. -->

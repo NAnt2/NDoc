@@ -21,7 +21,8 @@ namespace NDoc.Core
 		private string namespaceName;
 		private string typeName;
 		private string membersName;
-		private string memberID;
+		private string memberName;
+		private int overloadID;
 		private AssemblyNavigator assemblyNavigator;
 		private AssemblyDocumentation assemblyDocumentation;
 		private XmlWriter resultWriter;
@@ -137,7 +138,7 @@ namespace NDoc.Core
 			string documentation,
 			TextWriter result)
 		{
-			Evaluate(null, null, null, null, assemblyNavigator, documentation, result);
+			Evaluate(null, null, null, null, 0, assemblyNavigator, documentation, result);
 		}
 
 		/// <summary>
@@ -153,7 +154,7 @@ namespace NDoc.Core
 			string documentation,
 			TextWriter result)
 		{
-			Evaluate(namespaceName, null, null, null, assemblyNavigator, documentation, result);
+			Evaluate(namespaceName, null, null, null, 0, assemblyNavigator, documentation, result);
 		}
 
 		/// <summary>
@@ -172,7 +173,7 @@ namespace NDoc.Core
 			string documentation,
 			TextWriter result)
 		{
-			Evaluate(namespaceName, typeName, null, null, assemblyNavigator, documentation, result);
+			Evaluate(namespaceName, typeName, null, null, 0, assemblyNavigator, documentation, result);
 		}
 
 		/// <summary>
@@ -193,7 +194,7 @@ namespace NDoc.Core
 			string documentation,
 			TextWriter result)
 		{
-			Evaluate(namespaceName, typeName, membersName, null, assemblyNavigator, documentation, result);
+			Evaluate(namespaceName, typeName, membersName, null, 0, assemblyNavigator, documentation, result);
 		}
 
 		/// <summary>
@@ -202,26 +203,29 @@ namespace NDoc.Core
 		/// </summary>
 		/// <param name="namespaceName"></param>
 		/// <param name="typeName"></param>
-		/// <param name="memberID"></param>
+		/// <param name="memberName"></param>
+		/// <param name="overloadID"></param>
 		/// <param name="assemblyNavigator"></param>
 		/// <param name="documentation"></param>
 		/// <param name="result"></param>
 		public void EvaluateMember(
 			string namespaceName,
 			string typeName,
-			string memberID,
+			string memberName,
+			int overloadID,
 			AssemblyNavigator assemblyNavigator,
 			string documentation,
 			TextWriter result)
 		{
-			Evaluate(namespaceName, typeName, null, memberID, assemblyNavigator, documentation, result);
+			Evaluate(namespaceName, typeName, null, memberName, overloadID, assemblyNavigator, documentation, result);
 		}
 
 		private void Evaluate(
 			string namespaceName,
 			string typeName,
 			string membersName,
-			string memberID,
+			string memberName,
+			int overloadID,
 			AssemblyNavigator assemblyNavigator,
 			string documentation,
 			TextWriter result)
@@ -229,7 +233,8 @@ namespace NDoc.Core
 			this.namespaceName = namespaceName;
 			this.typeName = typeName;
 			this.membersName = membersName;
-			this.memberID = memberID;
+			this.memberName = memberName;
+			this.overloadID = overloadID;
 			this.assemblyNavigator = assemblyNavigator;
 			assemblyDocumentation = new AssemblyDocumentation(documentation);
 			resultWriter = new XmlTextWriter(result);
@@ -241,9 +246,14 @@ namespace NDoc.Core
 				assemblyNavigator.MoveToType(typeName);
 			}
 
-			if (memberID != null)
+			if (memberName != null)
 			{
-				assemblyNavigator.MoveToMember(memberID);
+				assemblyNavigator.MoveToMember(memberName);
+
+				for (int i = 1; i < overloadID; ++i)
+				{
+					assemblyNavigator.MoveToNextMember();
+				}
 			}
 
 			Evaluate(templateDocument.DocumentElement);

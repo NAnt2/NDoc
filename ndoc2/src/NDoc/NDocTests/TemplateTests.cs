@@ -68,12 +68,12 @@ public class TemplateTests : TestCase
 		return result.ToString();
 	}
 
-	private string EvaluateMember(string templateXml, string namespaceName, string typeName, string memberID)
+	private string EvaluateMember(string templateXml, string namespaceName, string typeName, string memberName, int overloadID)
 	{
 		Template template = new Template();
 		template.LoadXml(templateXml);
 		StringWriter result = new StringWriter();
-		template.EvaluateMember(namespaceName, typeName, memberID, assemblyNavigator, documentation, result);
+		template.EvaluateMember(namespaceName, typeName, memberName, overloadID, assemblyNavigator, documentation, result);
 		return result.ToString();
 	}
 
@@ -148,7 +148,8 @@ public class TemplateTests : TestCase
 				"<for-each-parameter-in-member><parameter-name /></for-each-parameter-in-member>",
 				"NDoc.Test.Template.ForEachParameterInMember",
 				"OneMethodNoParameters",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_ForEachParameterInMember_OneMethodOneParameter()
@@ -159,7 +160,8 @@ public class TemplateTests : TestCase
 				"<for-each-parameter-in-member><parameter-name /></for-each-parameter-in-member>",
 				"NDoc.Test.Template.ForEachParameterInMember",
 				"OneMethodOneParameter",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	#endregion
@@ -188,7 +190,8 @@ public class TemplateTests : TestCase
 				"<if-member-is-inherited>true</if-member-is-inherited>",
 				"NDoc.Test.Template.IfMemberIsInherited",
 				"OneMethod",
-				"Equals"));
+				"Equals",
+				0));
 	}
 
 	public void Test_IfMemberIsInherited_OneMethod()
@@ -199,7 +202,8 @@ public class TemplateTests : TestCase
 				"<if-member-is-inherited>true</if-member-is-inherited>",
 				"NDoc.Test.Template.IfMemberIsInherited",
 				"OneMethod",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	#endregion
@@ -214,7 +218,8 @@ public class TemplateTests : TestCase
 				"<if-member-is-overloaded>true</if-member-is-overloaded>",
 				"NDoc.Test.Template.IfMemberIsOverloaded",
 				"OneMethod",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	#endregion
@@ -229,7 +234,8 @@ public class TemplateTests : TestCase
 				"<if-member-has-parameters>true</if-member-has-parameters>",
 				"NDoc.Test.Template.IfMemberHasParameters",
 				"OneMethodNoParameters",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_IfMemberHasParameters_OneMethodOneParameter()
@@ -240,7 +246,8 @@ public class TemplateTests : TestCase
 				"<if-member-has-parameters>true</if-member-has-parameters>",
 				"NDoc.Test.Template.IfMemberHasParameters",
 				"OneMethodOneParameter",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	#endregion
@@ -258,7 +265,8 @@ public class TemplateTests : TestCase
 				"</for-each-parameter-in-member>",
 				"NDoc.Test.Template.IfNotLastParameter",
 				"OneMethodOneParameter",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_IfNotLastParameter_OneMethodTwoParameters()
@@ -272,7 +280,8 @@ public class TemplateTests : TestCase
 				"</for-each-parameter-in-member>",
 				"NDoc.Test.Template.IfNotLastParameter",
 				"OneMethodTwoParameters",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	#endregion
@@ -301,7 +310,8 @@ public class TemplateTests : TestCase
 				"<member-type />",
 				"NDoc.Test.Template.MemberType",
 				"OneConstructor",
-				".ctor"));
+				".ctor",
+				0));
 	}
 
 	public void Test_MemberType_OneEvent()
@@ -312,7 +322,8 @@ public class TemplateTests : TestCase
 				"<member-type />",
 				"NDoc.Test.Template.MemberType",
 				"OneEvent",
-				"Event1"));
+				"Event1",
+				0));
 	}
 
 	public void Test_MemberType_OneField()
@@ -323,7 +334,8 @@ public class TemplateTests : TestCase
 				"<member-type />",
 				"NDoc.Test.Template.MemberType",
 				"OneField",
-				"Field1"));
+				"Field1",
+				0));
 	}
 
 	public void Test_MemberType_OneMethod()
@@ -334,7 +346,8 @@ public class TemplateTests : TestCase
 				"<member-type />",
 				"NDoc.Test.Template.MemberType",
 				"OneMethod",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_MemberType_OneProperty()
@@ -345,7 +358,8 @@ public class TemplateTests : TestCase
 				"<member-type />",
 				"NDoc.Test.Template.MemberType",
 				"OneProperty",
-				"Property1"));
+				"Property1",
+				0));
 	}
 
 	#endregion
@@ -360,7 +374,8 @@ public class TemplateTests : TestCase
 				"<member-declaring-type />",
 				"NDoc.Test.Template.MemberDeclaringType",
 				"NoMembers",
-				"Equals"));
+				"Equals",
+				0));
 	}
 
 	#endregion
@@ -375,7 +390,8 @@ public class TemplateTests : TestCase
 				"<a href='{$member-link}'><member-name /></a>",
 				"NDoc.Test.Template.MemberLink",
 				"OneMethod",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_MemberLink_TwoOverloadedMethods()
@@ -401,7 +417,8 @@ public class TemplateTests : TestCase
 				"<a href='{$member-or-overloads-link}'><member-name /></a>",
 				"NDoc.Test.Template.MemberOrOverloadsLink",
 				"OneMethod",
-				"Method1"));
+				"Method1",
+				0));
 	}
 
 	public void Test_MemberOrOverloadsLink_TwoOverloadedMethods()
@@ -412,7 +429,8 @@ public class TemplateTests : TestCase
 				"<a href='{$member-or-overloads-link}'><member-name /></a>",
 				"NDoc.Test.Template.MemberOrOverloadsLink",
 				"TwoOverloadedMethods",
-				"Method"));
+				"Method",
+				0));
 	}
 
 	#endregion

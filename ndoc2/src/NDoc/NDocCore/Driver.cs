@@ -154,12 +154,15 @@ namespace NDoc.Core
 										assemblyNavigator.NamespaceName,
 										assemblyNavigator.TypeName,
 										assemblyNavigator.MemberName,
+										assemblyNavigator.MemberOverloadID,
 										assemblyNavigator2,
 										documentationFile,
 										streamWriter);
 
 									streamWriter.Close();
 								}
+
+								previousMethodName = assemblyNavigator.MemberName;
 							}
 							while (assemblyNavigator.MoveToNextMember());
 						}
