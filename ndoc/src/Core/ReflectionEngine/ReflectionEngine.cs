@@ -374,6 +374,13 @@ namespace NDoc.Core.Reflection
 			if (Char.IsDigit(type.Name, 0))
 				return false;
 
+			//HACK: exclude Net 2.0 compiler generated iterators
+			//These are nested classes with name starting with "<"
+			if (type.DeclaringType!=null && type.Name.StartsWith("<"))
+			{
+				return false;
+			}
+
 			//exclude types that are internal to the .Net framework.
 			if (type.FullName.StartsWith("System.") || type.FullName.StartsWith("Microsoft."))
 			{
