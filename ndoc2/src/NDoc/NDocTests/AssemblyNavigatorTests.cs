@@ -352,4 +352,29 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(!navigator.IsDelegate);
 		Assert(navigator.IsEnumeration);
 	}
+
+	public void TestTypeHasBaseType()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.DerivedClasses"));
+
+		Assert(navigator.MoveToType("BaseClass"));
+		Assert(!navigator.TypeHasBaseType);
+
+		Assert(navigator.MoveToType("DerivedClass"));
+		Assert(navigator.TypeHasBaseType);
+	}
+
+	public void TestTypeImplementsInterfaces()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.ImplementsInterfaces"));
+
+		Assert(navigator.MoveToType("ImplementsZeroInterfaces"));
+		Assert(!navigator.TypeImplementsInterfaces);
+
+		Assert(navigator.MoveToType("ImplementsOneInterface"));
+		Assert(navigator.TypeImplementsInterfaces);
+
+		Assert(navigator.MoveToType("ImplementsTwoInterfaces"));
+		Assert(navigator.TypeImplementsInterfaces);
+	}
 }

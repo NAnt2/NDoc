@@ -364,6 +364,82 @@ public class TemplateTests : TestCase
 				"Enumeration1"));
 	}
 
+	public void TestTypeTypeVB()
+	{
+		AssertEquals(
+			"Class",
+			EvaluateType(
+				"<type-type lang='VB' />",
+				"NDoc.Test",
+				"Class1"));
+
+		AssertEquals(
+			"Interface",
+			EvaluateType(
+				"<type-type lang='VB' />",
+				"NDoc.Test",
+				"Interface1"));
+
+		AssertEquals(
+			"Structure",
+			EvaluateType(
+				"<type-type lang='VB' />",
+				"NDoc.Test",
+				"Structure1"));
+
+		AssertEquals(
+			"Delegate",
+			EvaluateType(
+				"<type-type lang='VB' />",
+				"NDoc.Test",
+				"Delegate1"));
+
+		AssertEquals(
+			"Enum",
+			EvaluateType(
+				"<type-type lang='VB' />",
+				"NDoc.Test",
+				"Enumeration1"));
+	}
+
+	public void TestTypeTypeCSharp()
+	{
+		AssertEquals(
+			"class",
+			EvaluateType(
+				"<type-type lang='C#' />",
+				"NDoc.Test",
+				"Class1"));
+
+		AssertEquals(
+			"interface",
+			EvaluateType(
+				"<type-type lang='C#' />",
+				"NDoc.Test",
+				"Interface1"));
+
+		AssertEquals(
+			"struct",
+			EvaluateType(
+				"<type-type lang='C#' />",
+				"NDoc.Test",
+				"Structure1"));
+
+		AssertEquals(
+			"delegate",
+			EvaluateType(
+				"<type-type lang='C#' />",
+				"NDoc.Test",
+				"Delegate1"));
+
+		AssertEquals(
+			"enum",
+			EvaluateType(
+				"<type-type lang='C#' />",
+				"NDoc.Test",
+				"Enumeration1"));
+	}
+
 	public void TestWhitespace()
 	{
 		AssertEquals("<foo />", EvaluateNamespace("<foo> </foo>", "NDoc.Test"));
@@ -372,5 +448,135 @@ public class TemplateTests : TestCase
 	public void TestText()
 	{
 		AssertEquals(" ", EvaluateNamespace("<text> </text>", "NDoc.Test"));
+	}
+
+	public void TestTypeAccessVB()
+	{
+		AssertEquals(
+			"Public",
+			EvaluateType(
+				"<type-access lang='VB' />",
+				"NDoc.Test.AllAccess",
+				"PublicClass"));
+
+		AssertEquals(
+			"Friend",
+			EvaluateType(
+				"<type-access lang='VB' />",
+				"NDoc.Test.AllAccess",
+				"InternalClass"));
+	}
+
+	public void TestTypeAccessCSharp()
+	{
+		AssertEquals(
+			"public",
+			EvaluateType(
+				"<type-access lang='C#' />",
+				"NDoc.Test.AllAccess",
+				"PublicClass"));
+
+		AssertEquals(
+			"internal",
+			EvaluateType(
+				"<type-access lang='C#' />",
+				"NDoc.Test.AllAccess",
+				"InternalClass"));
+	}
+
+	public void TestIfTypeHasBaseType()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-base-type>has-base-type</if-type-has-base-type>",
+				"NDoc.Test.DerivedClasses",
+				"BaseClass"));
+
+		AssertEquals(
+			"has-base-type",
+			EvaluateType(
+				"<if-type-has-base-type>has-base-type</if-type-has-base-type>",
+				"NDoc.Test.DerivedClasses",
+				"DerivedClass"));
+	}
+
+	public void TestTypeBaseTypeName()
+	{
+		AssertEquals(
+			"Object",
+			EvaluateType(
+				"<type-base-type-name />",
+				"NDoc.Test.DerivedClasses",
+				"BaseClass"));
+
+		AssertEquals(
+			"BaseClass",
+			EvaluateType(
+				"<type-base-type-name />",
+				"NDoc.Test.DerivedClasses",
+				"DerivedClass"));
+	}
+
+	public void TestIfTypeImplementsInterfaces()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-implements-interfaces>implements-interfaces</if-type-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsZeroInterfaces"));
+
+		AssertEquals(
+			"implements-interfaces",
+			EvaluateType(
+				"<if-type-implements-interfaces>implements-interfaces</if-type-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsOneInterface"));
+
+		AssertEquals(
+			"implements-interfaces",
+			EvaluateType(
+				"<if-type-implements-interfaces>implements-interfaces</if-type-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsTwoInterfaces"));
+	}
+
+	public void TestIfTypeHasBaseTypeOrImplementsInterfaces()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-base-type-or-implements-interfaces>true</if-type-has-base-type-or-implements-interfaces>",
+				"NDoc.Test.DerivedClasses",
+				"BaseClass"));
+
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-base-type-or-implements-interfaces>true</if-type-has-base-type-or-implements-interfaces>",
+				"NDoc.Test.DerivedClasses",
+				"DerivedClass"));
+
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-base-type-or-implements-interfaces>true</if-type-has-base-type-or-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsZeroInterfaces"));
+
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-base-type-or-implements-interfaces>true</if-type-has-base-type-or-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsOneInterface"));
+
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-base-type-or-implements-interfaces>true</if-type-has-base-type-or-implements-interfaces>",
+				"NDoc.Test.ImplementsInterfaces",
+				"ImplementsTwoInterfaces"));
 	}
 }

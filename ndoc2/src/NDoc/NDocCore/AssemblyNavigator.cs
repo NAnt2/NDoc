@@ -352,5 +352,21 @@ namespace NDoc.Core
 				return currentType.IsEnum;
 			}
 		}
+
+		public bool TypeHasBaseType
+		{
+			get
+			{
+				return currentType.BaseType != null && currentType.BaseType.FullName != "System.Object";
+			}
+		}
+
+		public bool TypeImplementsInterfaces
+		{
+			get
+			{
+				return currentType.GetInterfaces().Length > 0;
+			}
+		}
 	}
 }

@@ -92,3 +92,33 @@ namespace NDoc.Test.Summaries
 	/// </summary>
 	public class SummaryWithTwoParas {}
 }
+
+namespace NDoc.Test.AllAccess
+{
+	public class PublicClass {}
+	class InternalClass {}
+}
+
+namespace NDoc.Test.DerivedClasses
+{
+	public class BaseClass {}
+	public class DerivedClass : BaseClass {}
+	public class DerivedDerivedClass : DerivedClass {}
+}
+
+namespace NDoc.Test.ImplementsInterfaces
+{
+	public interface Interface1 {}
+	public interface Interface2 {}
+	public class ImplementsZeroInterfaces {}
+	public class ImplementsOneInterface : Interface1 {}
+	public class ImplementsTwoInterfaces : Interface1, Interface2 {}
+}
+
+namespace NDoc.Test.DerivedClassAndImplementsInterfaces
+{
+	public class BaseClass {}
+	public interface Interface1 {}
+	public interface Interface2 {}
+	public class DerivedAndImplements : BaseClass, Interface1, Interface2 {}
+}

@@ -173,6 +173,15 @@ namespace NDoc.Core
 				case "if-namespace-contains-structures":
 					IfNamespaceContainsStructures(instructionElement);
 					break;
+				case "if-type-has-base-type":
+					IfTypeHasBaseType(instructionElement);
+					break;
+				case "if-type-has-base-type-or-implements-interfaces":
+					IfTypeHasBaseTypeOrImplementsInterfaces(instructionElement);
+					break;
+				case "if-type-implements-interfaces":
+					IfTypeImplementsInterfaces(instructionElement);
+					break;
 				case "namespace-name":
 					NamespaceName(instructionElement);
 					break;
@@ -181,6 +190,12 @@ namespace NDoc.Core
 					break;
 				case "text":
 					Text(instructionElement);
+					break;
+				case "type-access":
+					TypeAccess(instructionElement);
+					break;
+				case "type-base-type-name":
+					TypeBaseTypeName(instructionElement);
 					break;
 				case "type-name":
 					TypeName(instructionElement);
@@ -447,6 +462,30 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasBaseType(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.TypeHasBaseType)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfTypeHasBaseTypeOrImplementsInterfaces(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.TypeHasBaseType || assemblyNavigator.TypeImplementsInterfaces)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
+		private void IfTypeImplementsInterfaces(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.TypeImplementsInterfaces)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void NamespaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.NamespaceName);
@@ -460,6 +499,44 @@ namespace NDoc.Core
 		private void TemplateInstruction(XmlElement instructionElement)
 		{
 			EvaluateChildren(instructionElement);
+		}
+
+		private void TypeAccess(XmlElement instructionElement)
+		{
+			string access = "ERROR";
+
+			switch (instructionElement.GetAttribute("lang"))
+			{
+				case "VB":
+					switch (assemblyNavigator.CurrentType.Attributes & TypeAttributes.VisibilityMask)
+					{
+						case TypeAttributes.Public:
+							access = "Public";
+							break;
+						case TypeAttributes.NotPublic:
+							access = "Friend";
+							break;
+					}
+					break;
+				case "C#":
+					switch (assemblyNavigator.CurrentType.Attributes & TypeAttributes.VisibilityMask)
+					{
+						case TypeAttributes.Public:
+							access = "public";
+							break;
+						case TypeAttributes.NotPublic:
+							access = "internal";
+							break;
+					}
+					break;
+			}
+
+			resultWriter.WriteString(access);
+		}
+
+		private void TypeBaseTypeName(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.CurrentType.BaseType.Name);
 		}
 
 		private void TypeName(XmlElement instructionElement)
@@ -480,26 +557,79 @@ namespace NDoc.Core
 
 		private void TypeType(XmlElement instructionElement)
 		{
-			if (assemblyNavigator.IsClass)
+			string type = "ERROR";
+
+			switch (instructionElement.GetAttribute("lang"))
 			{
-				resultWriter.WriteString("Class");
+				case "":
+					if (assemblyNavigator.IsClass)
+					{
+						type = "Class";
+					}
+					else if (assemblyNavigator.IsInterface)
+					{
+						type = "Interface";
+					}
+					else if (assemblyNavigator.IsStructure)
+					{
+						type = "Structure";
+					}
+					else if (assemblyNavigator.IsDelegate)
+					{
+						type = "Delegate";
+					}
+					else if (assemblyNavigator.IsEnumeration)
+					{
+						type = "Enumeration";
+					}
+					break;
+				case "VB":
+					if (assemblyNavigator.IsClass)
+					{
+						type = "Class";
+					}
+					else if (assemblyNavigator.IsInterface)
+					{
+						type = "Interface";
+					}
+					else if (assemblyNavigator.IsStructure)
+					{
+						type = "Structure";
+					}
+					else if (assemblyNavigator.IsDelegate)
+					{
+						type = "Delegate";
+					}
+					else if (assemblyNavigator.IsEnumeration)
+					{
+						type = "Enum";
+					}
+					break;
+				case "C#":
+					if (assemblyNavigator.IsClass)
+					{
+						type = "class";
+					}
+					else if (assemblyNavigator.IsInterface)
+					{
+						type = "interface";
+					}
+					else if (assemblyNavigator.IsStructure)
+					{
+						type = "struct";
+					}
+					else if (assemblyNavigator.IsDelegate)
+					{
+						type = "delegate";
+					}
+					else if (assemblyNavigator.IsEnumeration)
+					{
+						type = "enum";
+					}
+					break;
 			}
-			else if (assemblyNavigator.IsInterface)
-			{
-				resultWriter.WriteString("Interface");
-			}
-			else if (assemblyNavigator.IsStructure)
-			{
-				resultWriter.WriteString("Structure");
-			}
-			else if (assemblyNavigator.IsDelegate)
-			{
-				resultWriter.WriteString("Delegate");
-			}
-			else if (assemblyNavigator.IsEnumeration)
-			{
-				resultWriter.WriteString("Enumeration");
-			}
+
+			resultWriter.WriteString(type);
 		}
 
 		#endregion

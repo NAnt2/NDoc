@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" ?>
 <!DOCTYPE template [
 	<!ENTITY nbsp "&#xA0;">
+	<!ENTITY nl "&#xD;&#xA;">
 ]>
 <template>
 	<html>
 		<head>
 			<title><namespace-name /></title>
 			<link rel="stylesheet" href="msdn.css" />
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		</head>
 		<body topmargin="0" id="bodyID" class="dtBODY">
 			<div id="nsbanner">
