@@ -90,5 +90,25 @@ namespace NDoc.Core
 
 			return null;
 		}
+
+		public XmlNode GetTypeConstructorsSummary(Type type)
+		{
+			string memberName = "M:" + type.FullName + ".#ctor";
+
+			foreach (DictionaryEntry entry in _Hashtable)
+			{
+				if (((string)entry.Key).StartsWith(memberName))
+				{
+					XmlNode memberNode = entry.Value as XmlNode;
+
+					if (memberNode["summary"] != null)
+					{
+						return memberNode;
+					}
+				}
+			}
+
+			return null;
+		}
 	}
 }

@@ -423,7 +423,11 @@ namespace NDoc.Core
 
 		private bool AccessMatches(string access, MethodBase method)
 		{
-			if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public && access == "public")
+			if (access == null)
+			{
+				return true;
+			}
+			else if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public && access == "public")
 			{
 				return true;
 			}
@@ -448,15 +452,12 @@ namespace NDoc.Core
 
 		public bool TypeHasConstructors(string access)
 		{
-			foreach (ConstructorInfo constructor in currentType.GetConstructors())
-			{
-				if (AccessMatches(access, constructor))
-				{
-					return true;
-				}
-			}
+			return GetConstructors(access).Count > 0;
+		}
 
-			return false;
+		public bool TypeHasOverloadedConstructors()
+		{
+			return GetConstructors(null).Count > 1;
 		}
 
 		public bool MoveToFirstConstructor(string access)

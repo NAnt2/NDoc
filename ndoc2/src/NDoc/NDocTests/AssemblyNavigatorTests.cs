@@ -464,4 +464,15 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNextMember());
 		Assert(!navigator.MoveToNextMember());
 	}
+
+	public void TestTypeHasOverloadedConstructors()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.Constructors"));
+
+		Assert(navigator.MoveToType("DefaultConstructor"));
+		Assert(!navigator.TypeHasOverloadedConstructors());
+
+		Assert(navigator.MoveToType("TwoConstructors"));
+		Assert(navigator.TypeHasOverloadedConstructors());
+	}
 }

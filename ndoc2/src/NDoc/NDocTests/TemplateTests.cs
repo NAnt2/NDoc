@@ -755,11 +755,18 @@ public class TemplateTests : TestCase
 	public void TestIfTypeHasConstructors()
 	{
 		AssertEquals(
-			String.Empty,
+			"true",
 			EvaluateType(
-				"<if-type-has-constructors>true</if-type-has-constructors>",
+				"<if-type-has-constructors access='public'>true</if-type-has-constructors>",
 				"NDoc.Test.Constructors",
 				"DefaultConstructor"));
+
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-constructors access='public'>true</if-type-has-constructors>",
+				"NDoc.Test.Constructors",
+				"PrivateConstructor"));
 	}
 
 	public void TestForEachConstructorInType()
@@ -792,6 +799,33 @@ public class TemplateTests : TestCase
 			"This constructor has a summary.",
 			EvaluateType(
 				"<for-each-constructor-in-type access='public'><member-summary strip='first' /></for-each-constructor-in-type>",
+				"NDoc.Test.Constructors",
+				"ConstructorWithSummary"));
+	}
+
+	public void TestIfTypeHasOverloadedConstructors()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-overloaded-constructors>true</if-type-has-overloaded-constructors>",
+				"NDoc.Test.Constructors",
+				"DefaultConstructor"));
+
+		AssertEquals(
+			"true",
+			EvaluateType(
+				"<if-type-has-overloaded-constructors>true</if-type-has-overloaded-constructors>",
+				"NDoc.Test.Constructors",
+				"TwoConstructors"));
+	}
+
+	public void TestTypeConstructorsSummary()
+	{
+		AssertEquals(
+			"This constructor has a summary.",
+			EvaluateType(
+				"<type-constructors-summary strip='first' />",
 				"NDoc.Test.Constructors",
 				"ConstructorWithSummary"));
 	}

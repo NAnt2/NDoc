@@ -159,4 +159,13 @@ namespace NDoc.Test.Constructors
 		/// <summary>This constructor has a summary.</summary>
 		public ConstructorWithSummary() {}
 	}
+
+	public class TwoConsructorsWithSummaries
+	{
+		/// <summary>This constructor has a summary.</summary>
+		public TwoConsructorsWithSummaries() {}
+
+		/// <summary>This constructor also has a summary.</summary>
+		public TwoConsructorsWithSummaries(int i) {}
+	}
 }

@@ -203,6 +203,9 @@ namespace NDoc.Core
 				case "if-type-has-constructors":
 					IfTypeHasConstructors(instructionElement);
 					break;
+				case "if-type-has-overloaded-constructors":
+					IfTypeHasOverloadedConstructors(instructionElement);
+					break;
 				case "if-type-has-remarks":
 					IfTypeHasRemarks(instructionElement);
 					break;
@@ -235,6 +238,9 @@ namespace NDoc.Core
 					break;
 				case "type-base-type-name":
 					TypeBaseTypeName(instructionElement);
+					break;
+				case "type-constructors-summary":
+					TypeConstructorsSummary(instructionElement);
 					break;
 				case "type-name":
 					TypeName(instructionElement);
@@ -601,6 +607,14 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasOverloadedConstructors(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.TypeHasOverloadedConstructors())
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfTypeHasRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
@@ -713,6 +727,23 @@ namespace NDoc.Core
 		private void TypeBaseTypeName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.CurrentType.BaseType.Name);
+		}
+
+		private void TypeConstructorsSummary(XmlElement instructionElement)
+		{
+			bool stripPara = instructionElement.GetAttribute("strip") == "first";
+
+			XmlNode node = assemblyDocumentation.GetTypeConstructorsSummary(assemblyNavigator.CurrentType);
+
+			if (node != null)
+			{
+				XmlNode summary = node["summary"];
+
+				if (summary != null)
+				{
+					EvaluateDocumentationChildren(summary, stripPara, true);
+				}
+			}
 		}
 
 		private void TypeName(XmlElement instructionElement)

@@ -39,15 +39,16 @@
 					<h4 class="dtH4">Public Constructors</h4>
 					<div class="tablediv">
 						<table cellspacing="0" class="dtTABLE">
-							<for-each-constructor-in-type access="public">
-								<tr valign="top">
-									<td width="50%">
-										<img src="public-method.bmp" alt="public constructor" border="0" />
-										<a href=""><type-name /> Constructor</a>
-									</td>
-									<td width="50%"><member-summary strip="first" /></td>
-								</tr>
-							</for-each-constructor-in-type>
+							<tr valign="top">
+								<td width="50%">
+									<img src="public-method.bmp" alt="public constructor" border="0" />
+									<a href=""><type-name /> Constructor</a>
+								</td>
+								<td width="50%">
+									<if-type-has-overloaded-constructors>Overloaded. </if-type-has-overloaded-constructors>
+									<type-constructors-summary strip="first" />
+								</td>
+							</tr>
 						</table>
 					</div>
 				</if-type-has-constructors>
