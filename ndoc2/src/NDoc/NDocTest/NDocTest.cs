@@ -138,3 +138,25 @@ namespace NDoc.Test.Remarks
 	public class RemarksWithoutPara {}
 	public class NoRemarks {}
 }
+
+namespace NDoc.Test.Constructors
+{
+	public class DefaultConstructor {}
+	
+	public class PrivateConstructor
+	{
+		private PrivateConstructor() { }
+	}
+
+	public class TwoConstructors
+	{
+		public TwoConstructors() { }
+		public TwoConstructors(int i) { }
+	}
+
+	public class ConstructorWithSummary
+	{
+		/// <summary>This constructor has a summary.</summary>
+		public ConstructorWithSummary() {}
+	}
+}

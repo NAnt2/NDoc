@@ -436,4 +436,32 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToType("SealedClass"));
 		Assert(navigator.IsTypeSealed);
 	}
+
+	public void TestTypeHasConstructorsPublic()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.Constructors"));
+
+		Assert(navigator.MoveToType("DefaultConstructor"));
+		Assert(navigator.TypeHasConstructors("public"));
+
+		Assert(navigator.MoveToType("PrivateConstructor"));
+		Assert(!navigator.TypeHasConstructors("public"));
+	}
+
+	public void TestMoveToConstructors()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.Constructors"));
+
+		Assert(navigator.MoveToType("DefaultConstructor"));
+		Assert(navigator.MoveToFirstConstructor("public"));
+		Assert(!navigator.MoveToNextMember());
+
+		Assert(navigator.MoveToType("PrivateConstructor"));
+		Assert(!navigator.MoveToFirstConstructor("public"));
+
+		Assert(navigator.MoveToType("TwoConstructors"));
+		Assert(navigator.MoveToFirstConstructor("public"));
+		Assert(navigator.MoveToNextMember());
+		Assert(!navigator.MoveToNextMember());
+	}
 }

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections;
+using System.Reflection;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -75,6 +76,19 @@ namespace NDoc.Core
 		{
 			string memberName = "T:" + type.FullName;
 			return GetMemberNode(memberName);
+		}
+
+		public XmlNode GetMemberNode(MethodBase method)
+		{
+			string memberName = "M:";
+
+			if (method.IsConstructor)
+			{
+				memberName += method.DeclaringType.FullName + ".#ctor";
+				return GetMemberNode(memberName);
+			}
+
+			return null;
 		}
 	}
 }

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" ?>
+<!DOCTYPE template [
+	<!ENTITY copy "&#xA9;">
+	<!ENTITY in "   ">
+	<!ENTITY nbsp "&#xA0;">
+	<!ENTITY nl "&#xD;&#xA;">
+]>
+<template>
+	<html>
+		<head>
+			<title>
+				<type-name />
+				<text> Members</text>
+			</title>
+			<link rel="stylesheet" href="msdn.css" />
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		</head>
+		<body topmargin="0" id="bodyID" class="dtBODY">
+			<div id="nsbanner">
+				<div id="bannerrow1">
+					<table class="bannerparthead" cellspacing="0">
+						<tr id="hdr">
+							<!-- TODO: The user should be able to specify these via properties. -->
+							<td class="runninghead" nowrap="nowrap">.NET Framework Class Library</td>
+							<td class="product" nowrap="nowrap">&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+				<div id="TitleRow">
+					<h1 class="dtH1">
+						<type-name />
+						<text> Members</text>
+					</h1>
+				</div>
+			</div>
+			<div id="nstext" valign="bottom">
+				<p><a href="{$type-link}"><type-name /> overview</a></p>
+				<if-type-has-constructors access="public">
+					<h4 class="dtH4">Public Constructors</h4>
+					<div class="tablediv">
+						<table cellspacing="0" class="dtTABLE">
+							<for-each-constructor-in-type access="public">
+								<tr valign="top">
+									<td width="50%">
+										<img src="public-method.bmp" alt="public constructor" border="0" />
+										<a href=""><type-name /> Constructor</a>
+									</td>
+									<td width="50%"><member-summary strip="first" /></td>
+								</tr>
+							</for-each-constructor-in-type>
+						</table>
+					</div>
+				</if-type-has-constructors>
+				<h4 class="dtH4">See Also</h4>
+				<p>
+					<a href="{$type-link}">
+						<type-name />
+						<text> </text>
+						<type-type />
+					</a>
+					<text> | </text>
+					<a href="{$namespace-link}">
+						<namespace-name />
+						<text> Namespace</text>
+					</a>
+				</p>
+				<div class="footer">
+					<hr />
+					<!-- TODO: We should probably let the user specify these via properties. -->
+					<p><a href="mailto:ndoc-devel@lists.sourceforge.net">Send comments on this topic.</a></p>
+					<p><a href="http://ndoc.sourceforge.net/">&copy; 2002 NDoc Corporation. All rights reserved.</a></p>
+				</div>
+			</div>
+		</body>
+	</html>
+</template>

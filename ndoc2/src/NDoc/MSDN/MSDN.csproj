@@ -76,6 +76,10 @@
                     RelPath = "templates\type.xml"
                     BuildAction = "Content"
                 />
+                <File
+                    RelPath = "templates\type-members.xml"
+                    BuildAction = "Content"
+                />
             </Include>
         </Files>
     </CSHARP>

@@ -34,6 +34,9 @@ namespace NDoc.Core
 			Template typeTemplate = new Template();
 			typeTemplate.Load(Path.Combine(styleDirectory, @"templates\type.xml"));
 
+			Template typeMembersTemplate = new Template();
+			typeMembersTemplate.Load(Path.Combine(styleDirectory, @"templates\type-members.xml"));
+
 			StreamWriter streamWriter = OpenNamespaces();
 
 			namespacesTemplate.Evaluate(
@@ -71,6 +74,17 @@ namespace NDoc.Core
 						streamWriter);
 
 					streamWriter.Close();
+
+					streamWriter = OpenTypeMembers(assemblyNavigator.CurrentType);
+
+					typeMembersTemplate.EvaluateType(
+						assemblyNavigator.NamespaceName,
+						assemblyNavigator.TypeName,
+						assemblyNavigator,
+						documentationFile,
+						streamWriter);
+
+					streamWriter.Close();
 				}
 				while (assemblyNavigator.MoveToNextType());
 			}
@@ -94,6 +108,13 @@ namespace NDoc.Core
 		private StreamWriter OpenType(Type type)
 		{
 			string fileName = type.FullName + ".html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
+		}
+
+		private StreamWriter OpenTypeMembers(Type type)
+		{
+			string fileName = type.FullName + "-members.html";
 			string outputFile = Path.Combine(outputDirectory, fileName);
 			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}

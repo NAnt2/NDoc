@@ -328,7 +328,7 @@ public class TemplateTests : TestCase
 	public void TestTypeSummaryWithoutParaStripFirst()
 	{
 		AssertEquals(
-			"<p>This summary has no para element.</p>",
+			"This summary has no para element.",
 			EvaluateType(
 			"<type-summary strip='first' />",
 			"NDoc.Test.Summaries",
@@ -750,5 +750,49 @@ public class TemplateTests : TestCase
 				"<if-type-has-remarks>true</if-type-has-remarks>",
 				"NDoc.Test.Remarks",
 				"NoRemarks"));
+	}
+
+	public void TestIfTypeHasConstructors()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<if-type-has-constructors>true</if-type-has-constructors>",
+				"NDoc.Test.Constructors",
+				"DefaultConstructor"));
+	}
+
+	public void TestForEachConstructorInType()
+	{
+		AssertEquals(
+			".",
+			EvaluateType(
+				"<for-each-constructor-in-type access='public'>.</for-each-constructor-in-type>",
+				"NDoc.Test.Constructors",
+				"DefaultConstructor"));
+
+		AssertEquals(
+			String.Empty,
+			EvaluateType(
+				"<for-each-constructor-in-type access='public'>.</for-each-constructor-in-type>",
+				"NDoc.Test.Constructors",
+				"PrivateConstructor"));
+
+		AssertEquals(
+			"..",
+			EvaluateType(
+				"<for-each-constructor-in-type access='public'>.</for-each-constructor-in-type>",
+				"NDoc.Test.Constructors",
+				"TwoConstructors"));
+	}
+
+	public void TestMemberSummary()
+	{
+		AssertEquals(
+			"This constructor has a summary.",
+			EvaluateType(
+				"<for-each-constructor-in-type access='public'><member-summary strip='first' /></for-each-constructor-in-type>",
+				"NDoc.Test.Constructors",
+				"ConstructorWithSummary"));
 	}
 }

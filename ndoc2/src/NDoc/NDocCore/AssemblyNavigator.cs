@@ -16,6 +16,7 @@ namespace NDoc.Core
 		private IEnumerator interfaceEnumerator;
 		private int interfaceCount;
 		private int currentInterfaceIndex;
+		private IEnumerator memberEnumerator;
 
 		public AssemblyNavigator(Assembly assembly)
 		{
@@ -417,6 +418,71 @@ namespace NDoc.Core
 			get
 			{
 				return currentType.IsSealed;
+			}
+		}
+
+		private bool AccessMatches(string access, MethodBase method)
+		{
+			if ((method.Attributes & MethodAttributes.Public) == MethodAttributes.Public && access == "public")
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		private ArrayList GetConstructors(string access)
+		{
+			ArrayList constructors = new ArrayList();
+
+			foreach (ConstructorInfo constructor in currentType.GetConstructors())
+			{
+				if (AccessMatches(access, constructor))
+				{
+					constructors.Add(constructor);
+				}
+			}
+
+			return constructors;
+		}
+
+		public bool TypeHasConstructors(string access)
+		{
+			foreach (ConstructorInfo constructor in currentType.GetConstructors())
+			{
+				if (AccessMatches(access, constructor))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public bool MoveToFirstConstructor(string access)
+		{
+			memberEnumerator = GetConstructors(access).GetEnumerator();
+			return MoveToNextMember();
+		}
+
+		public bool MoveToNextMember()
+		{
+			return memberEnumerator.MoveNext();
+		}
+
+		public MemberInfo CurrentMember
+		{
+			get
+			{
+				return memberEnumerator.Current as MemberInfo;
+			}
+		}
+
+		public MethodBase CurrentMethod
+		{
+			get
+			{
+				return memberEnumerator.Current as MethodBase;
 			}
 		}
 	}

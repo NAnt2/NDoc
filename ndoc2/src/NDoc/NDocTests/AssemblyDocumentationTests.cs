@@ -32,4 +32,11 @@ public class AssemblyDocumentationTests : TestCase
 		AssertNotNull(node);
 		AssertEquals("This is Class1.", node["summary"].InnerText);
 	}
+
+	public void TestConstructorSummary()
+	{
+		XmlNode node = documentation.GetMemberNode(typeof(NDoc.Test.Constructors.ConstructorWithSummary).GetConstructors()[0]);
+		AssertNotNull(node);
+		AssertEquals("This constructor has a summary.", node["summary"].InnerText);
+	}
 }

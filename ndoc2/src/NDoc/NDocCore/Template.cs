@@ -155,6 +155,9 @@ namespace NDoc.Core
 				case "for-each-class-in-namespace":
 					ForEachClassInNamespace(instructionElement);
 					break;
+				case "for-each-constructor-in-type":
+					ForEachConstructorInType(instructionElement);
+					break;
 				case "for-each-delegate-in-namespace":
 					ForEachDelegateInNamespace(instructionElement);
 					break;
@@ -197,6 +200,9 @@ namespace NDoc.Core
 				case "if-type-has-base-type-or-implements-interfaces":
 					IfTypeHasBaseTypeOrImplementsInterfaces(instructionElement);
 					break;
+				case "if-type-has-constructors":
+					IfTypeHasConstructors(instructionElement);
+					break;
 				case "if-type-has-remarks":
 					IfTypeHasRemarks(instructionElement);
 					break;
@@ -211,6 +217,9 @@ namespace NDoc.Core
 					break;
 				case "implemented-interface-name":
 					ImplementedInterfaceName(instructionElement);
+					break;
+				case "member-summary":
+					MemberSummary(instructionElement);
 					break;
 				case "namespace-name":
 					NamespaceName(instructionElement);
@@ -323,10 +332,13 @@ namespace NDoc.Core
 		{
 			XmlNode node = documentationNode.FirstChild;
 
-			if (stripPara && node.Name == "para")
+			if (stripPara)
 			{
-				EvaluateDocumentationChildren(node, false, false);
-				node = node.NextSibling;
+				if (node.Name == "para")
+				{
+					EvaluateDocumentationChildren(node, false, false);
+					node = node.NextSibling;
+				}
 			}
 			else if (addPara && node.NodeType != XmlNodeType.Element)
 			{
@@ -426,6 +438,20 @@ namespace NDoc.Core
 					EvaluateChildren(instructionElement);
 				}
 				while (assemblyNavigator.MoveToNextType());
+			}
+		}
+
+		private void ForEachConstructorInType(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.MoveToFirstConstructor(access))
+			{
+				do
+				{
+					EvaluateChildren(instructionElement);
+				}
+				while (assemblyNavigator.MoveToNextMember());
 			}
 		}
 
@@ -565,6 +591,16 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfTypeHasConstructors(XmlElement instructionElement)
+		{
+			string access = instructionElement.GetAttribute("access");
+
+			if (assemblyNavigator.TypeHasConstructors(access))
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfTypeHasRemarks(XmlElement instructionElement)
 		{
 			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentType);
@@ -607,6 +643,23 @@ namespace NDoc.Core
 		private void ImplementedInterfaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
+		}
+
+		private void MemberSummary(XmlElement instructionElement)
+		{
+			bool stripPara = instructionElement.GetAttribute("strip") == "first";
+
+			XmlNode node = assemblyDocumentation.GetMemberNode(assemblyNavigator.CurrentMethod);
+
+			if (node != null)
+			{
+				XmlNode summary = node["summary"];
+
+				if (summary != null)
+				{
+					EvaluateDocumentationChildren(summary, stripPara, true);
+				}
+			}
 		}
 
 		private void NamespaceName(XmlElement instructionElement)
