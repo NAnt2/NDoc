@@ -292,4 +292,64 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToType("Class1"));
 		AssertEquals("Class1", navigator.TypeName);
 	}
+
+	public void TestIsClass()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+
+		Assert(navigator.MoveToType("Class1"));
+		Assert(navigator.IsClass);
+		Assert(!navigator.IsInterface);
+		Assert(!navigator.IsStructure);
+		Assert(!navigator.IsDelegate);
+		Assert(!navigator.IsEnumeration);
+	}
+
+	public void TestIsInterface()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+
+		Assert(navigator.MoveToType("Interface1"));
+		Assert(!navigator.IsClass);
+		Assert(navigator.IsInterface);
+		Assert(!navigator.IsStructure);
+		Assert(!navigator.IsDelegate);
+		Assert(!navigator.IsEnumeration);
+	}
+
+	public void TestIsStructure()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+
+		Assert(navigator.MoveToType("Structure1"));
+		Assert(!navigator.IsClass);
+		Assert(!navigator.IsInterface);
+		Assert(navigator.IsStructure);
+		Assert(!navigator.IsDelegate);
+		Assert(!navigator.IsEnumeration);
+	}
+
+	public void TestIsDelegate()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+
+		Assert(navigator.MoveToType("Delegate1"));
+		Assert(!navigator.IsClass);
+		Assert(!navigator.IsInterface);
+		Assert(!navigator.IsStructure);
+		Assert(navigator.IsDelegate);
+		Assert(!navigator.IsEnumeration);
+	}
+
+	public void TestIsEnumeration()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+
+		Assert(navigator.MoveToType("Enumeration1"));
+		Assert(!navigator.IsClass);
+		Assert(!navigator.IsInterface);
+		Assert(!navigator.IsStructure);
+		Assert(!navigator.IsDelegate);
+		Assert(navigator.IsEnumeration);
+	}
 }

@@ -6,12 +6,16 @@ namespace NDoc.Core
 {
 	public class Driver
 	{
+		private string outputDirectory;
+
 		public void GenerateDocumentation(
 			string assemblyFile, 
 			string documentationFile,
 			string outputDirectory,
 			string outputStyle)
 		{
+			this.outputDirectory = outputDirectory;
+
 			Directory.CreateDirectory(outputDirectory);
 
 			Assembly assembly = Assembly.LoadFrom(assemblyFile);
@@ -21,26 +25,58 @@ namespace NDoc.Core
 
 			CopyResources(styleDirectory, outputDirectory);
 
-			Template template = new Template();
-			template.Load(Path.Combine(styleDirectory, @"templates\namespace.xml"));
+			Template namespaceTemplate = new Template();
+			namespaceTemplate.Load(Path.Combine(styleDirectory, @"templates\namespace.xml"));
+
+			Template typeTemplate = new Template();
+			typeTemplate.Load(Path.Combine(styleDirectory, @"templates\type.xml"));
 
 			assemblyNavigator.MoveToFirstNamespace();
 
 			do
 			{
-				string fileName = assemblyNavigator.NamespaceName + ".html";
-				string outputFile = Path.Combine(outputDirectory, fileName);
-				StreamWriter streamWriter = new StreamWriter(File.Open(outputFile, FileMode.Create));
+				StreamWriter streamWriter = OpenNamespace(assemblyNavigator.NamespaceName);
 
-				template.EvaluateNamespace(
+				namespaceTemplate.EvaluateNamespace(
 					assemblyNavigator.NamespaceName, 
 					assemblyNavigator, 
 					documentationFile, 
 					streamWriter);
 
 				streamWriter.Close();
+
+				assemblyNavigator.MoveToFirstClass();
+
+				do
+				{
+					streamWriter = OpenType(assemblyNavigator.CurrentType);
+
+					typeTemplate.EvaluateType(
+						assemblyNavigator.NamespaceName, 
+						assemblyNavigator.TypeName,
+						assemblyNavigator, 
+						documentationFile, 
+						streamWriter);
+
+					streamWriter.Close();
+				}
+				while (assemblyNavigator.MoveToNextType());
 			}
 			while (assemblyNavigator.MoveToNextNamespace());
+		}
+
+		private StreamWriter OpenNamespace(string namespaceName)
+		{
+			string fileName = namespaceName + ".html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
+		}
+
+		private StreamWriter OpenType(Type type)
+		{
+			string fileName = type.FullName + ".html";
+			string outputFile = Path.Combine(outputDirectory, fileName);
+			return new StreamWriter(File.Open(outputFile, FileMode.Create));
 		}
 
 		private void CopyResources(string styleDirectory, string outputDirectory)

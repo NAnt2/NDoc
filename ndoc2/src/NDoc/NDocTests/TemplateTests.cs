@@ -267,7 +267,7 @@ public class TemplateTests : TestCase
 	public void TestTypeSummaryWithoutPara()
 	{
 		AssertEquals(
-			"This summary has no para element.",
+			"<p>This summary has no para element.</p>",
 			EvaluateType(
 				"<type-summary />",
 				"NDoc.Test.Summaries",
@@ -319,10 +319,58 @@ public class TemplateTests : TestCase
 	public void TestTypeSummaryWithoutParaStripFirst()
 	{
 		AssertEquals(
-			"This summary has no para element.",
+			"<p>This summary has no para element.</p>",
 			EvaluateType(
 			"<type-summary strip='first' />",
 			"NDoc.Test.Summaries",
 			"SummaryWithoutPara"));
+	}
+
+	public void TestTypeType()
+	{
+		AssertEquals(
+			"Class",
+			EvaluateType(
+				"<type-type />",
+				"NDoc.Test",
+				"Class1"));
+
+		AssertEquals(
+			"Interface",
+			EvaluateType(
+				"<type-type />",
+				"NDoc.Test",
+				"Interface1"));
+
+		AssertEquals(
+			"Structure",
+			EvaluateType(
+				"<type-type />",
+				"NDoc.Test",
+				"Structure1"));
+
+		AssertEquals(
+			"Delegate",
+			EvaluateType(
+				"<type-type />",
+				"NDoc.Test",
+				"Delegate1"));
+
+		AssertEquals(
+			"Enumeration",
+			EvaluateType(
+				"<type-type />",
+				"NDoc.Test",
+				"Enumeration1"));
+	}
+
+	public void TestWhitespace()
+	{
+		AssertEquals("<foo />", EvaluateNamespace("<foo> </foo>", "NDoc.Test"));
+	}
+
+	public void TestText()
+	{
+		AssertEquals(" ", EvaluateNamespace("<text> </text>", "NDoc.Test"));
 	}
 }

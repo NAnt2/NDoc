@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" ?>
+<!DOCTYPE template [
+	<!ENTITY nbsp "&#xA0;">
+]>
+<template>
+	<html>
+		<head>
+			<title>
+				<type-name />
+				<text> </text>
+				<type-type />
+			</title>
+			<link rel="stylesheet" href="msdn.css" />
+		</head>
+		<body topmargin="0" id="bodyID" class="dtBODY">
+			<div id="nsbanner">
+				<div id="bannerrow1">
+					<table class="bannerparthead" cellspacing="0">
+						<tr id="hdr">
+							<td class="runninghead" nowrap="nowrap">.NET Framework Class Library</td>
+							<td class="product" nowrap="nowrap">&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+				<div id="TitleRow">
+					<h1 class="dtH1">
+						<type-name />
+						<text> </text>
+						<type-type />
+					</h1>
+				</div>
+			</div>
+			<div id="nstext" valign="bottom">
+				<type-summary />
+				<p>For a list of all members of this type, see <a href=""><type-name /> Members</a>.</p>
+			</div>
+		</body>
+	</html>
+</template>

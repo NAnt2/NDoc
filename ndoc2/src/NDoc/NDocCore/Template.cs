@@ -179,11 +179,17 @@ namespace NDoc.Core
 				case "template":
 					TemplateInstruction(instructionElement);
 					break;
+				case "text":
+					Text(instructionElement);
+					break;
 				case "type-name":
 					TypeName(instructionElement);
 					break;
 				case "type-summary":
 					TypeSummary(instructionElement);
+					break;
+				case "type-type":
+					TypeType(instructionElement);
 					break;
 				default:
 					resultWriter.WriteStartElement(instructionElement.LocalName);
@@ -259,13 +265,20 @@ namespace NDoc.Core
 
 		#region Helpers
 
-		private void EvaluateDocumentationChildren(XmlNode documentationNode, bool stripPara)
+		private void EvaluateDocumentationChildren(XmlNode documentationNode, bool stripPara, bool addPara)
 		{
 			XmlNode node = documentationNode.FirstChild;
 
 			if (stripPara && node.Name == "para")
 			{
-				EvaluateDocumentationChildren(node, false);
+				EvaluateDocumentationChildren(node, false, false);
+				node = node.NextSibling;
+			}
+			else if (addPara && node.NodeType != XmlNodeType.Element)
+			{
+				resultWriter.WriteStartElement("p");
+				EvaluateDocumentation(node);
+				resultWriter.WriteEndElement();
 				node = node.NextSibling;
 			}
 
@@ -439,6 +452,16 @@ namespace NDoc.Core
 			resultWriter.WriteString(assemblyNavigator.NamespaceName);
 		}
 
+		private void Text(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(instructionElement.InnerText);
+		}
+
+		private void TemplateInstruction(XmlElement instructionElement)
+		{
+			EvaluateChildren(instructionElement);
+		}
+
 		private void TypeName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.TypeName);
@@ -451,13 +474,32 @@ namespace NDoc.Core
 
 			if (node != null)
 			{
-				EvaluateDocumentationChildren(node["summary"], stripPara);
+				EvaluateDocumentationChildren(node["summary"], stripPara, true);
 			}
 		}
 
-		private void TemplateInstruction(XmlElement instructionElement)
+		private void TypeType(XmlElement instructionElement)
 		{
-			EvaluateChildren(instructionElement);
+			if (assemblyNavigator.IsClass)
+			{
+				resultWriter.WriteString("Class");
+			}
+			else if (assemblyNavigator.IsInterface)
+			{
+				resultWriter.WriteString("Interface");
+			}
+			else if (assemblyNavigator.IsStructure)
+			{
+				resultWriter.WriteString("Structure");
+			}
+			else if (assemblyNavigator.IsDelegate)
+			{
+				resultWriter.WriteString("Delegate");
+			}
+			else if (assemblyNavigator.IsEnumeration)
+			{
+				resultWriter.WriteString("Enumeration");
+			}
 		}
 
 		#endregion
@@ -467,7 +509,7 @@ namespace NDoc.Core
 		private void Para(XmlElement documentationElement)
 		{
 			resultWriter.WriteStartElement("p");
-			EvaluateDocumentationChildren(documentationElement, false);
+			EvaluateDocumentationChildren(documentationElement, false, false);
 			resultWriter.WriteEndElement();
 		}
 

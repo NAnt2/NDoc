@@ -50,7 +50,7 @@ namespace NDoc.Core
 
 		public bool MoveToNamespace(string namespaceName)
 		{
-			if (namespaceNames.Contains(namespaceName))
+			if (currentNamespaceName != namespaceName && namespaceNames.Contains(namespaceName))
 			{
 				currentNamespaceName = namespaceName;
 				currentTypes = null;
@@ -107,7 +107,7 @@ namespace NDoc.Core
 			}
 		}
 
-		private bool IsDelegate(Type type)
+		private bool IsDelegateType(Type type)
 		{
 			return 
 				type.IsClass &&
@@ -121,7 +121,7 @@ namespace NDoc.Core
 
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == currentNamespaceName && type.IsClass && !IsDelegate(type))
+				if (type.Namespace == currentNamespaceName && type.IsClass && !IsDelegateType(type))
 				{
 					currentTypes.Add(type);
 				}
@@ -172,7 +172,7 @@ namespace NDoc.Core
 
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == currentNamespaceName && IsDelegate(type))
+				if (type.Namespace == currentNamespaceName && IsDelegateType(type))
 				{
 					currentTypes.Add(type);
 				}
@@ -310,6 +310,46 @@ namespace NDoc.Core
 			get
 			{
 				return currentType;
+			}
+		}
+
+		public bool IsClass
+		{
+			get
+			{
+				return currentType.IsClass && !IsDelegateType(currentType);
+			}
+		}
+
+		public bool IsInterface
+		{
+			get
+			{
+				return currentType.IsInterface;
+			}
+		}
+
+		public bool IsStructure
+		{
+			get
+			{
+				return currentType.IsValueType && !currentType.IsEnum;
+			}
+		}
+
+		public bool IsDelegate
+		{
+			get
+			{
+				return IsDelegateType(currentType);
+			}
+		}
+
+		public bool IsEnumeration
+		{
+			get
+			{
+				return currentType.IsEnum;
 			}
 		}
 	}

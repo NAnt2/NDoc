@@ -6,6 +6,14 @@ namespace NDoc.Test
 {
 	/// <summary>This is Class1.</summary>
 	public class Class1 {}
+	/// <summary>This is Interface1.</summary>
+	public interface Interface1 {}
+	/// <summary>This is Structure1.</summary>
+	public struct Structure1 {}
+	/// <summary>This is Delegate1.</summary>
+	public delegate void Delegate1();
+	/// <summary>This is Enumeration1.</summary>
+	public enum Enumeration1 {}
 }
 
 namespace NDoc.Test.TwoClasses

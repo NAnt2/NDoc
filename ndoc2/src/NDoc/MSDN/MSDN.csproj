@@ -68,6 +68,10 @@
                     RelPath = "templates\namespace.xml"
                     BuildAction = "Content"
                 />
+                <File
+                    RelPath = "templates\type.xml"
+                    BuildAction = "Content"
+                />
             </Include>
         </Files>
     </CSHARP>
