@@ -1332,7 +1332,10 @@ namespace NDoc.Core.Reflection
 
 		private void WriteSpecialAttributes(XmlWriter writer, Type type)
 		{
-			if ((type.Attributes & TypeAttributes.Serializable) == TypeAttributes.Serializable)
+			if (
+				(type.IsSerializable) ||
+				((type.Attributes & TypeAttributes.Serializable) == TypeAttributes.Serializable)
+			   )
 			{
 				if (attributeFilter.Show("System.SerializableAttribute"))
 				{
