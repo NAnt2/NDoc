@@ -192,12 +192,37 @@ namespace NDoc.Core
 		public void SaveOutputs( string filter )
 		{
 			DirectoryInfo dir = new DirectoryInfo( WorkingDirectory );
-			foreach ( FileInfo f in dir.GetFiles( filter ) )
+			if (filter=="*.*")
+			{
+				SaveAllOutputs(dir);
+			}
+			else
+			{
+				foreach ( FileInfo f in dir.GetFiles( filter ) )
+				{
+					string newFile = Path.Combine( this.RootDirectory, f.Name );
+					if ( File.Exists( newFile ) )
+						File.Delete( newFile );
+					f.MoveTo( newFile );
+				}
+			}
+		}
+
+		private void SaveAllOutputs(DirectoryInfo sourceDir)
+		{
+			foreach ( FileInfo f in sourceDir.GetFiles() )
 			{
 				string newFile = Path.Combine( this.RootDirectory, f.Name );
 				if ( File.Exists( newFile ) )
 					File.Delete( newFile );
 				f.MoveTo( newFile );
+			}
+			foreach ( DirectoryInfo dir in sourceDir.GetDirectories() )
+			{
+				string newDir = Path.Combine( this.RootDirectory, dir.Name );
+				if ( Directory.Exists( newDir ) )
+					Directory.Delete( newDir, true );
+				dir.MoveTo( newDir );
 			}
 		}
 
