@@ -50,14 +50,31 @@
 	</xsl:template>
 	<!-- -->
 	<xsl:template match="hierarchyType" mode="hierarchy">
-		<div class="Hierarchy">
+		<div class="hier">
+			<xsl:choose>
+				<xsl:when test="hierarchyInterfaces">
+					<table class="hier">
+						<tr>
+							<td width="1%">
+								<nobr>
 			<xsl:call-template name="get-type-link">
 				<xsl:with-param name="id" select="@id" />
 			</xsl:call-template>
-			<xsl:if test="hierarchyInterfaces">
-				<xsl:text>&#160;---- </xsl:text>
-				<xsl:apply-templates select="./hierarchyInterfaces/hierarchyInterface" mode="baseInterfaces" />
-			</xsl:if>
+									<xsl:text>&#160;----&#160;</xsl:text>
+								</nobr>
+							</td>
+							<td width="99%">
+								<xsl:apply-templates select="./hierarchyInterfaces/hierarchyInterface" mode="baseInterfaces" />
+							</td>
+						</tr>
+					</table>
+				</xsl:when>
+				<xsl:otherwise>
+			<xsl:call-template name="get-type-link">
+				<xsl:with-param name="id" select="@id" />
+			</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
 			<xsl:apply-templates select="hierarchyType" mode="hierarchy" />
 		</div>
 	</xsl:template>
