@@ -1009,6 +1009,9 @@
 				<!--KSD-->
 				<xsl:text> Conversion</xsl:text>
 			</xsl:when>
+			<!-- These are not ecma defined operators, but they are used in Borland's Delphi -->
+			<xsl:when test="$name='op_Round'">Round Operator</xsl:when>
+			<xsl:when test="$name='op_Trunc'">Truncate Operator</xsl:when>
 			<xsl:otherwise>ERROR</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

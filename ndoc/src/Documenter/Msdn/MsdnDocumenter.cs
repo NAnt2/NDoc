@@ -1282,6 +1282,8 @@ namespace NDoc.Documenter.Msdn
 					string from2 = parameterNode2.Attributes["type"].Value;
 					string to2 = operatorNode.Attributes["returnType"].Value;
 					return "Implicit " + StripNamespace(from2) + " to " + StripNamespace(to2) + " Conversion";
+				case "op_Round": return "Round Operator";
+				case "op_Trunc": return "Truncate Operator";
 				default:
 					return "ERROR";
 			}
