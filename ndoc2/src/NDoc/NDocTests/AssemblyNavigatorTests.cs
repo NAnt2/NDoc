@@ -213,6 +213,18 @@ public class AssemblyNavigatorTests : TestCase
 
 	#endregion
 
+	#region IsMemberInherited Tests
+
+	public void Test_IsMemberInherited_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsMemberInherited"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		Assert(!navigator.IsMemberInherited);
+	}
+
+	#endregion
+
 	#region IsStructure Tests
 
 	public void Test_IsStructure_Class1()
@@ -298,6 +310,18 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.IsTypeSealed"));
 		Assert(navigator.MoveToType("SealedClass"));
 		Assert(navigator.IsTypeSealed);
+	}
+
+	#endregion
+
+	#region MemberDeclaringType Tests
+
+	public void Test_MemberDeclaringType_NoMembers()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MemberDeclaringType"));
+		Assert(navigator.MoveToType("NoMembers"));
+		Assert(navigator.MoveToMember("Equals"));
+		AssertEquals("Object", navigator.MemberDeclaringType);
 	}
 
 	#endregion
@@ -578,6 +602,25 @@ public class AssemblyNavigatorTests : TestCase
 		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToFirstStructure.TwoStructures"));
 		Assert(navigator.MoveToFirstStructure());
 		AssertEquals("Structure1", navigator.TypeName);
+	}
+
+	#endregion
+
+	#region MoveToMember Tests
+
+	public void Test_MoveToMember_NoMethods()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToMember"));
+		Assert(navigator.MoveToType("NoMembers"));
+		Assert(!navigator.MoveToMember("NonExistantMember"));
+	}
+
+	public void Test_MoveToMember_OneMethod()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.AssemblyNavigator.MoveToMember"));
+		Assert(navigator.MoveToType("OneMethod"));
+		Assert(navigator.MoveToMember("Method1"));
+		AssertEquals("Method1", navigator.MemberName);
 	}
 
 	#endregion

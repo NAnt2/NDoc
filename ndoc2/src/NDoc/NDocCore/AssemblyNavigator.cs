@@ -836,5 +836,47 @@ namespace NDoc.Core
 					null;
 			}
 		}
+
+		/// <summary>
+		///		<para>Positions the navigator's member cursor on the specified member.</para>
+		/// </summary>
+		/// <param name="memberName"></param>
+		/// <returns></returns>
+		public bool MoveToMember(string memberName)
+		{
+			memberEnumerator = currentType.GetMembers().GetEnumerator();
+
+			while (memberEnumerator.MoveNext())
+			{
+				if (((MemberInfo)memberEnumerator.Current).Name == memberName)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		///		<para>Checks to see if the current member is inherited from a base type.</para>
+		/// </summary>
+		public bool IsMemberInherited
+		{
+			get
+			{
+				return ((MemberInfo)memberEnumerator.Current).DeclaringType != currentType;
+			}
+		}
+
+		/// <summary>
+		///		<para>Gets the name of the current member's declaring type.</para>
+		/// </summary>
+		public string MemberDeclaringType
+		{
+			get
+			{
+				return ((MemberInfo)memberEnumerator.Current).DeclaringType.Name;
+			}
+		}
 	}
 }

@@ -175,6 +175,11 @@ namespace NDoc.Core
 				assemblyNavigator.MoveToType(typeName);
 			}
 
+			if (memberID != null)
+			{
+				assemblyNavigator.MoveToMember(memberID);
+			}
+
 			Evaluate(templateDocument.DocumentElement);
 		}
 
@@ -240,6 +245,9 @@ namespace NDoc.Core
 				case "for-each-structure-in-namespace":
 					ForEachStructureInNamespace(instructionElement);
 					break;
+				case "if-member-is-inherited":
+					IfMemberIsInherited(instructionElement);
+					break;
 				case "if-namespace-contains-classes":
 					IfNamespaceContainsClasses(instructionElement);
 					break;
@@ -290,6 +298,9 @@ namespace NDoc.Core
 					break;
 				case "implemented-interface-name":
 					ImplementedInterfaceName(instructionElement);
+					break;
+				case "member-declaring-type":
+					MemberDeclaringType(instructionElement);
 					break;
 				case "member-name":
 					MemberName(instructionElement);
@@ -634,6 +645,14 @@ namespace NDoc.Core
 			}
 		}
 
+		private void IfMemberIsInherited(XmlElement instructionElement)
+		{
+			if (assemblyNavigator.IsMemberInherited)
+			{
+				EvaluateChildren(instructionElement);
+			}
+		}
+
 		private void IfNamespaceContainsClasses(XmlElement instructionElement)
 		{
 			if (assemblyNavigator.NamespaceHasClasses)
@@ -773,6 +792,11 @@ namespace NDoc.Core
 		private void ImplementedInterfaceName(XmlElement instructionElement)
 		{
 			resultWriter.WriteString(assemblyNavigator.ImplementedInterfaceName);
+		}
+
+		private void MemberDeclaringType(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(assemblyNavigator.MemberDeclaringType);
 		}
 
 		private void MemberName(XmlElement instructionElement)

@@ -53,6 +53,17 @@ public class TemplateTests : TestCase
 		return result.ToString();
 	}
 
+	private string EvaluateMember(string templateXml, string namespaceName, string typeName, string memberID)
+	{
+		Template template = new Template();
+		template.LoadXml(templateXml);
+		StringWriter result = new StringWriter();
+		template.EvaluateMember(namespaceName, typeName, memberID, assemblyNavigator, documentation, result);
+		return result.ToString();
+	}
+
+	#region ForEachPropertyInType Tests
+
 	public void Test_ForEachPropertyInType_TwoProperties()
 	{
 		AssertEquals(
@@ -63,6 +74,36 @@ public class TemplateTests : TestCase
 				"TwoProperties"));
 	}
 
+	#endregion
+
+	#region IfMemberIsInherited Tests
+
+	public void Test_IfMemberIsInherited_NoMembers()
+	{
+		AssertEquals(
+			"true",
+			EvaluateMember(
+				"<if-member-is-inherited>true</if-member-is-inherited>",
+				"NDoc.Test.Template.IfMemberIsInherited",
+				"OneMethod",
+				"Equals"));
+	}
+
+	public void Test_IfMemberIsInherited_OneMethod()
+	{
+		AssertEquals(
+			String.Empty,
+			EvaluateMember(
+				"<if-member-is-inherited>true</if-member-is-inherited>",
+				"NDoc.Test.Template.IfMemberIsInherited",
+				"OneMethod",
+				"Method1"));
+	}
+
+	#endregion
+
+	#region IfTypeHasProperties Tests
+
 	public void Test_IfTypeHasProperties_NoProperties()
 	{
 		AssertEquals(
@@ -72,6 +113,23 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Template.IfTypeHasProperties",
 				"NoProperties"));
 	}
+
+	#endregion
+
+	#region MemberDeclaringType Tests
+
+	public void Test_MemberDeclaringType_NoMembers()
+	{
+		AssertEquals(
+			"Object",
+			EvaluateMember(
+				"<member-declaring-type />",
+				"NDoc.Test.Template.MemberDeclaringType",
+				"NoMembers",
+				"Equals"));
+	}
+
+	#endregion
 
 	// TODO: The following tests need to be rewritten using the same scheme as the preceding tests.
 

@@ -9,6 +9,16 @@ namespace NDoc.Test.Template
 		}
 	}
 
+	namespace IfMemberIsInherited
+	{
+		public class NoMembers {}
+
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+	}
+
 	namespace IfTypeHasProperties
 	{
 		public class NoProperties
@@ -19,5 +29,10 @@ namespace NDoc.Test.Template
 		{
 			public int Property1 { get { return 0; } }
 		}
+	}
+
+	namespace MemberDeclaringType
+	{
+		public class NoMembers {}
 	}
 }

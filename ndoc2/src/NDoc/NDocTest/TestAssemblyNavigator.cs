@@ -49,6 +49,14 @@ namespace NDoc.Test.AssemblyNavigator
 		public class TwoInterfaces : Interface2, Interface1 {}
 	}
 
+	namespace IsMemberInherited
+	{
+		public class OneMethod
+		{
+			public void Method1() {}
+		}
+	}
+
 	namespace IsStructure
 	{
 		public class Class1 {}
@@ -70,6 +78,11 @@ namespace NDoc.Test.AssemblyNavigator
 		public abstract class AbstractClass {}
 		public class NormalClass {}
 		public sealed class SealedClass {}
+	}
+
+	namespace MemberDeclaringType
+	{
+		public class NoMembers {}
 	}
 
 	namespace MoveToFirstClass
@@ -233,6 +246,16 @@ namespace NDoc.Test.AssemblyNavigator
 		{
 			public struct Structure2 {}
 			public struct Structure1 {}
+		}
+	}
+
+	namespace MoveToMember
+	{
+		public class NoMembers {}
+		
+		public class OneMethod
+		{
+			public void Method1() {}
 		}
 	}
 
