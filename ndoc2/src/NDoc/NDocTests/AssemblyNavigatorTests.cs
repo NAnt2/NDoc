@@ -37,7 +37,7 @@ public class AssemblyNavigatorTests : TestCase
 	public void TestMoveToFirstNamespace()
 	{
 		Assert(navigator.MoveToFirstNamespace());
-		AssertEquals("NDoc.Test", navigator.NamespaceName);
+		AssertNull(navigator.NamespaceName);
 	}
 
 	public void TestMoveToNextNamespace()
@@ -47,7 +47,8 @@ public class AssemblyNavigatorTests : TestCase
 		// So just make sure that there's more than one and that they're in
 		// alphabetic order.
 
-		navigator.MoveToFirstNamespace();
+		navigator.MoveToFirstNamespace(); // the global namespace
+		navigator.MoveToNextNamespace(); // the NDoc.Test namespace
 
 		string previousNamespaceName = navigator.NamespaceName;
 		int n = 1;
@@ -474,5 +475,35 @@ public class AssemblyNavigatorTests : TestCase
 
 		Assert(navigator.MoveToType("TwoConstructors"));
 		Assert(navigator.TypeHasOverloadedConstructors());
+	}
+
+	public void TestMoveToGlobalNamespace()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test"));
+		Assert(navigator.MoveToNamespace(null));
+		AssertNull(navigator.NamespaceName);
+	}
+
+	public void TestPrivateImplementationDetails()
+	{
+		// We should already be in the global namespace.
+		navigator.MoveToFirstClass();
+
+		do
+		{
+			Assert(!navigator.TypeName.StartsWith("<PrivateImplementationDetails>"));
+		}
+		while (navigator.MoveToNextType());
+	}
+
+	public void TestNestedTypeName()
+	{
+		Assert(navigator.MoveToNamespace("NDoc.Test.NestedClassWithSummary"));
+		Assert(navigator.MoveToType("OuterClass.NestedClass"));
+		Assert(navigator.MoveToFirstClass());
+		AssertEquals("OuterClass", navigator.TypeName);
+		Assert(navigator.MoveToNextType());
+		AssertEquals("OuterClass.NestedClass", navigator.TypeName);
+		Assert(!navigator.MoveToNextType());
 	}
 }

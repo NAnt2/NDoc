@@ -4,6 +4,10 @@ using System.Reflection;
 
 namespace NDoc.Core
 {
+	/// <summary>
+	///		<para>Enables convenient traversal over the namespaces, types,
+	///		and members in an assembly.</para>
+	/// </summary>
 	public class AssemblyNavigator
 	{
 		private Assembly assembly;
@@ -99,15 +103,18 @@ namespace NDoc.Core
 		{
 			get
 			{
-				return currentType != null ? currentType.Name : null;
+				return currentType != null ? GetTypeName(currentType) : null;
 			}
 		}
 
+		/// <summary>
+		///		<para>Compares types by their names.</para>
+		/// </summary>
 		private class TypeComparer : IComparer
 		{
 			int IComparer.Compare(object x, object y)
 			{
-				return String.Compare(((Type)x).Name, ((Type)y).Name);
+				return String.Compare(GetTypeName((Type)x), GetTypeName((Type)y));
 			}
 		}
 
@@ -125,7 +132,10 @@ namespace NDoc.Core
 
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == currentNamespaceName && type.IsClass && !IsDelegateType(type))
+				if (type.Namespace == currentNamespaceName && 
+					type.IsClass && 
+					!IsDelegateType(type) &&
+					!type.FullName.StartsWith("<PrivateImplementationDetails>"))
 				{
 					currentTypes.Add(type);
 				}
@@ -295,11 +305,32 @@ namespace NDoc.Core
 			return false;
 		}
 
+		internal static string GetTypeName(Type type)
+		{
+			string name = type.FullName;
+			
+			int indexOfDot = name.LastIndexOf('.');
+
+			if (indexOfDot != -1)
+			{
+				name = name.Substring(indexOfDot + 1);
+			}
+
+			name = name.Replace('+', '.');
+
+			return name;
+		}
+
+		private bool NameMatches(Type type, string typeName)
+		{
+			return GetTypeName(type) == typeName;
+		}
+
 		public bool MoveToType(string typeName)
 		{
 			foreach (Type type in assembly.GetTypes())
 			{
-				if (type.Namespace == currentNamespaceName && type.Name == typeName)
+				if (type.Namespace == currentNamespaceName && NameMatches(type, typeName))
 				{
 					currentType = type;
 					return true;
@@ -423,7 +454,7 @@ namespace NDoc.Core
 
 		private bool AccessMatches(string access, MethodBase method)
 		{
-			if (access == null)
+			if (access == null || access == String.Empty)
 			{
 				return true;
 			}

@@ -38,7 +38,7 @@
 							<for-each-class-in-namespace>
 								<tr valign="top">
 									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
-									<td width="50%"><type-summary para="strip" /></td>
+									<td width="50%"><type-summary strip="first" /></td>
 								</tr>
 							</for-each-class-in-namespace>
 						</table>
@@ -55,7 +55,7 @@
 							<for-each-interface-in-namespace>
 								<tr valign="top">
 									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
-									<td width="50%"><type-summary para="strip" /></td>
+									<td width="50%"><type-summary strip="first" /></td>
 								</tr>
 							</for-each-interface-in-namespace>
 						</table>
@@ -72,7 +72,7 @@
 							<for-each-structure-in-namespace>
 								<tr valign="top">
 									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
-									<td width="50%"><type-summary para="strip" /></td>
+									<td width="50%"><type-summary strip="first" /></td>
 								</tr>
 							</for-each-structure-in-namespace>
 						</table>
@@ -89,7 +89,7 @@
 							<for-each-delegate-in-namespace>
 								<tr valign="top">
 									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
-									<td width="50%"><type-summary para="strip" /></td>
+									<td width="50%"><type-summary strip="first" /></td>
 								</tr>
 							</for-each-delegate-in-namespace>
 						</table>
@@ -106,7 +106,7 @@
 							<for-each-enumeration-in-namespace>
 								<tr valign="top">
 									<td width="50%"><a href="{$type-link}"><type-name /></a></td>
-									<td width="50%"><type-summary para="strip" /></td>
+									<td width="50%"><type-summary strip="first" /></td>
 								</tr>
 							</for-each-enumeration-in-namespace>
 						</table>

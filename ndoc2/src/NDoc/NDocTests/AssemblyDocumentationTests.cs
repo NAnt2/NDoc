@@ -44,6 +44,17 @@ public class AssemblyDocumentationTests : TestCase
 	{
 		XmlNode node = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.Constructors.ConstructorWithSummary));
 		AssertNotNull(node);
-		AssertEquals("This constructor has a summary.", node["summary"].InnerText);
+		AssertEquals("This constructor has a summary.", node.InnerText);
+
+		node = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.Constructors.ConstructorWithSummaryAndRemarks));
+		AssertNotNull(node);
+		AssertEquals("This constructor has a summary.", node.InnerText);
+	}
+
+	public void TestNestedTypeSummary()
+	{
+		XmlNode node = documentation.GetMemberNode(typeof(NDoc.Test.NestedClassWithSummary.OuterClass.NestedClass));
+		AssertNotNull(node);
+		AssertEquals("This is a nested class.", node.InnerText);
 	}
 }

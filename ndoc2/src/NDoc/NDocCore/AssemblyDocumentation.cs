@@ -23,6 +23,9 @@ using System.Xml.XPath;
 
 namespace NDoc.Core
 {
+	/// <summary>
+	///		<para>Encapsulates the csc-generated documentation XML files.</para>
+	/// </summary>
 	public class AssemblyDocumentation
 	{
 		private XmlDocument _Document;
@@ -74,7 +77,7 @@ namespace NDoc.Core
 
 		public XmlNode GetMemberNode(Type type)
 		{
-			string memberName = "T:" + type.FullName;
+			string memberName = "T:" + type.FullName.Replace('+', '.');
 			return GetMemberNode(memberName);
 		}
 
@@ -100,10 +103,11 @@ namespace NDoc.Core
 				if (((string)entry.Key).StartsWith(memberName))
 				{
 					XmlNode memberNode = entry.Value as XmlNode;
+					XmlNode summaryNode = memberNode["summary"];
 
-					if (memberNode["summary"] != null)
+					if (summaryNode != null)
 					{
-						return memberNode;
+						return summaryNode;
 					}
 				}
 			}

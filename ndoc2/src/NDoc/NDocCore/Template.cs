@@ -7,6 +7,10 @@ using System.Xml;
 
 namespace NDoc.Core
 {
+	/// <summary>
+	///		<para>Represents an XML-based template used to generate 
+	///		customizable documentation output.</para>
+	/// </summary>
 	public class Template
 	{
 		private XmlDocument templateDocument;
@@ -733,16 +737,11 @@ namespace NDoc.Core
 		{
 			bool stripPara = instructionElement.GetAttribute("strip") == "first";
 
-			XmlNode node = assemblyDocumentation.GetTypeConstructorsSummary(assemblyNavigator.CurrentType);
+			XmlNode summaryNode = assemblyDocumentation.GetTypeConstructorsSummary(assemblyNavigator.CurrentType);
 
-			if (node != null)
+			if (summaryNode != null)
 			{
-				XmlNode summary = node["summary"];
-
-				if (summary != null)
-				{
-					EvaluateDocumentationChildren(summary, stripPara, true);
-				}
+				EvaluateDocumentationChildren(summaryNode, stripPara, true);
 			}
 		}
 

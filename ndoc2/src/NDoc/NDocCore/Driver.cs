@@ -4,6 +4,10 @@ using System.Reflection;
 
 namespace NDoc.Core
 {
+	/// <summary>
+	///		<para>Performs all the work necessary to generate documentation for an 
+	///		assembly.</para>
+	/// </summary>
 	public class Driver
 	{
 		private string outputDirectory;
@@ -60,33 +64,34 @@ namespace NDoc.Core
 
 				streamWriter.Close();
 
-				assemblyNavigator.MoveToFirstClass();
-
-				do
+				if (assemblyNavigator.MoveToFirstClass())
 				{
-					streamWriter = OpenType(assemblyNavigator.CurrentType);
+					do
+					{
+						streamWriter = OpenType(assemblyNavigator.CurrentType);
 
-					typeTemplate.EvaluateType(
-						assemblyNavigator.NamespaceName, 
-						assemblyNavigator.TypeName,
-						assemblyNavigator, 
-						documentationFile, 
-						streamWriter);
+						typeTemplate.EvaluateType(
+							assemblyNavigator.NamespaceName, 
+							assemblyNavigator.TypeName,
+							assemblyNavigator, 
+							documentationFile, 
+							streamWriter);
 
-					streamWriter.Close();
+						streamWriter.Close();
 
-					streamWriter = OpenTypeMembers(assemblyNavigator.CurrentType);
+						streamWriter = OpenTypeMembers(assemblyNavigator.CurrentType);
 
-					typeMembersTemplate.EvaluateType(
-						assemblyNavigator.NamespaceName,
-						assemblyNavigator.TypeName,
-						assemblyNavigator,
-						documentationFile,
-						streamWriter);
+						typeMembersTemplate.EvaluateType(
+							assemblyNavigator.NamespaceName,
+							assemblyNavigator.TypeName,
+							assemblyNavigator,
+							documentationFile,
+							streamWriter);
 
-					streamWriter.Close();
+						streamWriter.Close();
+					}
+					while (assemblyNavigator.MoveToNextType());
 				}
-				while (assemblyNavigator.MoveToNextType());
 			}
 			while (assemblyNavigator.MoveToNextNamespace());
 		}

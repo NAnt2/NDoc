@@ -1,7 +1,10 @@
 using System;
 
+// This creates a global namespace.
+public class Class1 {}
+
 // As long as all the other namespaces in this assembly are prefixed with 
-// NDoc.Test, this will always be the first namespace.
+// NDoc.Test, this will always be the second namespace.
 namespace NDoc.Test
 {
 	/// <summary>This is Class1.</summary>
@@ -160,6 +163,13 @@ namespace NDoc.Test.Constructors
 		public ConstructorWithSummary() {}
 	}
 
+	public class ConstructorWithSummaryAndRemarks
+	{
+		/// <summary>This constructor has a summary.</summary>
+		/// <remarks>This constructor has remarks.</remarks>
+		public ConstructorWithSummaryAndRemarks() {}
+	}
+
 	public class TwoConsructorsWithSummaries
 	{
 		/// <summary>This constructor has a summary.</summary>
@@ -167,5 +177,35 @@ namespace NDoc.Test.Constructors
 
 		/// <summary>This constructor also has a summary.</summary>
 		public TwoConsructorsWithSummaries(int i) {}
+	}
+
+	public class TwoConsructorsWithSummariesAndRemarks
+	{
+		/// <summary>This constructor has a summary.</summary>
+		/// <remarks>This constructor has remarks.</remarks>
+		public TwoConsructorsWithSummariesAndRemarks() {}
+
+		/// <summary>This constructor also has a summary.</summary>
+		/// <remarks>This constructor also has remarks.</remarks>
+		public TwoConsructorsWithSummariesAndRemarks(int i) {}
+	}
+}
+
+namespace NDoc.Test.PrivateImplementationDetails
+{
+	/// <summary>This class causes the &lt;PrivateImplementationDetails> 
+	/// class to appear in the compiled assembly.</summary>
+	public class PrivateImplementationDetails
+	{
+		static byte[] foo = new byte[] { 1, 2, 3 };
+	}
+}
+
+namespace NDoc.Test.NestedClassWithSummary
+{
+	public class OuterClass
+	{
+		/// <summary>This is a nested class.</summary>
+		public class NestedClass {}
 	}
 }
