@@ -19,7 +19,7 @@
 			<xsl:call-template name="html-head">
 				<xsl:with-param name="title" select="concat(../@name, '.', @name, ' Event')" />
 			</xsl:call-template>
-			<body id="bodyID" class="dtBODY">
+			<body id="bodyID" class="dtBODY"><INPUT class="userDataStyle" id="userDataCache" type="hidden" />
 				<xsl:call-template name="title-row">
 					<xsl:with-param name="type-name">
 						<xsl:value-of select="../@name" />.<xsl:value-of select="@name" /> Event
