@@ -26,56 +26,129 @@ public class AssemblyDocumentationTests : TestCase
 	{
 	}
 
-	public void TestTypeSummary()
+	public void Test_GetMemberSummary_OneMethodNoSummary()
 	{
-		XmlNode node = documentation.GetTypeSummary(typeof(NDoc.Test.Class1));
-		AssertNotNull(node);
-		AssertEquals("This is Class1.", node.InnerText);
+		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.OneMethodNoSummary).GetMethod("Method1"));
+		AssertNull(summaryNode);
 	}
 
-	public void TestConstructorSummary()
+	public void Test_GetMemberSummary_OneMethodWithSummary()
 	{
-		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Constructors.ConstructorWithSummary).GetConstructors()[0]);
-		AssertNotNull(node);
-		AssertEquals("This constructor has a summary.", node.InnerText);
+		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.OneMethodWithSummary).GetMethod("Method1"));
+		AssertNotNull(summaryNode);
+		AssertEquals("OneMethodWithSummary.Method1() Summary", summaryNode.InnerText);
 	}
 
-	public void TestTypeConstructorsSummary()
+	public void Test_GetMemberSummary_OneParameterWithSummary()
 	{
-		XmlNode node = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.Constructors.ConstructorWithSummary));
-		AssertNotNull(node);
-		AssertEquals("This constructor has a summary.", node.InnerText);
-
-		node = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.Constructors.ConstructorWithSummaryAndRemarks));
-		AssertNotNull(node);
-		AssertEquals("This constructor has a summary.", node.InnerText);
+		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.OneParameterWithSummary).GetMethod("Method1"));
+		AssertNotNull(summaryNode);
+		AssertEquals("OneParameterWithSummary.Method1(int) Summary", summaryNode.InnerText);
 	}
 
-	public void TestNestedTypeSummary()
+	public void Test_GetMemberSummary_TwoParametersWithSummary()
 	{
-		XmlNode node = documentation.GetTypeSummary(typeof(NDoc.Test.NestedClassWithSummary.OuterClass.NestedClass));
-		AssertNotNull(node);
-		AssertEquals("This is a nested class.", node.InnerText);
+		XmlNode summaryNode = documentation.GetMemberSummary(typeof(NDoc.Test.AssemblyDocumentation.GetMemberSummary.TwoParametersWithSummary).GetMethod("Method1"));
+		AssertNotNull(summaryNode);
+		AssertEquals("TwoParametersWithSummary.Method1(int,string) Summary", summaryNode.InnerText);
 	}
 
-	public void TestMemberSummary()
+	public void Test_GetTypeConstructorsSummary_DefaultConstructor()
 	{
-		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithSummary).GetMethod("Method1"));
-		AssertNotNull(node);
-		AssertEquals("This method has a summary.", node.InnerText);
+		XmlNode summaryNode = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeConstructorsSummary.DefaultConstructor));
+		AssertNull(summaryNode);
 	}
 
-	public void TestMemberSummaryForMethodWithParameter()
+	public void Test_GetTypeConstructorsSummary_OneConstructorNoSummary()
 	{
-		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithParameterWithSummary).GetMethod("Method1"));
-		AssertNotNull(node);
-		AssertEquals("This method has a summary.", node.InnerText);
+		XmlNode summaryNode = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeConstructorsSummary.OneConstructorNoSummary));
+		AssertNull(summaryNode);
 	}
 
-	public void TestMemberSummaryForMethodWithTwoParameters()
+	public void Test_GetTypeConstructorsSummary_OneConstructorWithSummary()
 	{
-		XmlNode node = documentation.GetMemberSummary(typeof(NDoc.Test.Methods.OneMethodWithTwoParametersWithSummary).GetMethod("Method1"));
-		AssertNotNull(node);
-		AssertEquals("This method has a summary.", node.InnerText);
+		XmlNode summaryNode = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeConstructorsSummary.OneConstructorWithSummary));
+		AssertNotNull(summaryNode);
+		AssertEquals("OneConstructorWithSummary.OneConstructorWithSummary() Summary", summaryNode.InnerText);
+	}
+
+	public void Test_GetTypeConstructorsSummary_OverloadedConstructorsWithSummary()
+	{
+		XmlNode summaryNode = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeConstructorsSummary.OverloadedConstructorsWithSummary));
+		AssertNotNull(summaryNode);
+		AssertEquals("OverloadedConstructorsWithSummary.OverloadedConstructorsWithSummary() Summary", summaryNode.InnerText);
+	}
+
+	public void Test_GetTypeConstructorsSummary_OverloadedConstructorsFirstNoSummary()
+	{
+		XmlNode summaryNode = documentation.GetTypeConstructorsSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeConstructorsSummary.OverloadedConstructorsFirstNoSummary));
+		AssertNotNull(summaryNode);
+		AssertEquals("OverloadedConstructorsFirstNoSummary.OverloadedConstructorsFirstNoSummary(int) Summary", summaryNode.InnerText);
+	}
+
+	public void Test_GetTypeRemarks_NestedTypeRemarks()
+	{
+		XmlNode remarksNode = documentation.GetTypeRemarks(typeof(NDoc.Test.AssemblyDocumentation.GetTypeRemarks.NestedTypeRemarks.NestedType));
+		AssertNotNull(remarksNode);
+		AssertEquals("NestedTypeRemarks.NestedType Remarks", remarksNode.InnerText);
+	}
+
+	public void Test_GetTypeRemarks_NoSummaryOrRemarks()
+	{
+		XmlNode remarksNode = documentation.GetTypeRemarks(typeof(NDoc.Test.AssemblyDocumentation.GetTypeRemarks.NoSummaryOrRemarks));
+		AssertNull(remarksNode);
+	}
+
+	public void Test_GetTypeRemarks_RemarksNoSummary()
+	{
+		XmlNode remarksNode = documentation.GetTypeRemarks(typeof(NDoc.Test.AssemblyDocumentation.GetTypeRemarks.RemarksNoSummary));
+		AssertNotNull(remarksNode);
+		AssertEquals("RemarksNoSummary Remarks", remarksNode.InnerText);
+	}
+
+	public void Test_GetTypeRemarks_SummaryAndRemarks()
+	{
+		XmlNode remarksNode = documentation.GetTypeRemarks(typeof(NDoc.Test.AssemblyDocumentation.GetTypeRemarks.SummaryAndRemarks));
+		AssertNotNull(remarksNode);
+		AssertEquals("SummaryAndRemarks Remarks", remarksNode.InnerText);
+	}
+
+	public void Test_GetTypeRemarks_SummaryNoRemarks()
+	{
+		XmlNode remarksNode = documentation.GetTypeRemarks(typeof(NDoc.Test.AssemblyDocumentation.GetTypeRemarks.SummaryNoRemarks));
+		AssertNull(remarksNode);
+	}
+
+	public void Test_GetTypeSummary_NestedTypeSummary()
+	{
+		XmlNode summaryNode = documentation.GetTypeSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeSummary.NestedTypeSummary.NestedType));
+		AssertNotNull(summaryNode);
+		AssertEquals("NestedTypeSummary.NestedType Summary", summaryNode.InnerText);
+	}
+
+	public void Test_GetTypeSummary_NoSummaryOrRemarks()
+	{
+		XmlNode summaryNode = documentation.GetTypeSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeSummary.NoSummaryOrRemarks));
+		AssertNull(summaryNode);
+	}
+
+	public void Test_GetTypeSummary_RemarksNoSummary()
+	{
+		XmlNode summaryNode = documentation.GetTypeSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeSummary.RemarksNoSummary));
+		AssertNull(summaryNode);
+	}
+
+	public void Test_GetTypeSummary_SummaryAndRemarks()
+	{
+		XmlNode summaryNode = documentation.GetTypeSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeSummary.SummaryAndRemarks));
+		AssertNotNull(summaryNode);
+		AssertEquals("SummaryAndRemarks Summary", summaryNode.InnerText);
+	}
+
+	public void Test_GetTypeSummary_SummaryNoRemarks()
+	{
+		XmlNode summaryNode = documentation.GetTypeSummary(typeof(NDoc.Test.AssemblyDocumentation.GetTypeSummary.SummaryNoRemarks));
+		AssertNotNull(summaryNode);
+		AssertEquals("SummaryNoRemarks Summary", summaryNode.InnerText);
 	}
 }
