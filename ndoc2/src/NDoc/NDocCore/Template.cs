@@ -733,6 +733,21 @@ namespace NDoc.Core
 			{
 				EvaluateDocumentationChildren(summaryNode, stripPara, true);
 			}
+			else
+			{
+				if (!stripPara)
+				{
+					resultWriter.WriteStartElement("p");
+				}
+
+				resultWriter.WriteString(
+					"Initializes a new instance of the " + assemblyNavigator.TypeName + " " + GetTypeType(String.Empty).ToLower() + ".");
+
+				if (!stripPara)
+				{
+					resultWriter.WriteEndElement();
+				}
+			}
 		}
 
 		private void TypeName(XmlElement instructionElement)
@@ -762,81 +777,84 @@ namespace NDoc.Core
 			}
 		}
 
-		private void TypeType(XmlElement instructionElement)
+		private string GetTypeType(string lang)
 		{
-			string type = "ERROR";
-
-			switch (instructionElement.GetAttribute("lang"))
+			switch (lang)
 			{
 				case "":
 					if (assemblyNavigator.IsClass)
 					{
-						type = "Class";
+						return "Class";
 					}
 					else if (assemblyNavigator.IsInterface)
 					{
-						type = "Interface";
+						return "Interface";
 					}
 					else if (assemblyNavigator.IsStructure)
 					{
-						type = "Structure";
+						return "Structure";
 					}
 					else if (assemblyNavigator.IsDelegate)
 					{
-						type = "Delegate";
+						return "Delegate";
 					}
 					else if (assemblyNavigator.IsEnumeration)
 					{
-						type = "Enumeration";
+						return "Enumeration";
 					}
 					break;
 				case "VB":
 					if (assemblyNavigator.IsClass)
 					{
-						type = "Class";
+						return "Class";
 					}
 					else if (assemblyNavigator.IsInterface)
 					{
-						type = "Interface";
+						return "Interface";
 					}
 					else if (assemblyNavigator.IsStructure)
 					{
-						type = "Structure";
+						return "Structure";
 					}
 					else if (assemblyNavigator.IsDelegate)
 					{
-						type = "Delegate";
+						return "Delegate";
 					}
 					else if (assemblyNavigator.IsEnumeration)
 					{
-						type = "Enum";
+						return "Enum";
 					}
 					break;
 				case "C#":
 					if (assemblyNavigator.IsClass)
 					{
-						type = "class";
+						return "class";
 					}
 					else if (assemblyNavigator.IsInterface)
 					{
-						type = "interface";
+						return "interface";
 					}
 					else if (assemblyNavigator.IsStructure)
 					{
-						type = "struct";
+						return "struct";
 					}
 					else if (assemblyNavigator.IsDelegate)
 					{
-						type = "delegate";
+						return "delegate";
 					}
 					else if (assemblyNavigator.IsEnumeration)
 					{
-						type = "enum";
+						return "enum";
 					}
 					break;
 			}
 
-			resultWriter.WriteString(type);
+			return "ERROR";
+		}
+
+		private void TypeType(XmlElement instructionElement)
+		{
+			resultWriter.WriteString(GetTypeType(instructionElement.GetAttribute("lang")));
 		}
 
 		#endregion

@@ -829,4 +829,14 @@ public class TemplateTests : TestCase
 				"NDoc.Test.Constructors",
 				"ConstructorWithSummary"));
 	}
+
+	public void TestMissingTypeConstructorsSummary()
+	{
+		AssertEquals(
+			"Initializes a new instance of the DefaultConstructor class.",
+			EvaluateType(
+				"<type-constructors-summary strip='first' />",
+				"NDoc.Test.Constructors",
+				"DefaultConstructor"));
+	}
 }
