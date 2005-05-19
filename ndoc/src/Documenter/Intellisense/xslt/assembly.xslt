@@ -62,7 +62,7 @@
 	<xsl:template match="node()|@*" mode="doc"/>
 	<xsl:template match="summary|param|exception" mode="doc">
 			<xsl:copy>
-				<xsl:apply-templates select="./node()" mode="slashdoc" />
+				<xsl:apply-templates select="./node()|@*" mode="slashdoc" />
 			</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>
