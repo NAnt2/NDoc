@@ -332,7 +332,7 @@
 			<xsl:when test="@langword='virtual'">
 				<xsl:text>virtual</xsl:text>
 				<xsl:if test="$ndoc-vb-syntax">
-				  (<b>CanOverride</b><xsl:text> in Visual Basic)</xsl:text></xsl:if>
+				  (<b>Overridable</b><xsl:text> in Visual Basic)</xsl:text></xsl:if>
 			</xsl:when>
 			<xsl:otherwise>
 				<b>

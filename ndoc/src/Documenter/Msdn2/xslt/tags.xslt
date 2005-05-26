@@ -327,7 +327,7 @@
 			</xsl:when>
 			<xsl:when test="@langword='virtual'">
 				<xsl:text>virtual</xsl:text>
-				(<b>CanOverride</b><xsl:text> in Visual Basic)</xsl:text>
+				(<b>Overridable</b><xsl:text> in Visual Basic)</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<b>
