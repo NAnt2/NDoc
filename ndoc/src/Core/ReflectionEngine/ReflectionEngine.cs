@@ -1174,6 +1174,9 @@ namespace NDoc.Core.Reflection
 				writer.WriteAttributeString("hiding", "true");
 			}
 
+			if (type.DeclaringType!=null)
+				writer.WriteAttributeString("declaringType", type.DeclaringType.FullName);
+
 			// structs can't be abstract and always derive from System.ValueType
 			// so don't bother including those attributes.
 			if (!isStruct)
@@ -1843,6 +1846,9 @@ namespace NDoc.Core.Reflection
 			writer.WriteAttributeString("id", memberName);
 			writer.WriteAttributeString("access", GetTypeAccessValue(type));
 
+			if (type.DeclaringType!=null)
+				writer.WriteAttributeString("declaringType", type.DeclaringType.FullName);
+
 			WriteTypeDocumentation(writer, memberName, type);
 			WriteCustomAttributes(writer, type);
 
@@ -1878,6 +1884,9 @@ namespace NDoc.Core.Reflection
 			writer.WriteAttributeString("name", GetNestedTypeName(type));
 			writer.WriteAttributeString("id", memberName);
 			writer.WriteAttributeString("access", GetTypeAccessValue(type));
+
+			if (type.DeclaringType!=null)
+				writer.WriteAttributeString("declaringType", type.DeclaringType.FullName);
 
 			const BindingFlags bindingFlags = 
 					  BindingFlags.Instance | 
@@ -1932,6 +1941,9 @@ namespace NDoc.Core.Reflection
 			writer.WriteAttributeString("name", GetNestedTypeName(type));
 			writer.WriteAttributeString("id", memberName);
 			writer.WriteAttributeString("access", GetTypeAccessValue(type));
+
+			if (type.DeclaringType!=null)
+				writer.WriteAttributeString("declaringType", type.DeclaringType.FullName);
 
 			const BindingFlags bindingFlags = 
 					  BindingFlags.Instance | 
