@@ -478,6 +478,7 @@
 							<td width="50%">
 								<xsl:call-template name="get-a-href">
 									<xsl:with-param name="cref" select="@cref" />
+									<xsl:with-param name="ignore-text" select="true()" />
 								</xsl:call-template>
 							</td>
 							<td width="50%">
