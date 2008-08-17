@@ -64,7 +64,6 @@ namespace NDoc.Core.PropertyGridUI
 			string fileName = String.Empty;
 			string initialDirectory= String.Empty;
 
-			string currentValue=(string)value;
 			if (((string)value).Length>0)
 			{
 				fileName = Path.GetFileName((string)value);

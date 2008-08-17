@@ -167,7 +167,6 @@ namespace NDoc.Core
 					value = PathUtilities.RelativeToAbsolutePath(BasePath, value);
 					this.FixedPath = false;
 				}
-				System.IO.FileInfo f = new System.IO.FileInfo(value);
 				_Path = value;
 			}
 		}

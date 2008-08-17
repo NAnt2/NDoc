@@ -92,8 +92,8 @@ namespace NDoc.Core.Reflection
 		[Description("A collection of additional paths to search for reference assemblies.\nNote: This is a PROJECT level property that is shared by all documenters...")]
 		public ReferencePathCollection ReferencePaths
 		{
-			get 
-			{ 
+			get
+			{
 				return Project._referencePaths;
 			}
 			set
@@ -102,8 +102,6 @@ namespace NDoc.Core.Reflection
 				SetDirty();
 			}
 		}
-		bool ShouldSerializeReferencePaths() { return (Project._referencePaths.Count > 0); }
-		void ResetReferencePaths() { Project._referencePaths = new ReferencePathCollection(); }
 
 		#region Show Missing Documentation Options
 

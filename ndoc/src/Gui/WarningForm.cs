@@ -161,10 +161,5 @@ namespace NDoc.Gui
 		{
 			Clipboard.SetDataObject(ClipboardMsg,true);
 		}
-	
-		private void WarningForm_Load(object sender, System.EventArgs e)
-		{
-			btnOK.Focus();
-		}
 	}
 }

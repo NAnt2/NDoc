@@ -62,8 +62,8 @@ namespace NDoc.Core
 		public override string Path
 		{
 			get { return base.Path; }
-			set 
-			{ 
+			set
+			{
 				if (value.Length > 0)
 				{
 					base.Path = value;
@@ -74,7 +74,6 @@ namespace NDoc.Core
 				}
 			}
 		}
-		bool ShouldSerializePath() { return false; }
 
 		// This is a special type converter which will be associated with the FilePath class.
 		// It converts an FilePath object to a string representation for use in a property grid.

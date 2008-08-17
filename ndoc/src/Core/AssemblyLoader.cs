@@ -54,9 +54,6 @@ namespace NDoc.Core.Reflection
 		/// </list></remarks>
 		private Hashtable AssemblyNameFileNameMap;
 
-		// loaded assembly cache keyed by Assembly FullName
-		private Hashtable assemblysLoadedAssyName;
-
 		// loaded assembly cache keyed by Assembly FileName
 		private Hashtable assemblysLoadedFileName;
 
@@ -66,7 +63,6 @@ namespace NDoc.Core.Reflection
 		/// <param name="referenceDirectories">Reference directories.</param>
 		public AssemblyLoader(ReferencePathCollection referenceDirectories)
 		{
-			this.assemblysLoadedAssyName = new Hashtable();
 			this.assemblysLoadedFileName = new Hashtable();
 			this.AssemblyNameFileNameMap = new Hashtable();
 			this.directoryLists = new Hashtable();
@@ -82,7 +78,7 @@ namespace NDoc.Core.Reflection
 		public ICollection SearchedDirectories 
 		{
 			get { return searchedDirectories.Keys; }
-		} 
+		}
 
 		/// <summary>
 		/// Assemblies that could not be resolved.

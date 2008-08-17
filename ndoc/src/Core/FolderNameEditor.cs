@@ -32,9 +32,7 @@ namespace NDoc.Core.PropertyGridUI
 	/// </summary>
 	public class FoldernameEditor : System.Drawing.Design.UITypeEditor
 	{
-
 		private string _InitialFolder = String.Empty;
-		private string _StatusText = String.Empty;
 
 		/// <summary>
 		/// Gets the edit style.
