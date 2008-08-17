@@ -1381,15 +1381,10 @@ namespace NDoc.Core.Reflection
 
 			foreach (FieldInfo field in type.GetFields(bindingFlags))
 			{
-				// value__ field handled above...
-				if (field.Name != "value__")
-				{
-					WriteField(
-						writer, 
-						field, 
-						type, 
-						IsHiding(field, type));
-				}
+				if (field.Name == "value__" || !IsEditorBrowsable (field))
+					continue;
+
+				WriteField(writer, field, type, IsHiding(field, type));
 			}
 
 			writer.WriteEndElement();
@@ -3665,7 +3660,6 @@ namespace NDoc.Core.Reflection
 			if ((type.BaseType != null) && 
 				MustDocumentType(type.BaseType)) // we don't care about undocumented types
 			{
-				string baseMemberID = MemberID.GetMemberID(type.BaseType);
 				namespaceHierarchies.Add(namespaceName, type.BaseType, type);
 				BuildNamespaceHierarchy(namespaceName, type.BaseType);
 			}
@@ -3797,11 +3791,6 @@ namespace NDoc.Core.Reflection
 		}
 
 		#endregion
-
-		private void TraceErrorOutput(string message)
-		{
-			TraceErrorOutput(message, null);
-		}
 
 		private void TraceErrorOutput(string message, Exception ex)
 		{
