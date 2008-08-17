@@ -126,10 +126,9 @@ namespace NDoc.Core.Reflection
 							}
 						}
 
-#if (!MONO)
 						//TODO: search in the mono lib folder, if they ever give us the xml documentation
 						// If still not found, try locating the assembly in the Framework folder
-						if ((docPath == null) || (!File.Exists(docPath)))
+						if (!RunningOnMono && (docPath == null || !File.Exists(docPath)))
 						{
 #if (NET_1_0)
 							FileVersionInfo version = FileVersionInfo.GetVersionInfo(assemblyPath);
@@ -155,7 +154,6 @@ namespace NDoc.Core.Reflection
 								}
 							}
 						}
-#endif
 
 						if ((docPath != null) && (File.Exists(docPath)))
 						{
@@ -411,6 +409,15 @@ namespace NDoc.Core.Reflection
 					return null;
 
 				return Path.Combine(installRoot, version);
+			}
+		}
+
+		private static bool RunningOnMono
+		{
+			get
+			{
+				// check a class in mscorlib to determine if we're running on Mono
+				return (Type.GetType ("System.MonoType", false) != null);
 			}
 		}
 	}
