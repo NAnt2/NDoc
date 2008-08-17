@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="NDocGui" default="compile">
 	<target name="compile">
-		<csc target="winexe" output="${current.bin.dir}/${nant.project.name}.exe" debug="${current.build.debug}" optimize="${current.build.optimize}" unsafe="false" win32icon="ndoc.ico" checked="false" define="${current.build.defines}">
+		<csc target="winexe" output="${current.bin.dir}/${project::get-name()}.exe" debug="${current.build.debug}" optimize="${current.build.optimize}" unsafe="false" win32icon="ndoc.ico" checked="false" define="${current.build.defines}">
 			<sources>
 				<include name="**/*.cs" />
 				<include name="../CommonAssemblyInfo.cs" />
