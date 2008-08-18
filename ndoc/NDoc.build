@@ -8,7 +8,7 @@
     <property name="project.build.config" value="release" readonly="false" />
     <property name="project.build.package" value="false" readonly="false" />
     <property name="build.number" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('01/01/2000'))))}" />
-    <property name="build.dir" value="${nant.project.basedir}/bin" readonly="false" />
+    <property name="build.dir" value="${project::get-base-directory()}/bin" readonly="false" />
     <!-- Include helpers -->
     <include buildfile="NDoc.build.include" />
     <include buildfile="NDoc.build.package" />
@@ -85,7 +85,6 @@
         <!-- 
             build .NET Framework 2.0 version if both Framework and SDK are available 
         -->
-        <!--
         <if test="${framework::exists('net-2.0')}">
             <if test="${framework::sdk-exists('net-2.0')}">
                 <call target="set-net-2.0-framework-configuration" />
@@ -108,7 +107,6 @@
                 <echo message="The .NET Framework 2.0 is not available. Build skipped." />
             </if>
         </if>
-        -->
         <!-- 
             build Mono 1.0 version if both Framework and SDK are available 
         -->
@@ -134,6 +132,31 @@
                 <echo message="Mono 1.0 is not available. Build skipped." />
             </if>
         </if>
+        <!-- 
+            build Mono 2.0 version if both Framework and SDK are available 
+        -->
+        <if test="${framework::exists('mono-2.0')}">
+            <if test="${framework::sdk-exists('mono-2.0')}">
+                <call target="set-mono-2.0-framework-configuration" />
+                <call target="compile" />
+            </if>
+            <if test="${not framework::sdk-exists('mono-2.0')}">
+                <if test="${property::exists('project.build.package') and project.build.package}">
+                    <fail message="The Mono SDK 2.0 is not available." />
+                </if>
+                <if test="${not property::exists('project.build.package') or not project.build.package}">
+                    <echo message="The Mono SDK 2.0 is not available. Build skipped." />
+                </if>
+            </if>
+        </if>
+        <if test="${not framework::exists('mono-2.0')}">
+            <if test="${property::exists('project.build.package') and project.build.package}">
+                <fail message="Mono 2.0 is not available." />
+            </if>
+            <if test="${not property::exists('project.build.package') or not project.build.package}">
+                <echo message="Mono 2.0 is not available. Build skipped." />
+            </if>
+        </if>
     </target>
     <!--
 
@@ -142,7 +165,7 @@
         <!-- ensure the bin dir has been created, and clean it up if needed -->
         <call target="clean-current-bin-dir" />
         <!-- copy the ndoc signing key file to the bin dir -->
-        <copy file="${nant.project.basedir}/NDoc.snk" todir="${current.bin.dir}" />
+        <copy file="${project::get-base-directory()}/NDoc.snk" todir="${current.bin.dir}" />
         <!-- build all projects -->
         <nant buildfile="src/ExtendedUI/ExtendedUI.build" target="compile" inheritall="true" />
         <nant buildfile="src/Core/Core.build" target="compile" inheritall="true" />
