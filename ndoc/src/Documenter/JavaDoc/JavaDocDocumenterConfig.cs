@@ -95,7 +95,5 @@ namespace NDoc.Documenter.JavaDoc
 				SetDirty();
 			}
 		}
-		void ResetOutputDirectory() { _outputDirectory = string.Format( ".{0}doc{0}", Path.DirectorySeparatorChar ); }
-
 	}
 }
