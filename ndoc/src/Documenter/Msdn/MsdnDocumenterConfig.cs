@@ -97,8 +97,6 @@ namespace NDoc.Documenter.Msdn
 				SetDirty();
 			}
 		}
-		void ResetOutputDirectory() { _outputDirectory = string.Format( ".{0}doc{0}", Path.DirectorySeparatorChar ); }
-
 
 		/// <summary>Gets or sets the HtmlHelpName property.</summary>
 		/// <remarks>The HTML Help project file and the compiled HTML Help file
@@ -414,8 +412,6 @@ namespace NDoc.Documenter.Msdn
 				}
 			}
 		}	
-		void ResetAdditionalContentResourceDirectory() { _AdditionalContentResourceDirectory = new FolderPath(); }
-
 
 		FilePath _ExtensibilityStylesheet = new FilePath();
 
@@ -438,7 +434,6 @@ namespace NDoc.Documenter.Msdn
 				}
 			}
 		}	
-		void ResetExtensibilityStylesheet() { _ExtensibilityStylesheet = new FilePath(); }
 	
 		short _LangID = 1033;
 

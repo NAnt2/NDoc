@@ -579,30 +579,6 @@ namespace NDoc.Documenter.Msdn
 #endif
 		}
 
-		private void MakeHtmlForNamespaces(string assemblyName)
-		{
-			XmlNodeList namespaceNodes = xmlDocumentation.SelectNodes("/ndoc/assembly[@name=\"" + assemblyName + "\"]/module/namespace");
-			int[] indexes = SortNodesByAttribute(namespaceNodes, "name");
-
-			int nNodes = namespaceNodes.Count;
-
-			for (int i = 0; i < nNodes; i++)
-			{
-				OnDocBuildingProgress(i*100/nNodes);
-
-				XmlNode namespaceNode = namespaceNodes[indexes[i]];
-
-				if (namespaceNode.ChildNodes.Count > 0)
-				{
-					string namespaceName = (string)namespaceNode.Attributes["name"].Value;
-
-					MakeHtmlForNamespace(assemblyName, namespaceName);
-				}
-			}
-
-			OnDocBuildingProgress(100);
-		}
-
 		private void MakeHtmlForAssembliesSorted()
 		{
 			XmlNodeList assemblyNodes = xmlDocumentation.SelectNodes("/ndoc/assembly");
