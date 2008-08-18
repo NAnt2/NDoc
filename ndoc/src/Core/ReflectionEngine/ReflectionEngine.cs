@@ -1959,7 +1959,7 @@ namespace NDoc.Core.Reflection
 				// defines the enum's base type, so we will treat this seperately...
 				if (field.Name == "value__")
 				{
-					if (field.FieldType.FullName != "System.Int32")
+					if (field.FieldType != typeof (int))
 					{
 						writer.WriteAttributeString("baseType", field.FieldType.FullName);
 					}
@@ -1976,6 +1976,9 @@ namespace NDoc.Core.Reflection
 
 			foreach (FieldInfo field in type.GetFields(bindingFlags))
 			{
+                if (field.Name == "value__" || !IsEditorBrowsable(field))
+                    continue;
+
 				// value__ field handled above...
 				if (field.Name != "value__")
 				{
