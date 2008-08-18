@@ -26,7 +26,11 @@ namespace NDoc.Gui
 		/// </summary>
 		[Category("Appearance")]
 		[Description("Adds some extra spacing around the header")]
-		public int Padding
+		public
+#if NET_2_0
+		new
+#endif
+		int Padding
 		{
 			get { return padding; }
 			set

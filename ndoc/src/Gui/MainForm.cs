@@ -2069,7 +2069,7 @@ namespace NDoc.Gui
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="EventArgs" /> that contains the event data.</param>
         private void menuViewLicense_Click(object sender, System.EventArgs e) {
-            Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase, true);
+            Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             // first try to locate license file in directory in which NDocGui is
             // located
             string path = Path.Combine(Path.GetDirectoryName(uri.AbsolutePath), "gpl.rtf");
@@ -2188,21 +2188,21 @@ namespace NDoc.Gui
 		{
 			get
 			{
-                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase, true);
-                // first try to locate help file in directory in which NDocGui is
-                // located
-                string path = Path.Combine( 
-                    Path.GetDirectoryName(uri.AbsolutePath),
-                    "NDocUsersGuide.chm");
-                if (!File.Exists(path)) {
-                    // if not found, try to look in NDoc main directory, which is 3 
-                    // levels up (from <ndoc root>/bin/<framework>/<framework version> 
-                    // to <ndoc root>/doc/help)
-                    path = Path.Combine(Path.GetDirectoryName(uri.AbsolutePath), 
-                        string.Format(CultureInfo.InvariantCulture, "..{0}..{0}..{0}doc{0}help{0}NDocUsersGuide.chm", 
-                        Path.DirectorySeparatorChar));
-                }
-                return path;
+				Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+				// first try to locate help file in directory in which NDocGui is
+				// located
+				string path = Path.Combine( 
+				Path.GetDirectoryName(uri.AbsolutePath),
+				"NDocUsersGuide.chm");
+				if (!File.Exists(path)) {
+					// if not found, try to look in NDoc main directory, which is 3 
+					// levels up (from <ndoc root>/bin/<framework>/<framework version> 
+					// to <ndoc root>/doc/help)
+					path = Path.Combine(Path.GetDirectoryName(uri.AbsolutePath), 
+						string.Format(CultureInfo.InvariantCulture, "..{0}..{0}..{0}doc{0}help{0}NDocUsersGuide.chm", 
+						Path.DirectorySeparatorChar));
+				}
+				return path;
 			}
 		}
 
