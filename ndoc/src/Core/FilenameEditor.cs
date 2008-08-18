@@ -31,7 +31,6 @@ namespace NDoc.Core.PropertyGridUI
 	/// </summary>
 	public class FilenameEditor : System.Drawing.Design.UITypeEditor
 	{
-
 		/// <summary>
 		/// Gets the edit style.
 		/// </summary>
@@ -79,11 +78,7 @@ namespace NDoc.Core.PropertyGridUI
 			} 
 			else 
 			{
-#if (MONO)
-                throw new NotImplementedException();
-#else
 				fileDlg = new SaveFileDialog();
-#endif
 			}
 			fileDlg.RestoreDirectory=true;
 			fileDlg.FileName = fileName;

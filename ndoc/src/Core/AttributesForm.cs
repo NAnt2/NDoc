@@ -30,12 +30,10 @@ namespace NDoc.Core.PropertyGridUI
 		/// </summary>
 		public string Value;
 
-
 		/// <summary>
 		/// Structure which holds all the attributes
 		/// </summary>
 		ArrayList AttributesToShow = new ArrayList();
-
 
 		private System.Windows.Forms.ListBox listAttributes;
 		private System.Windows.Forms.Label label1;
@@ -103,9 +101,7 @@ namespace NDoc.Core.PropertyGridUI
 					}
 					AttributesToShow.Add(attributeToShow);
 					this.listAttributes.DataSource = AttributesToShow;
-#if (!MONO) // not yet available in MWF
 					this.listAttributes.DisplayMember = "Name";
-#endif
 				}
 			}
 			UpdateAttributes();
@@ -333,9 +329,7 @@ namespace NDoc.Core.PropertyGridUI
 		{
 			this.listAttributes.DataSource = null;
 			this.listAttributes.DataSource = AttributesToShow;
-#if (!MONO) // not yet available in MWF
 			this.listAttributes.DisplayMember = "Name";
-#endif
 			if (this.listAttributes.SelectedIndex >= 0)
 			{
 				this.Edit.Enabled = true;
