@@ -32,7 +32,7 @@ namespace NDoc.Core.PropertyGridUI
 		}
 
 		/// <summary>
-		/// Edits the specified object's value using the editor style indicated by <see cref="GetEditStyle"/>.
+		/// Edits the specified object's value using the editor style indicated by <see cref="GetEditStyle(ITypeDescriptorContext)"/>.
 		/// </summary>
 		/// <param name="context">An <see cref="ITypeDescriptorContext"/> that can be used to gain additional context information.</param>
 		/// <param name="provider">An <see cref="IServiceProvider"/> that this editor can use to obtain services.</param>
@@ -55,10 +55,10 @@ namespace NDoc.Core.PropertyGridUI
 		}
 
 		/// <summary>
-		/// Gets the editor style used by the <see cref="EditValue"/> method.
+        /// Gets the editor style used by the <see cref="EditValue(ITypeDescriptorContext, IServiceProvider, object)"/> method.
 		/// </summary>
 		/// <param name="context">An <see cref="ITypeDescriptorContext"/> that can be used to gain additional context information.</param>
-		/// <returns>A <see cref="UITypeEditorEditStyle"/> value that indicates the style of editor used by <see cref="EditValue"/>.</returns>
+		/// <returns>A <see cref="UITypeEditorEditStyle"/> value that indicates the style of editor used by <see cref="EditValue(ITypeDescriptorContext, IServiceProvider, object)"/>.</returns>
 		public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
 		{
 			if (context != null && context.Instance != null)

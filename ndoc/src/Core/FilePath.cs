@@ -74,7 +74,6 @@ namespace NDoc.Core
 				}
 			}
 		}
-		bool ShouldSerializePath() { return false; }
 
 		// This is a special type converter which will be associated with the FilePath class.
 		// It converts an FilePath object to a string representation for use in a property grid.

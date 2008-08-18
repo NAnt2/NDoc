@@ -42,14 +42,6 @@ namespace NDoc.Core
 	{
 		IDocumenterConfig		config;
 
-		private BaseDocumenterConfig MyConfig
-		{
-			get
-		{
-				return (BaseDocumenterConfig)Config;
-			}
-		}
-
 		/// <summary>Initializes a new instance of the <see cref="BaseDocumenter"/> class.</summary>
 		/// <param name="name">The display name of this documenter.</param>
 		protected BaseDocumenter(string name)
@@ -129,16 +121,16 @@ namespace NDoc.Core
 				DocBuildingProgress(this, new ProgressArgs(progress, ""));
 		}
 
-		/// <summary>See <see cref="IDocumenter.Clear">IDocumenter.Clear</see>.</summary>
+		/// <summary>See <see cref="IDocumenter.Clear" />.</summary>
 		abstract public void Clear();
 
-		/// <summary>See <see cref="IDocumenter.CanBuild">IDocumenter.CanBuild</see>.</summary>
+		/// <summary>See <see cref="IDocumenter.CanBuild(Project)" />.</summary>
 		public virtual string CanBuild(Project project)
 		{
 			return this.CanBuild(project, false);
 		}
 
-		/// <summary>See <see cref="IDocumenter.CanBuild">CanBuild</see>.</summary>
+		/// <summary>See <see cref="IDocumenter.CanBuild(Project)" />.</summary>
 		public virtual string CanBuild(Project project, bool checkInputOnly)
 		{
 			StringBuilder xfiles = new StringBuilder();

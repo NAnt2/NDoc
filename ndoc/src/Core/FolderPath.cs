@@ -78,7 +78,6 @@ namespace NDoc.Core
 				}
 			}
 		}
-		bool ShouldSerializePath() { return false; }
 
 		/// <inheritDoc/>
 		public override string ToString()

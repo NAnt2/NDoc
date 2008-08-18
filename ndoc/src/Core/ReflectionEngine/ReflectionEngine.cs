@@ -3907,11 +3907,6 @@ namespace NDoc.Core.Reflection
 			writer.WriteEndElement();
 		}
 
-		private void TraceErrorOutput(string message)
-		{
-			TraceErrorOutput(message,null);
-		}
-
 		private void TraceErrorOutput(string message, Exception ex)
 		{
 			Trace.WriteLine("[WARNING] " + message);

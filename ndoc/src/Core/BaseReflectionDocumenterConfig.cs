@@ -86,8 +86,6 @@ namespace NDoc.Core.Reflection
 			_DocumentedAttributes = string.Empty;
 		}
 
-		
-		
 		/// <summary>
 		/// Gets or sets a collection of additional paths to search for reference assemblies.
 		/// </summary>
@@ -106,8 +104,6 @@ namespace NDoc.Core.Reflection
 				SetDirty();
 			}
 		}
-		bool ShouldSerializeReferencePaths() { return (Project._referencePaths.Count > 0); }
-		void ResetReferencePaths() { Project._referencePaths = new ReferencePathCollection(); }
 
 		#region Show Missing Documentation Options
 
@@ -805,7 +801,6 @@ namespace NDoc.Core.Reflection
 		}
 		#endregion
 
-	
 		/// <summary>
 		/// 
 		/// </summary>

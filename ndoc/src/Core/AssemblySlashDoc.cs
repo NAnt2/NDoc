@@ -66,7 +66,6 @@ namespace NDoc.Core
 			get { return assembly; }
 			set { assembly = value; }
 		} 
-		void ResetAssembly() { assembly = new FilePath(); }
 
 		/// <summary>
 		/// Gets or sets the path to a documentation comment XML file.
@@ -80,6 +79,5 @@ namespace NDoc.Core
 			get { return slashDoc; }
 			set { slashDoc = value; }
 		} 
-		void ResetSlashDoc() { slashDoc = new FilePath(); }
 	}
 }

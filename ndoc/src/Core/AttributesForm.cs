@@ -90,8 +90,6 @@ namespace NDoc.Core.PropertyGridUI
 					string[] tmparray2 = new String[200];
 					tmparray2 = tmparray[i].Split(propertyDelimiters, 199);
 				
-					ArrayList PropertiesToShow = new ArrayList();
-
 					AttributeToShow attributeToShow = new AttributeToShow();
 					attributeToShow.Name = tmparray2[0];
 
