@@ -2,6 +2,10 @@
 <project name="NDocGui" default="compile">
 	<target name="compile" unless="${framework::get-family(framework::get-target-framework())=='mono'}">
 		<csc target="winexe" output="${current.bin.dir}/${project::get-name()}.exe" debug="${current.build.debug}" optimize="${current.build.optimize}" unsafe="false" warnaserror="true" win32icon="ndoc.ico" checked="false" define="${current.build.defines}">
+			<nowarn>
+				<!-- ignore warnings regarding usage of AssemblyKeyFile attribute as error on .NET 2.0 -->
+				<warning number="1699" if="${framework::get-target-framework() == 'net-2.0'}" />
+			</nowarn>
 			<sources>
 				<include name="**/*.cs" />
 				<include name="../CommonAssemblyInfo.cs" />
